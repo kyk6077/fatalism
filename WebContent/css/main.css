@@ -1,6 +1,4 @@
 @charset "UTF-8";
-
-<style type="text/css">
   	#left{
   		position: fixed;
   		left: 25px;
@@ -105,14 +103,4 @@
 	#aa:hover+#aa2{
 		display: inline-block;
 	}
-  </style>
-  <script type="text/javascript">
-		
-  	$(function() {
-		$("#abox_dt").click(function() {
-			 $("dd").toggle(350);
-		});
-		
-	});
-  	
-  </script>
+

@@ -6,11 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-  <c:import url="./temp/b.jsp"></c:import>
-  
+<c:import url="./temp/b.jsp"/>  
+ <script type="text/javascript">
+   	$(function() {
+ 		$(".abox_dt").click(function() {
+ 			 $("dd").toggle(350);
+ 		});
+		
+ 	});
+</script>
 </head>
 <body>
+
 <c:import url="./temp/h.jsp"></c:import>
 	
 </body>

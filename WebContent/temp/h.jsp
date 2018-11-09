@@ -29,7 +29,7 @@
 		<!-- 카테고리 -->
 		<div id="abox">
 			<dl class="abox_dl">
-				<dt  id="abox_dt">스토어</dt>
+				<dt  class="abox_dt">스토어</dt>
 					<dd >
 						<a>신상품</a>
 					</dd>
@@ -71,7 +71,7 @@
 				</dt>
 			</dl>
 			<dl class="abox_dl">
-				<dt id="abox_dt">COMMUNITY</dt>
+				<dt class="abox_dt">COMMUNITY</dt>
 				<dd>
 					<a>NOTICE</a>
 				</dd>
