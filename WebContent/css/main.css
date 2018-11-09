@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+<style type="text/css">
+  	#left{
+  		position: fixed;
+  		left: 25px;
+  		top: 40px;
+  		z-index: 999;
+  		width: auto;
+  		padding-bottom: 25px;
+  	}
+  	li{
+  		list-style: none;
+  	}
+  	#logo{
+  		width : 100%;
+  		margin: 30px auto;
+  		text-align: center;
+  	}
+  	#logo_images{
+  		padding: 0;
+  		margin: 0 20px;
+  		width: 240px;
+  	}
+  	#login_menu{
+  		width: 240px;
+  		margin: 0 auto 20px;
+  	}
+  	#login_menu_1{
+  		margin: 0;
+  		padding: 0;
+  	}
+  	#login_menu_2{
+  		margin: 0;
+  		width: 100%;
+  		line-height: 20px;
+  		font-size: 11px;
+  		color:#000;
+  		letter-spacing: 0.5px;
+  	}
+	/* 	카테고리 */
+	#abox{
+		margin: 0px auto 10px;
+		padding: 0 0 0 20px;
+		width: auto;
+		font-family: 'Roboto',nanum gothic,sans-serif,dotum,verdana,arial;
+		position: relative;
+		
+	}
+	 #abox dl{
+		height: auto;
+		margin: 0 0;
+		padding: 0;
+		cursor: pointer;
+	} 
+	#abox dd{
+		display: none;
+	}
+	#abox dt{
+		height: 25px;
+		line-height: 20px;
+		text-indent: 0px;
+		font-size: 13px;
+		color:#000;
+		padding: 5px 0 0 0;
+		
+	}
+	#left #abox dd {
+		padding: 0 0 0 10px;
+		font-size: 12px;
+		margin-top: 8px;
+	}
+	#left #abox dt a {
+		color : black;
+	}
+	#left #abox dd a {
+		color : black;
+	}
+	
+	#left .box1 #aa{
+		margin:  0 0 25px 20px;
+		position: relative;
+		font-weight: 500;
+		font-size: 12px;
+		font-weight:bold;
+		color:black;
+	}
+	#sns{
+		margin: 0 0 0 20px;
+	}
+	#sns a img {
+		width: 15px;
+		height: 15px;
+		margin-bottom: 5px;
+	}
+	#sns span{
+		margin: 0 6px;
+	}
+	
+	#aa2{
+		display: none;
+		background-color: black;
+		
+	}
+	#aa:hover+#aa2{
+		display: inline-block;
+	}
+  </style>
+  <script type="text/javascript">
+		
+  	$(function() {
+		$("#abox_dt").click(function() {
+			 $("dd").toggle(350);
+		});
+		
+	});
+  	
+  </script>
