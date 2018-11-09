@@ -98,7 +98,7 @@
 	#aa2{
 		display: none;
 		background-color: black;
-		
+		/* 여기를고쳐야함 */
 	}
 	#aa:hover+#aa2{
 		display: inline-block;
