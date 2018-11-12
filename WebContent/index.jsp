@@ -20,11 +20,7 @@
 <body>
 
 <c:import url="./temp/h.jsp"></c:import>
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 0e3ff79eefef7865582d92d602082c44b644e89f
 
 </body>
 </html>

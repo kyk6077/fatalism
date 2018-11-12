@@ -8,17 +8,7 @@
 <title>Insert title here</title>
 <c:import url="../../../temp/b.jsp"></c:import>
 <style type="text/css">
-	.container{
-		margin: 70px 0 0 400px;
-	}
-	.contents{
-		margin: 0 auto;
-		
-	}
-	h2{
-		
-		text-align: center;/* 가운데 정렬 */
-	}
+	
 	th{
 		background-color: #fbfafa;
 		font-weight: normal;
@@ -88,10 +78,12 @@
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"></c:import>
-	<div class="container">
-		<div class="contents">
-		<form name="frm" action="./memberJoin.do" method="post">
+	<div id="sub_container">
+		<div id="sub_contents">
+		<div class="titleArea">
 		<h2>JOIN</h2>
+		</div>
+		<form name="frm" action="./memberJoin.do" method="post">
 		<h3>기본정보</h3>
 		<input type="hidden" value="f" name="checkid" id="checkid">
 			<table class="table table-bordered">
@@ -219,10 +211,7 @@
 			</form>
 		</div>
 	</div>
-	<div id="footer">
-		
-	</div>
-
+<c:import url="../../../temp/footer.jsp"></c:import>
 
 </body>
 </html>

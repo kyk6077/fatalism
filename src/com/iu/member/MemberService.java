@@ -2,6 +2,7 @@ package com.iu.member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.iu.action.ActionFoward;
 
@@ -11,6 +12,45 @@ public class MemberService {
 	public MemberService() {
 		memberDAO = new MemberDAO();
 	}
+	
+	//로그인
+		public ActionFoward login(HttpServletRequest request, HttpServletResponse response) {
+			//아이디 비번 받아서 처리하는 일을함
+			ActionFoward actionFoward= new ActionFoward();
+			String method = request.getMethod();
+			if(method.equals("POST")) {
+			
+			MemberDTO memberDTO = new MemberDTO();
+	    	memberDTO.setId(request.getParameter("id"));
+	    	memberDTO.setPw(request.getParameter("pw"));
+	    	memberDTO.setKind(request.getParameter("kind"));
+	    	try {
+				memberDTO = memberDAO.login(memberDTO);
+				
+			} catch (Exception e) {
+				memberDTO= null;
+				e.printStackTrace();
+			}
+	    	if(memberDTO!=null) {
+	    		HttpSession session = request.getSession();
+	    		session.setAttribute("member", memberDTO);
+	    		actionFoward.setCheck(false);
+	    		actionFoward.setPath("../index.jsp");
+	    	}else {
+	    		request.setAttribute("message", "Login Fail");
+	    		actionFoward.setCheck(true);
+	    		actionFoward.setPath("../WEB-INF/view/member/memberLogin.jsp");
+	    	}
+			
+			}else {
+				//GET
+				actionFoward.setCheck(true);
+	    		actionFoward.setPath("../WEB-INF/view/member/memberLogin.jsp");
+			}
+			
+			return actionFoward;
+		}
+	
 
 	//중복확인
 	public ActionFoward checkId(HttpServletRequest request, HttpServletResponse response) {

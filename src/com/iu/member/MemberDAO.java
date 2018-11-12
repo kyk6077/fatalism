@@ -9,9 +9,28 @@ import com.iu.util.DBConnector;
 public class MemberDAO {
 	
 	//로그인
-	public void login(MemberDTO memberDTO) throws Exception{
+	public MemberDTO login(MemberDTO memberDTO) throws Exception{
 		Connection con = DBConnector.getConnect();
 		String sql = "select * from member where id=? and pw=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, memberDTO.getId());
+		st.setString(2, memberDTO.getPw());
+		ResultSet rs = st.executeQuery();
+		
+		if(rs.next()) {
+			
+			memberDTO.setName(rs.getString("name"));
+			memberDTO.setNum_address(rs.getInt("num_address"));
+			memberDTO.setMain_address(rs.getString("main_address"));
+			memberDTO.setSub_address(rs.getString("sub_address"));
+			memberDTO.setCountry(rs.getString("country"));
+			memberDTO.setPhone(rs.getString("phone"));
+			memberDTO.setEmail(rs.getString("email"));
+		}else {
+			memberDTO=null;
+		}
+		DBConnector.disConnect(rs, st, con);
+		return memberDTO;
 	}
 	
 	

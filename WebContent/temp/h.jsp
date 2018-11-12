@@ -11,9 +11,9 @@
 		<div id="login_menu">
 			<ul id="login_menu_1">
 				<li id="login_menu_2">
-					<a style="color: #000">로그인</a>
+					<a style="color: #000" href="${pageContext.request.contextPath }/member/memberLogin.do">로그인</a>
 					<span>I</span>
-					<a style="color: #000" href="${pageContext.request.contextPath }/member/memberJoin.do">회원갑입</a>
+					<a style="color: #000" href="${pageContext.request.contextPath }/member/memberJoin.do">회원가입</a>
 					<span>I</span>
 					<a style="color: #000">마이페이지</a>
 				</li>

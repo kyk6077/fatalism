@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
-.container{
+/* .container{
 	margin: 70px 0 0 400px;
-}
+} */
 	
   	#left{
   		position: fixed;
@@ -112,6 +112,25 @@
 	}
 	#aa:hover+#aa2{
 		display: inline-block;
+	}
+	
+	#sub_container{
+		margin: 50px 0 0 0;
+		overflow: hidden;
+		width: 100%;
+		min-height: 800px;
+		height: 100%;
+		/* 바디 위 부분 마진 */
+	}
+	#sub_contents{
+		overflow :hidden;
+		padding : 30px 160px 80px 340px;
+		margin: 0 auto;
+	}
+	
+	.titleArea{
+	/* 바디 부분의 title 부분 */	
+		text-align: center;/* 가운데 정렬 */
 	}
 	
 	

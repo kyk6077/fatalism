@@ -7,7 +7,6 @@ a:hover {text-decoration: none; color: white;}
 a:active {text-decoration: none; color: gray;}        
                
 footer {
-	margin-top:600px;
 	background-color:black;
     font-size: 12px;
     font-family :'나눔고딕', 'Malgun Gothic', sans-serif;
