@@ -7,13 +7,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="./temp/b.jsp"/>
 <title>Insert title here</title>
-
+<style type="text/css">
+	#main_body{
+		margin-left: 320px;
+		margin-top: 70px;
+	}
+</style>
 </head>
 <body>
 <c:import url="./temp/h.jsp"/>
 	
 <div class="container-fluid">
+	<div id="main_body">
 		<h1> asdfsaf</h1>
+	</div>
 </div>
 
 
