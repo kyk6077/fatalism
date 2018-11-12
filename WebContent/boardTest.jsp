@@ -12,7 +12,7 @@
 /* body 시작 */
 
 	.container{
-		margin: 70px 0 0 400px;
+		margin: 70px 0 0 300px;
 	}
 	#page_title{
 		text-align:center;
@@ -20,7 +20,7 @@
 	#board_table{
 		border: 1px solid #EAEAEA;;
 		margin-top:50px;
-		width:1300px;
+		width:900px;
 	}
 	#board_table tr{
 		height: 45px;
@@ -38,13 +38,12 @@
 		border: 1px solid #EAEAEA;;
 	}
 	.table_subject{
-		width:750px;
+		width:550px;
 	}
 
 /* body 끝 */
 	
 </style>
-
 </head>
 <body>
 <c:import url="./temp/h.jsp"/>
@@ -57,9 +56,9 @@
 					<td>NO</td><td>SUBJECT</td><td>WRITER</td><td>DATE</td><td>HIT</td>
 				</tr>
 			</thead>
-				<c:forEach var="v" begin="1" end="10" step="1">
+				<c:forEach items="${list}" var="boardList">
 				<tr>
-					<td>sdsf+${v}</td><td class="table_subject">sadsdsfsadsdsf</td><td>sadfdsf</td><td>sadfdsf</td><td>sadfdsf</td>
+					<td>${boardList.num}</td><td class="table_subject">${boardList.subject}</td><td>${boardList.writer}</td><td>${boardList.reg_date}</td><td>${boardList.hit}</td>
 				</tr>
 				</c:forEach>
 			</table>

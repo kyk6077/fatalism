@@ -3,16 +3,32 @@ package com.fatalism.notice;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.fatalism.board.BoardDAO;
+
 import com.fatalism.board.BoardDTO;
+import com.fatalism.page.Search;
+import com.fatalism.page.RowNumber;
 import com.fatalism.util.DBConnector;
 
-public class NoticeDAO implements BoardDAO{
+public class NoticeDAO{
 
 //	public static void main(String[] args) {
 //		NoticeDAO noticeDAO = new NoticeDAO();
+//		try {
+//			List<NoticeDTO> ar = noticeDAO.selectList();
+//			for(int i=0;i<ar.size();i++) {
+//				System.out.println(ar.get(i).getSubject());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
+		
+		
+		
 //		NoticeDTO noticeDTO = null;
 //		try {
 //			for(int i=0;i<60;i++) {
@@ -29,11 +45,13 @@ public class NoticeDAO implements BoardDAO{
 //			System.out.println("실패");
 //			e.printStackTrace();
 //		}
-//		
+		
 //	}
+	
+	
 	public int insert(BoardDTO boardDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'N',null,null,null,null)";
+		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'N',0,0,0,0)";
 		System.out.println(boardDTO.getWriter());
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1,boardDTO.getSubject());
@@ -44,26 +62,64 @@ public class NoticeDAO implements BoardDAO{
 		DBConnector.disConnect(con, st);
 		return result;
 	}
+	
+	public List<NoticeDTO> selectList(RowNumber rowNumber, Search search) throws Exception {
+		Connection con = DBConnector.getConnect();
+		List<NoticeDTO> ar = new ArrayList<>();
+		String sql ="select * from ( "
+				+ "select rownum R, N.* from( "
+				+ "select * from board where kind='N' "
+				+ "and ? like ?) N "
+				+ "order by R desc) "
+				+ "where R between ? and ? ";
+		
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1,search.getKind());
+		st.setString(2, "%"+search.getSearch()+"%");
+		st.setInt(3, rowNumber.getStartRow());
+		st.setInt(4, rowNumber.getLastRow());
+		ResultSet rs = st.executeQuery();
+		
+		while(rs.next()) {
+			NoticeDTO nDTO = new NoticeDTO();
+			nDTO.setNum(rs.getInt("num"));
+			nDTO.setSubject(rs.getString("subject"));
+			nDTO.setWriter(rs.getString("writer"));
+			nDTO.setReg_date(rs.getDate("reg_date"));
+			nDTO.setHit(rs.getInt("hit"));
+			nDTO.setContents(rs.getString("contents"));
+			nDTO.setKind("N");
+			ar.add(nDTO);
+		}
+		
+		DBConnector.disConnect(con, st, rs);
+		return ar;
+	}
 
-	@Override
+	public int getNum() throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql="select BT_seq.nextval from dual";
+		PreparedStatement st = con.prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
+		rs.next();
+		int num = rs.getInt(1);
+		DBConnector.disConnect(con, st, rs);
+		return num;
+	}
+	
 	public int delete(int num) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public int update() throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public List<BoardDTO> selectList() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
+	
 	public BoardDTO selectOne() throws Exception {
 		// TODO Auto-generated method stub
 		return null;

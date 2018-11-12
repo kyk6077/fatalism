@@ -4,7 +4,7 @@
 <div id="left">
 		<div id="logo">
 			<a href="${pageContext.request.contextPath }/index.jsp">
-				<img alt="" src="./images/logo.png" id="logo_images">
+				<img alt="" src="${pageContext.request.contextPath }/images/logo.png" id="logo_images">
 			</a>
 		</div>
 		<!-- 로그인메뉴 -->
@@ -92,15 +92,15 @@
 		<!-- 아이콘 -->
 		<div id = "sns">
 			<a href="https://www.instagram.com/fatalism_official/" target="_blank">
-				<img  src="./images/instagram.png"  >
+				<img  src="${pageContext.request.contextPath }/images/instagram.png"  >
 			</a>
 			<span>I</span>
 			<a href="https://www.facebook.com/fatalism23/" target="_blank">
-				<img  src="./images/facebook.png"  >
+				<img  src="${pageContext.request.contextPath }/images/facebook.png"  >
 			</a>
 			<span>I</span>
 			<a href="https://pf.kakao.com/_jxhVRj" target="_blank">
-				<img  src="./images/kakaotalk.png"  >
+				<img  src="${pageContext.request.contextPath }/images/kakaotalk.png"  >
 			</a>
 		</div>
 			
