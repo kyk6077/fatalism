@@ -52,36 +52,66 @@
 		padding: 10px 0;
 		text-align: center;
 	}
-	
-	
-	
+	#footer{
+		width: 100%;
+		margin: 0 0;
+		overflow: hidden;
+		padding: 0 0 40px 0;
+		background: black;
+		
+	}
+	#btn{
+		width:140px;
+		height:50px;
+		background: url('../images/join.png');
+		background-repeat:no-repeat;
+		margin: auto;
+	}
+	#btn2{
+		width: 140px;
+		height: 50px;
+		background-image: url("../images/cancel.png");
+	}
 </style>
+<script type="text/javascript">
+	$(function() {
+		
+		$("#id").blur(function() {
+			 $("#id_1").html("사용가능한 아이디입니다.");
+		});
+		/* $("#btn2").click(function() {
+			location.href="../index.jsp";
+		}); */
+		
+	});
+</script>
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"></c:import>
 	<div class="container">
 		<div class="contents">
-		<form name="frm" action="./memberJoin.do" method="post" enctype="multipart/form-data">
+		<form name="frm" action="./memberJoin.do" method="post">
 		<h2>JOIN</h2>
 		<h3>기본정보</h3>
-		
+		<input type="hidden" value="f" name="checkid" id="checkid">
 			<table class="table table-bordered">
+				
 				<tr>
 				<th >아이디</th>
-				<td><input type="text">
-				<span> 아이디를  입력해 주새요.</span>
+				<td><input type="text" id="id" name="id">
+				<span id="id_1"></span>
 				(영문소문자/숫자 4~16자)
 				</td>
 				</tr>
 				<tr>
 				<th >비밀번호</th>
-				<td><input type="text">
+				<td><input type="password" id="pw" name="pw">
 				(영문 대문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자)
 				</td>
 				</tr>
 				<tr>
 				<th>비밀번호 확인</th>
-				<td><input type="text"></td>
+				<td><input type="password" id="pw2" name="pw2"></td>
 				</tr>
 				<tr>
 				<th>이름</th>
@@ -165,7 +195,7 @@
 				</div>
 			</div>
 			<div class="consent">
-				<h6 style="font-weight: bold;">[필수] 이용약관 동의</h6>
+				<h6 style="font-weight: bold;">[선택] 이용약관 동의</h6>
 				<div class="consent_1">
 					<div class="consent_2">
 						<p>제1조(목적)
@@ -181,11 +211,16 @@
 				</div>
 			</div>
 			<div class="join_button">
-				<a href="${pageContext.request.contextPath }/index.jsp"><img src="../images/join.png"></a>
-				<a href="${pageContext.request.contextPath }/index.jsp"><img src="../images/cancel.png"></a>
-			</div>			
+				<button type="submit" id="btn"></button>
+				<!-- <button id="btn2" ></button> -->
+				<%-- <a href="${pageContext.request.contextPath }/index.jsp"><img src="../images/cancel.png"></a> --%>
+			</div>
+						
 			</form>
 		</div>
+	</div>
+	<div id="footer">
+		
 	</div>
 
 

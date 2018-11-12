@@ -2,10 +2,33 @@ package com.iu.member;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.iu.util.DBConnector;
 
 public class MemberDAO {
+	
+	//로그인
+	public void login(MemberDTO memberDTO) throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql = "select * from member where id=? and pw=?";
+	}
+	
+	
+	//중복확인
+	public boolean checkId(String id) throws Exception{
+		boolean check = true;
+		Connection con = DBConnector.getConnect();
+		String sql="select * from member where id =?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, id);
+		ResultSet rs = st.executeQuery();
+		check = rs.next();
+		DBConnector.disConnect(rs, st, con);
+		return check;
+	}
+	
+	
 	
 	//insert
 	public int insert(MemberDTO memberDTO) throws Exception{

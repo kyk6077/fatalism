@@ -36,7 +36,6 @@ public class MemberController extends HttpServlet {
 		
 		String command = request.getPathInfo();
 		ActionFoward actionFoward=null;
-		
 		if(command.equals("/memberJoin.do")) {
 			actionFoward = memberService.insert(request, response);
 		}
