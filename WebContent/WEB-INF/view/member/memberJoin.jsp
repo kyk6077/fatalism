@@ -97,29 +97,29 @@
 				</tr>
 				<tr>
 				<th >비밀번호</th>
-				<td><input type="password" id="pw" name="pw">
+				<td><input type="password" id="pw" >
 				(영문 대문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자)
 				</td>
 				</tr>
 				<tr>
 				<th>비밀번호 확인</th>
-				<td><input type="password" id="pw2" name="pw2"></td>
+				<td><input type="password" id="pw2" name="pw"></td>
 				</tr>
 				<tr>
 				<th>이름</th>
-				<td><input type="text"></td>
+				<td><input type="text" name="name"></td>
 				</tr>
 				<tr>
 				<th>주소</th>
-				<td><input type="text" size="4" style="margin-bottom: 5px"> <button>우편번호</button> <input type="checkbox"> 해외 거주자인 경우, 체크해 주세요.<br>
-					<input type="text" size="30" style="margin-bottom: 5px"> 기본주소<br>
-					<input type="text" size="30"> 나머지주소
+				<td><input type="text" size="4" style="margin-bottom: 5px" name="num_address"> <button>우편번호</button> <input type="checkbox" name="c"> 해외 거주자인 경우, 체크해 주세요.<br>
+					<input type="text" size="30" style="margin-bottom: 5px" name="main_address"> 기본주소<br>
+					<input type="text" size="30" name="sub_address"> 나머지주소
 				</td>
 				</tr>
 				<tr>
 				<th>휴대전화</th>
 				<td>
-				<select >
+				<select name="phone">
 					<option>010</option>
 					<option>011</option>
 					<option>016</option>
@@ -128,15 +128,15 @@
 					<option>019</option>
 				</select>
 				-
-				<input type="text" maxlength="4" size="4">
+				<input type="text" maxlength="4" size="4" name="phone1">
 				-
-				<input type="text" maxlength="4" size="4">
+				<input type="text" maxlength="4" size="4" name="phone2">
 				</td>
 				</tr>
 				<tr>
    				<th> 이메일 </th>
    				<td>
-    			<input type = "text"/> @ <input type = "text"/> &nbsp;&nbsp; 
+    			<input type = "text" name="email"> @ <input type = "text" name="email1"> &nbsp;&nbsp; 
     			<select>
      				<option> 직접입력 </option>
      				<option> naver.com </option>

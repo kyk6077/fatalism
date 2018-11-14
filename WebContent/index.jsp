@@ -13,7 +13,7 @@
  		$(".abox_dt").click(function() {
  			 $("dd").toggle(350);
  		});
-		
+		/* 스토어 누르면 이벤트가 발생하는 코드 */
  	});
 </script>
 </head>

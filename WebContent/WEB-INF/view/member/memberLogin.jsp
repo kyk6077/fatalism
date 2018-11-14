@@ -45,12 +45,12 @@
 					<fieldset>
 						
 						<label title="아이디">
-							<input placeholder="아이디" type="text" size="43">
+							<input placeholder="아이디" type="text" size="43" id="id" name="id">
 						</label>
 						<label title="비밀번호">
-							<input type="password" placeholder="비밀번호" size="43">
+							<input type="password" placeholder="비밀번호" size="43" id="pw" name="pw">
 						</label>
-						<input type="submit" id="btn_login" value="LOGIN">
+						<button type="submit" id="btn_login">LOGIN</button>
 						<p>
 							<input type="checkbox">
 							<label>아이디저장</label>
