@@ -46,6 +46,8 @@ public class ReviewService implements BoardService{
 		String message = "listSuccess";
 		try {
 			int curPage = 1;
+			try{curPage = Integer.parseInt(request.getParameter("curPage"));
+			}catch(Exception e) {}
 			Search search = new Search();
 			search.setSearch(request.getParameter("search"));
 			search.setKind(request.getParameter("kind"));
@@ -58,7 +60,8 @@ public class ReviewService implements BoardService{
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../boardTest.jsp");
 			request.setAttribute("list", ar);
-			request.setAttribute("message", message);
+			request.setAttribute("pager",pager);
+			request.setAttribute("board","review");
 		} catch (Exception e) {
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../index.jsp");
@@ -66,10 +69,6 @@ public class ReviewService implements BoardService{
 			request.setAttribute("message", message);
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 		
 		return actionFoward;
 	}

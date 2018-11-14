@@ -36,6 +36,8 @@ public class QnaController extends HttpServlet {
 		String command = request.getPathInfo();
 		if(command.equals("/qnaList.do")) {
 			actionFoward = qnaService.selectList(request, response);
+		}else if(command.equals("/qnaWrite.do")) {
+			actionFoward = qnaService.insert(request, response);
 		}else {
 			System.out.println("실패");
 		}

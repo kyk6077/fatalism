@@ -8,7 +8,7 @@ public class MakePager {
 	
 	public MakePager(int curPage, Search search) {
 		this.curPage = curPage;
-		this.perPage = 5;
+		this.perPage = 15;
 		this.search = new Search();
 		this.search.setSearch(search.getSearch());
 		this.search.setKind(search.getKind());

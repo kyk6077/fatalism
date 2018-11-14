@@ -36,6 +36,8 @@ public class NoticeController extends HttpServlet {
 		String command = request.getPathInfo();
 		if(command.equals("/noticeList.do")) {
 			actionFoward = noticeService.selectList(request, response);
+		}else if(command.equals("/noticeWrite.do")) {
+			actionFoward = noticeService.insert(request, response);
 		}else {
 			System.out.println("실패");
 		}

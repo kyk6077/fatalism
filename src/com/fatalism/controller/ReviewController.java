@@ -36,6 +36,8 @@ public class ReviewController extends HttpServlet {
 		String command = request.getPathInfo();
 		if(command.equals("/reviewList.do")) {
 			actionFoward = reviewService.selectList(request, response);
+		}else if(command.equals("/reviewWrite.do")) {
+			actionFoward = reviewService.insert(request, response);
 		}else {
 			System.out.println("실패");
 		}

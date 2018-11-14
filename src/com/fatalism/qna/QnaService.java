@@ -49,6 +49,8 @@ public class QnaService implements BoardService{
 		String message = "listSuccess";
 		try {
 			int curPage = 1;
+			try{curPage = Integer.parseInt(request.getParameter("curPage"));
+			}catch(Exception e) {}
 			Search search = new Search();
 			search.setSearch(request.getParameter("search"));
 			search.setKind(request.getParameter("kind"));
@@ -61,7 +63,8 @@ public class QnaService implements BoardService{
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../boardTest.jsp");
 			request.setAttribute("list", ar);
-			request.setAttribute("message", message);
+			request.setAttribute("pager",pager);
+			request.setAttribute("board","qna");
 		} catch (Exception e) {
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../index.jsp");

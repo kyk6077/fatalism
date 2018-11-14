@@ -62,15 +62,14 @@ public class ReviewDAO{
 		String sql ="select * from ( "
 				+ "select rownum R, R.* from( "
 				+ "select * from board where kind='R' "
-				+ "and ? like ?) R "
+				+ "and "+search.getKind()+" like ?) R "
 				+ "order by R desc) "
 				+ "where R between ? and ? ";
 		
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1,search.getKind());
-		st.setString(2, "%"+search.getSearch()+"%");
-		st.setInt(3, rowNumber.getStartRow());
-		st.setInt(4, rowNumber.getLastRow());
+		st.setString(1, "%"+search.getSearch()+"%");
+		st.setInt(2, rowNumber.getStartRow());
+		st.setInt(3, rowNumber.getLastRow());
 		ResultSet rs = st.executeQuery();
 		
 		while(rs.next()) {
@@ -114,7 +113,7 @@ public class ReviewDAO{
 
 	public int getNum() throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql="select BT_seq.nextval from dual";
+		String sql="select COUNT(num) from board where kind='R'";
 		PreparedStatement st = con.prepareStatement(sql);
 		ResultSet rs = st.executeQuery();
 		rs.next();

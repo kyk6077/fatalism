@@ -1,6 +1,4 @@
 package com.fatalism.notice;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +26,8 @@ public class NoticeService implements BoardService{
 		String message = "listSuccess";
 		try {
 			int curPage = 1;
+			try{curPage = Integer.parseInt(request.getParameter("curPage"));
+			}catch(Exception e) {}
 			Search search = new Search();
 			search.setSearch(request.getParameter("search"));
 			search.setKind(request.getParameter("kind"));
@@ -35,12 +35,12 @@ public class NoticeService implements BoardService{
 			RowNumber rowNumber = makePager.MakeRow();
 			int totalCount = noticeDAO.getNum();
 			Pager pager = makePager.MakePage(totalCount);
-
 			ar = noticeDAO.selectList(rowNumber,pager.getSearch());
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../boardTest.jsp");
 			request.setAttribute("list", ar);
-			request.setAttribute("message", message);
+			request.setAttribute("pager",pager);
+			request.setAttribute("board","notice");
 		} catch (Exception e) {
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../index.jsp");
@@ -53,7 +53,9 @@ public class NoticeService implements BoardService{
 	
 	@Override
 	public ActionFoward insert(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		
+		
+		
 		return null;
 	}
 
