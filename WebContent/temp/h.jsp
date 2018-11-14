@@ -11,18 +11,18 @@
 		<div id="login_menu">
 			<ul id="login_menu_1">
 				<li id="login_menu_2">
-					<a style="color: #000">로그인</a>
+					<a style="color: #000" href="${pageContext.request.contextPath }/member/memberLogin.do">로그인</a>
 					<span>I</span>
-					<a style="color: #000">회원갑입</a>
+					<a style="color: #000" href="${pageContext.request.contextPath }/member/memberJoin.do">회원가입</a>
 					<span>I</span>
-					<a style="color: #000">마이페이지</a>
+					<a style="color: #000" href="">마이페이지</a>
 				</li>
 				<li id="login_menu_2">
-					<a style="color: #000">장바구니</a>
+					<a style="color: #000" href="">장바구니</a>
 					<span>I</span>
-					<a style="color: #000">주문내역</a>
+					<a style="color: #000" href="">주문내역</a>
 					<span>I</span>
-					<a style="color: #000">관심상품</a>
+					<a style="color: #000" href="">관심상품</a>
 				</li>
 			</ul>
 		</div>
@@ -86,7 +86,7 @@
 		
 		<div class="box1">
 			<span id="aa">COMPANY INFO</span>
-			<p>daasdsad</p>
+			<p id="aa2">daasdsad</p>
 			
 		</div>
 		<!-- 아이콘 -->

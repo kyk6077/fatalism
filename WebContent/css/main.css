@@ -1,4 +1,9 @@
 @charset "UTF-8";
+
+/* .container{
+	margin: 70px 0 0 400px;
+} */
+	
   	#left{
   		position: fixed;
   		left: 25px;
@@ -97,10 +102,35 @@
 	
 	#aa2{
 		display: none;
+		position:absolute;
 		background-color: black;
+		min-width: 160px;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		z-index: 1;
+		opacity: 0.7;
 		/* 여기를고쳐야함 */
 	}
 	#aa:hover+#aa2{
 		display: inline-block;
 	}
-
+	
+	#sub_container{
+		margin: 50px 0 0 0;
+		overflow: hidden;
+		width: 100%;
+		min-height: 800px;
+		height: 100%;
+		/* 바디 위 부분 마진 */
+	}
+	#sub_contents{
+		overflow :hidden;
+		padding : 30px 160px 80px 340px;
+		margin: 0 auto;
+	}
+	
+	.titleArea{
+	/* 바디 부분의 title 부분 */	
+		text-align: center;/* 가운데 정렬 */
+	}
+	
+	

@@ -6,13 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<c:import url="./temp/b.jsp"/>  
+<c:import url="./temp/b.jsp"/>
+ 
  <script type="text/javascript">
    	$(function() {
  		$(".abox_dt").click(function() {
  			 $("dd").toggle(350);
  		});
-		
+		/* 스토어 누르면 이벤트가 발생하는 코드 */
  	});
 </script>
 </head>
@@ -23,6 +24,7 @@
 <a href="./review/reviewList.do">boardList</a>
 
 <c:import url="./temp/h.jsp"></c:import>
-	
+
+
 </body>
 </html>
