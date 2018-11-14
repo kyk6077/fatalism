@@ -25,8 +25,18 @@ public class QnaService implements BoardService{
 	
 	@Override
 	public ActionFoward insert(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		if(method.equals("POST")) {
+			
+			
+		}else {
+			request.setAttribute("board","qna");
+			actionFoward.setCheck(true);
+			actionFoward.setPath("../WEB-INF/view/board/boardWrite.jsp");
+		}
+		
+		return actionFoward;
 	}
 
 	@Override
@@ -61,14 +71,15 @@ public class QnaService implements BoardService{
 
 			ar = qnaDAO.selectList(rowNumber,pager.getSearch());
 			actionFoward.setCheck(true);
-			actionFoward.setPath("../boardTest.jsp");
+			actionFoward.setPath("../WEB-INF/view/board/boardList.jsp");
 			request.setAttribute("list", ar);
 			request.setAttribute("pager",pager);
 			request.setAttribute("board","qna");
 		} catch (Exception e) {
 			actionFoward.setCheck(true);
-			actionFoward.setPath("../index.jsp");
+			actionFoward.setPath("../WEB-INF/common/result.jsp");
 			message = "list Fali";
+			request.setAttribute("path", "../index.jsp");
 			request.setAttribute("message", message);
 			e.printStackTrace();
 		}

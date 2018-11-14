@@ -8,7 +8,7 @@
 <!-- ckeditor -->
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<c:import url="./temp/b.jsp"/>
+<c:import url="../../../temp/b.jsp"/>
 <script type="text/javascript">
 	$(function(){
 		CKEDITOR.replace('contents');
@@ -44,7 +44,7 @@
 </style>
 </head>
 <body>
-<c:import url="./temp/h.jsp"/>
+<c:import url="../../../temp/h.jsp"/>
 	<div class="container">
 		<div class=row>
 		<h3 id="page_title">board</h3>
@@ -55,14 +55,10 @@
 							<th>제목</th>
 							<td><input type="text" id="title" size=50></td>
 						</tr>
+						
 						<tr>
 							<th>작성자</th>
 							<td><input type="text" id="writer" size=15></td>
-						</tr>
-						<tr>
-							<th>이메일</th>
-							<td><input type="text" id="email" size=15> @ 
-							<input type="text" id="email2" size=15></td>
 						</tr>
 						<tr>
 							<td colspan="2" id="contents_ck"><textarea rows="50" cols="40" class="form-control" name="contents">

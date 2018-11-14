@@ -37,14 +37,15 @@ public class NoticeService implements BoardService{
 			Pager pager = makePager.MakePage(totalCount);
 			ar = noticeDAO.selectList(rowNumber,pager.getSearch());
 			actionFoward.setCheck(true);
-			actionFoward.setPath("../boardTest.jsp");
+			actionFoward.setPath("../WEB-INF/view/board/boardList.jsp");
 			request.setAttribute("list", ar);
 			request.setAttribute("pager",pager);
 			request.setAttribute("board","notice");
 		} catch (Exception e) {
 			actionFoward.setCheck(true);
-			actionFoward.setPath("../index.jsp");
+			actionFoward.setPath("../WEB-INF/common/result.jsp");
 			message = "list Fali";
+			request.setAttribute("path", "../index.jsp");
 			request.setAttribute("message", message);
 			e.printStackTrace();
 		}
@@ -53,12 +54,19 @@ public class NoticeService implements BoardService{
 	
 	@Override
 	public ActionFoward insert(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		if(method.equals("POST")) {
+			
+			
+		}else {
+			request.setAttribute("board","notice");
+			actionFoward.setCheck(true);
+			actionFoward.setPath("../WEB-INF/view/board/boardWrite.jsp");
+		}
 		
-		
-		
-		return null;
+		return actionFoward;
 	}
-
 	@Override
 	public ActionFoward delete(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
