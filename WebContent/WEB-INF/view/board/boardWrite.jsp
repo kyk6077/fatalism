@@ -12,6 +12,12 @@
 <script type="text/javascript">
 	$(function(){
 		CKEDITOR.replace('contents');
+		
+		$('#register_btn').on('click',function(){
+			$('#boardWriteForm').submit();
+			alert("굿");
+		});
+		
 	});
 </script>
 <style type="text/css">
@@ -24,7 +30,7 @@
 	}
 	.write_table{
 		border: 1px solid #EAEAEA;
-		width:1200px;
+		width:1170px;
 	}
 	.write_table td{
 		padding:10px;
@@ -39,9 +45,17 @@
 	#contents_ck{
 		padding: 0px;
 	}
+	.row_btn{
+		margin-top: 20px;
+	}
+	.row_btn2{
+		float: right;
+	}
+	
 /* body 끝 */
 	
 </style>
+
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"/>
@@ -49,7 +63,7 @@
 		<div class=row>
 		<h3 id="page_title">board</h3>
 			<div class="write">
-				<form action="./notice/noticeWrite.do" method="post">
+				<form action="./${board}Write.do" method="post" id="boardWriteForm">
 					<table class="write_table">
 						<tr>
 							<th>제목</th>
@@ -70,22 +84,28 @@
 						</tr>
 						<tr>
 							<th>비밀번호</th>
-							<td><input type="text" size=15></td>
+							<td><input type="number" size=10></td>
 						</tr>
 						<tr>
 							<th>비밀글설정</th>
-							<td></td>
+							<td>
+							<input type="radio" checked="checked" name="hide_radio" value="n">공개글 <input type="radio" name="hide_radio" value="s">비밀글</td>
 						</tr>
 						<tr>
 							<th>개인정보 수집 및 이용 동의</th>
-							<td><textarea cols="20" rows="9">개인정보의 수집..</textarea><br>
-							개인정보 수집 및 이용에 동의하십니까?</td>
+							<td><textarea cols="70" rows="8" readonly="readonly">■ 개인정보의 수집·이용 목적서비스 제공 및 계약의 이행, 구매 및 대금결제, 물품배송 또는 청구지 발송, 회원관리 등을 위한 목적 ■ 수집하려는 개인정보의 항목이름, 주소, 연락처 등 ■ 개인정보의 보유 및 이용 기간회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외없이 해당정보를 파기합니다.</textarea><br>
+							개인정보 수집 및 이용에 동의하십니까? <input type="radio" name="agree" value="y">동의함 <input type="radio" name="agree" value="n">동의 안함 </td>
 						</tr>
 					</table>
 					
-					<button>목록</button>
-					<input type="submit" value="등록">
-					<button>취소</button>
+					<div class="row_btn">
+						<a href="#"><img alt="1" src="../images/write_img/btn_list.png"></a>
+						<div class="row_btn2">
+							<a href="#" id="register_btn"><img alt="1" src="../images/write_img/btn_register.png"></a>
+							<a href="#" ><img alt="1" src="../images/write_img/btn_cancel.png"></a>
+<!-- 					<input type="submit" value="등록"> -->
+						</div>
+					</div>
 				</form>
 			</div>
 		</div>
