@@ -18,23 +18,14 @@ public class MemberDAO {
 		ResultSet rs = st.executeQuery();
 		
 		if(rs.next()) {
-			
 			memberDTO.setName(rs.getString("name"));
-			
 			memberDTO.setNum_address(rs.getInt("num_address"));
-			
 			memberDTO.setMain_address(rs.getString("main_address"));
-			
 			memberDTO.setSub_address(rs.getString("sub_address"));
-			
 			memberDTO.setCountry(rs.getString("country"));
-			
 			memberDTO.setPhone(rs.getString("phone"));
-			
 			memberDTO.setEmail(rs.getString("email"));
-			
 			memberDTO.setKind(rs.getString("kind"));
-			
 			memberDTO.setMoney(rs.getInt("money"));
 			
 		}else {
