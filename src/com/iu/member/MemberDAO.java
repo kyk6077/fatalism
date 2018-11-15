@@ -8,6 +8,28 @@ import com.iu.util.DBConnector;
 
 public class MemberDAO {
 	
+	//회원 정보 수정
+	public int update(MemberDTO memberDTO) throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql="update member set pw=?, name=?, num_address=?, main_address=?, sub_address=?, country=?, phone=?,email=? where id=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, memberDTO.getPw());
+		st.setString(2, memberDTO.getName());
+		st.setInt(3, memberDTO.getNum_address());
+		st.setString(4, memberDTO.getMain_address());
+		st.setString(5, memberDTO.getSub_address());
+		st.setString(6, memberDTO.getCountry());
+		st.setString(7, memberDTO.getPhone());
+		st.setString(8, memberDTO.getEmail());
+		st.setString(9, memberDTO.getId());
+
+		int result = st.executeUpdate();
+		
+		DBConnector.disConnect(st, con);
+		return result;
+	}
+	
+	
 	//로그인
 	public MemberDTO login(MemberDTO memberDTO) throws Exception{
 		Connection con = DBConnector.getConnect();

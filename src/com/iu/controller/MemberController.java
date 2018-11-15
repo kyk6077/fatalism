@@ -40,6 +40,10 @@ public class MemberController extends HttpServlet {
 			actionFoward = memberService.insert(request, response);
 		}else if(command.equals("/memberLogin.do")) {
 			actionFoward = memberService.login(request, response);
+		}else if(command.equals("/memberLogout.do")){
+			actionFoward = memberService.logout(request, response);
+		}else if(command.equals("/memberUpdate.do")) {
+			actionFoward = memberService.update(request, response);
 		}
 		
 		

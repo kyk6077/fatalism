@@ -1,78 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../../../temp/b.jsp"></c:import>
-<style type="text/css">
-	
-	th{
-		background-color: #fbfafa;
-		font-weight: normal;
-		font-size: 12px;
-		padding: 11px 0 10px 18px;
-	}
-	br{
-		padding: 5px;
-	}
-	h3{
-		padding: 50px 0 10px;
-		font-size: 13px;
-		font-weight: bold;
-	}
-	.consent{
-		padding:20px;
-		height: 209px;
-		width:100%;
-		border-width: 1px;
-		border-color: #e6e6e6;
-		background-color: #efeff0;
-	}
-	.consent_2{
-		overflow: auto;
-		height: 110px;
-		padding: 20px;
-		border: 1px solid #d5d5d5;
-		background: #fff;
-	}
-	.join_button{
-		padding: 10px 0;
-		text-align: center;
-	}
-	#footer{
-		width: 100%;
-		margin: 0 0;
-		overflow: hidden;
-		padding: 0 0 40px 0;
-		background: black;
-		
-	}
-	#btn{
-		width:140px;
-		height:50px;
-		background: url('../images/join.png');
-		background-repeat:no-repeat;
-		margin: auto;
-	}
-	#btn2{
-		width: 140px;
-		height: 50px;
-		background-image: url("../images/cancel.png");
-	}
-</style>
+
 <script type="text/javascript">
 	$(function() {
 		
 		$("#id").blur(function() {
 			 $("#id_1").html("사용가능한 아이디입니다.");
 		});
-		/* $("#btn2").click(function() {
-			location.href="../index.jsp";
-		}); */
+		 
 		
+		$("#btn").click(function() {
+			var isSeasonCHK = $("input:checkbox[name='SEASON[]']").is(":checked");
+				if (!isSeasonCHK) {
+						alert("약관에 동의하세요");
+						return false;
+					}
+		});
+
 	});
 </script>
 </head>
@@ -167,7 +118,7 @@
 						<p>③ ‘회원’이라 함은 “몰”에 개인정보를 제공하여 회원등록을 한 자로서, “몰”의 정보를 지속적으로 제공받으며, “몰”이 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.</p>
 						<p>④ ‘비회원’이라 함은 회원에 가입하지 않고 “몰”이 제공하는 서비스를 이용하는 자를 말합니다.</p>
 					</div>
-						이약관에 동의하십니까? <input type="checkbox"> 동의함
+						이약관에 동의하십니까? <input type="checkbox" class="c"> 동의함
 				</div>
 			</div>
 			<div class="consent">
@@ -183,9 +134,10 @@
 						<p>③ ‘회원’이라 함은 “몰”에 개인정보를 제공하여 회원등록을 한 자로서, “몰”의 정보를 지속적으로 제공받으며, “몰”이 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.</p>
 						<p>④ ‘비회원’이라 함은 회원에 가입하지 않고 “몰”이 제공하는 서비스를 이용하는 자를 말합니다.</p>
 					</div>
-						이약관에 동의하십니까? <input type="checkbox"> 동의함
+						이약관에 동의하십니까? <input type="checkbox" id="c1" name="SEASON[]" value="1"> 동의함
 				</div>
 			</div>
+			
 			<div class="consent">
 				<h6 style="font-weight: bold;">[선택] 이용약관 동의</h6>
 				<div class="consent_1">
@@ -199,13 +151,14 @@
 						<p>③ ‘회원’이라 함은 “몰”에 개인정보를 제공하여 회원등록을 한 자로서, “몰”의 정보를 지속적으로 제공받으며, “몰”이 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.</p>
 						<p>④ ‘비회원’이라 함은 회원에 가입하지 않고 “몰”이 제공하는 서비스를 이용하는 자를 말합니다.</p>
 					</div>
-						이약관에 동의하십니까? <input type="checkbox"> 동의함
+						이약관에 동의하십니까? <input type="checkbox" id="c2" name="SEASON[]" value="2"> 동의함
 				</div>
 			</div>
+			
 			<div class="join_button">
 				<button type="submit" id="btn"></button>
-				<!-- <button id="btn2" ></button> -->
-				<%-- <a href="${pageContext.request.contextPath }/index.jsp"><img src="../images/cancel.png"></a> --%>
+				 <!-- <button id="btn2" ></button> -->
+				<a href="${pageContext.request.contextPath }/index.jsp" id="btn2"></a>
 			</div>
 						
 			</form>
