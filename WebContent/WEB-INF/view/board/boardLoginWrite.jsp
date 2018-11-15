@@ -45,8 +45,8 @@
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"/>
-	<div class="container">
-		<div class=row>
+	<div id="sub_container">
+		<div id="sub_contents">
 		<h3 id="page_title">board</h3>
 			<div class="write">
 				<form action="./qna/qnaWrite.do" method="post">
@@ -90,5 +90,6 @@
 			</div>
 		</div>
 	</div>
+	<c:import url="../../../temp/footer.jsp"/>
 </body>
 </html>

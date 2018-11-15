@@ -28,11 +28,11 @@
 </script>
 <style type="text/css">
 /* body 시작 */
-	.container{
-		margin: 70px 0 0 300px;
-	}
 	#page_title{
 		text-align: center;
+	}
+	.write{
+		
 	}
 	.write_table{
 		border: 1px solid #EAEAEA;
@@ -65,8 +65,8 @@
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"/>
-	<div class="container">
-		<div class=row>
+	<div id="sub_container">
+		<div id="sub_contents">
 		<h3 id="page_title">board</h3>
 			<div class="write">
 				<form action="./${board}Write.do" method="post" id="boardWriteForm">
@@ -121,5 +121,6 @@
 			</div>
 		</div>
 	</div>
+	<c:import url="../../../temp/footer.jsp"/>
 </body>
 </html>

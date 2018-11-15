@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div id="left">
 	<div id="logo">
@@ -11,14 +12,33 @@
 	<!-- 로그인메뉴 -->
 	<div id="login_menu">
 		<ul id="login_menu_1">
-			<li id="login_menu_2"><a style="color: #000"
-				href="${pageContext.request.contextPath }/member/memberLogin.do">로그인</a>
-				<span>I</span> <a style="color: #000"
-				href="${pageContext.request.contextPath }/member/memberJoin.do">회원가입</a>
-				<span>I</span> <a style="color: #000" href="">마이페이지</a></li>
-			<li id="login_menu_2"><a style="color: #000" href="">장바구니</a> <span>I</span>
-				<a style="color: #000" href="">주문내역</a> <span>I</span> <a
-				style="color: #000" href="">관심상품</a></li>
+			<!-- 로그인후 -->
+			<c:choose>
+				<c:when test="${not empty member}">
+					<li id="login_menu_2"><a style="color: #000"
+						href="${pageContext.request.contextPath }/member/memberLogout.do">로그아웃</a>
+						<span>I</span> <a style="color: #000"
+						href="${pageContext.request.contextPath }/member/memberUpdate.do">회원정보수정</a>
+						<span>I</span> <a style="color: #000" href="">마이페이지</a></li>
+					<li id="login_menu_2"><a style="color: #000" href="">장바구니</a>
+						<span>I</span> <a style="color: #000" href="">주문내역</a> <span>I</span>
+						<a style="color: #000" href="">관심상품</a></li>
+				</c:when>
+				<c:otherwise>
+					<li id="login_menu_2">
+						<!-- 로그인전 --> <a style="color: #000"
+						href="${pageContext.request.contextPath }/member/memberLogin.do">로그인</a>
+						<span>I</span> <a style="color: #000"
+						href="${pageContext.request.contextPath }/member/memberJoin.do">회원가입</a>
+						<span>I</span> <a style="color: #000"
+						href="${pageContext.request.contextPath }/member/memberLogin.do">마이페이지</a>
+					</li>
+					<li id="login_menu_2"><a style="color: #000" href="">장바구니</a>
+						<span>I</span> <a style="color: #000"
+						href="${pageContext.request.contextPath }/member/memberOrder.do">주문내역</a>
+						<span>I</span> <a style="color: #000" href="">관심상품</a></li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 	</div>
 	<!-- 카테고리 -->
@@ -82,7 +102,6 @@
 	<div class="box1">
 		<span id="aa">COMPANY INFO</span>
 		<p id="aa2">daasdsad</p>
-
 	</div>
 	<!-- 아이콘 -->
 	<div id="sns">
@@ -95,8 +114,5 @@
 			<img src="${pageContext.request.contextPath }/images/kakaotalk.png">
 		</a>
 	</div>
-
-
 </div>
 <!-- left의 끝 -->
-
