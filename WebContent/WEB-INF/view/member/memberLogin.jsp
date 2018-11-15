@@ -7,31 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../../../temp/b.jsp"></c:import>
-<style type="text/css">
-	.login{
-		margin: 0 0 3px 0 ;
-		padding: 30px 0 ;
-	}	
-	fieldset{
-		position:relative;
-		width: 380px;
-		margin: 0 auto;
-	}
-	ul{
-		padding: 8px 5px 5px;
-		margin: 0;
-		border: 0;
-	}
-	#btn_login{
-		width: 100%;
-		height: 40px;
-		background-color: black;
-		font-size: 15px;
-		font-weight: bold;
-		color: white;
-	}
-	
-</style>
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"></c:import>
@@ -44,11 +19,11 @@
 				<div class="login">
 					<fieldset>
 						
-						<label title="아이디">
-							<input placeholder="아이디" type="text" size="43" id="id" name="id">
+						<label title="아이디" id="fontid">
+							<input placeholder="아이디" type="text" size="49" id="id" name="id">
 						</label>
-						<label title="비밀번호">
-							<input type="password" placeholder="비밀번호" size="43" id="pw" name="pw">
+						<label title="비밀번호" id="fontpw">
+							<input type="password" placeholder="비밀번호" size="49" id="pw" name="pw">
 						</label>
 						<button type="submit" id="btn_login">LOGIN</button>
 						<p>
