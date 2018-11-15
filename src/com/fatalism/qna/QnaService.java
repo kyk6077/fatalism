@@ -15,27 +15,52 @@ import com.fatalism.page.Search;
 
 public class QnaService implements BoardService{
 	private QnaDAO qnaDAO;
-	
+
 	public QnaService() {
 		qnaDAO = new QnaDAO();
 	}
-	
-	
-	
-	
+
+
+
+
 	@Override
 	public ActionFoward insert(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
 		String method = request.getMethod();
 		if(method.equals("POST")) {
-			
-			
+			QnaDTO qnaDTO = new QnaDTO();
+			try {
+				qnaDTO.setSubject(request.getParameter("subject"));
+				qnaDTO.setWriter(request.getParameter("writer"));
+				qnaDTO.setContents(request.getParameter("contents"));
+				qnaDTO.setPnum(1);
+				qnaDTO.setPw(request.getParameter("board_pw"));
+				int result = qnaDAO.insert(qnaDTO);
+				if(result>0) {
+					request.setAttribute("message", "Write Success");
+					request.setAttribute("path", "./qnaList.do");
+					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+					actionFoward.setCheck(true);
+				}else {
+					request.setAttribute("message","Write Fail");
+					request.setAttribute("path","./qnaWrite.do");
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+				}
+
+			}catch (Exception e) {
+				request.setAttribute("message","Write Fail");
+				request.setAttribute("path","./qnaWrite.do");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+			}
+
 		}else {
 			request.setAttribute("board","qna");
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/board/boardWrite.jsp");
 		}
-		
+
 		return actionFoward;
 	}
 
@@ -54,7 +79,7 @@ public class QnaService implements BoardService{
 	@Override
 	public ActionFoward selectList(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
-		
+
 		List<QnaDTO> ar = null;
 		String message = "listSuccess";
 		try {
@@ -83,16 +108,36 @@ public class QnaService implements BoardService{
 			request.setAttribute("message", message);
 			e.printStackTrace();
 		}
-		
+
 		return actionFoward;
 	}
 
 	@Override
 	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionFoward actionFoward = new ActionFoward();
+
+		try {
+			QnaDTO qnaDTO = qnaDAO.selectOne(Integer.parseInt(request.getParameter("num")));
+			if(qnaDTO!=null) {
+				request.setAttribute("boardDTO",qnaDTO);
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/boardSelectOne.jsp");
+			}else {
+				request.setAttribute("message", "Fail");
+				request.setAttribute("path", "./qnaList.do");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+			}
+		}catch (Exception e) {
+			request.setAttribute("message", "Fail");
+			request.setAttribute("path", "./qnaList.do");
+			actionFoward.setCheck(true);
+			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+		}
+
+		return actionFoward;
 	}
 
-	
-	
+
+
 }

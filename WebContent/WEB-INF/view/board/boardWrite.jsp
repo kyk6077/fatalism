@@ -14,9 +14,15 @@
 		CKEDITOR.replace('contents');
 		
 		$('#register_btn').on('click',function(){
-			$('#boardWriteForm').submit();
-			alert("굿");
+			var checked_radio = $('input:radio[name=agree_radio]:checked').val();
+			if(checked_radio == 'y'){
+				$('#boardWriteForm').submit();
+			}else{
+				alert("이용약관에 동의해주시기 바랍니다.");
+			}
 		});
+		
+		
 		
 	});
 </script>
@@ -67,15 +73,15 @@
 					<table class="write_table">
 						<tr>
 							<th>제목</th>
-							<td><input type="text" id="title" size=50></td>
+							<td><input type="text" id="subject" name="subject" size=50></td>
 						</tr>
 						
 						<tr>
 							<th>작성자</th>
-							<td><input type="text" id="writer" size=15></td>
+							<td><input type="text" id="writer" name="writer" size=15></td>
 						</tr>
 						<tr>
-							<td colspan="2" id="contents_ck"><textarea rows="50" cols="40" class="form-control" name="contents">
+							<td colspan="2" id="contents_ck"><textarea rows="50" cols="40" class="form-control" id="contents" name="contents">
 							</textarea></td>
 						</tr>
 						<tr>
@@ -84,17 +90,22 @@
 						</tr>
 						<tr>
 							<th>비밀번호</th>
-							<td><input type="number" size=10></td>
+							<td><input type="text" id="board_pw" name="board_pw" size=10></td>
 						</tr>
+		
+						<c:if test="${board!='qna'}">
 						<tr>
 							<th>비밀글설정</th>
 							<td>
-							<input type="radio" checked="checked" name="hide_radio" value="n">공개글 <input type="radio" name="hide_radio" value="s">비밀글</td>
+							<input type="radio" checked="checked" name="hide_radio" value="N">공개글 
+							<input type="radio" name="hide_radio" value="S">비밀글</td>
 						</tr>
+						</c:if>
+						
 						<tr>
 							<th>개인정보 수집 및 이용 동의</th>
 							<td><textarea cols="70" rows="8" readonly="readonly">■ 개인정보의 수집·이용 목적서비스 제공 및 계약의 이행, 구매 및 대금결제, 물품배송 또는 청구지 발송, 회원관리 등을 위한 목적 ■ 수집하려는 개인정보의 항목이름, 주소, 연락처 등 ■ 개인정보의 보유 및 이용 기간회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외없이 해당정보를 파기합니다.</textarea><br>
-							개인정보 수집 및 이용에 동의하십니까? <input type="radio" name="agree" value="y">동의함 <input type="radio" name="agree" value="n">동의 안함 </td>
+							개인정보 수집 및 이용에 동의하십니까? <input type="radio" class="agree_radio" name="agree_radio" value="y">동의함 <input type="radio" class="agree_radio" name="agree_radio" value="n">동의 안함 </td>
 						</tr>
 					</table>
 					

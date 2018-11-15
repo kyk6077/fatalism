@@ -10,6 +10,7 @@ import com.fatalism.page.MakePager;
 import com.fatalism.page.Pager;
 import com.fatalism.page.RowNumber;
 import com.fatalism.page.Search;
+import com.fatalism.qna.QnaDTO;
 
 public class NoticeService implements BoardService{
 	private NoticeDAO noticeDAO;
@@ -57,7 +58,32 @@ public class NoticeService implements BoardService{
 		ActionFoward actionFoward = new ActionFoward();
 		String method = request.getMethod();
 		if(method.equals("POST")) {
-			
+			NoticeDTO noticeDTO = new NoticeDTO();
+			try {
+				noticeDTO.setSubject(request.getParameter("subject"));
+				noticeDTO.setWriter(request.getParameter("writer"));
+				noticeDTO.setContents(request.getParameter("contents"));
+				noticeDTO.setHide(request.getParameter("hide_radio"));
+				noticeDTO.setPw(request.getParameter("board_pw"));
+				int result = noticeDAO.insert(noticeDTO);
+				if(result>0) {
+					request.setAttribute("message", "Write Success");
+					request.setAttribute("path", "./noticeList.do");
+					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+					actionFoward.setCheck(true);
+				}else {
+					request.setAttribute("message","Write Fail");
+					request.setAttribute("path","./noticeWrite.do");
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+				}
+				
+			}catch (Exception e) {
+				request.setAttribute("message","Write Fail");
+				request.setAttribute("path","./noticeWrite.do");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+			}
 			
 		}else {
 			request.setAttribute("board","notice");
@@ -82,8 +108,28 @@ public class NoticeService implements BoardService{
 
 	@Override
 	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionFoward actionFoward = new ActionFoward();
+		
+		try {
+			NoticeDTO noticeDTO = noticeDAO.selectOne(Integer.parseInt(request.getParameter("num")));
+			if(noticeDTO!=null) {
+				request.setAttribute("boardDTO",noticeDTO);
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/boardSelectOne.jsp");
+			}else {
+				request.setAttribute("message", "Fail");
+				request.setAttribute("path", "./noticeList.do");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+			}
+		}catch (Exception e) {
+			request.setAttribute("message", "Fail");
+			request.setAttribute("path", "./noticeList.do");
+			actionFoward.setCheck(true);
+			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+		}
+		
+		return actionFoward;
 	}
 	
 	

@@ -38,6 +38,8 @@ public class ReviewController extends HttpServlet {
 			actionFoward = reviewService.selectList(request, response);
 		}else if(command.equals("/reviewWrite.do")) {
 			actionFoward = reviewService.insert(request, response);
+		}else if(command.equals("/reviewSelectOne.do")) {
+			actionFoward = reviewService.selectOne(request, response);
 		}else {
 			System.out.println("실패");
 		}

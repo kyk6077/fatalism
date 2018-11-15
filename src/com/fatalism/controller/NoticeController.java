@@ -38,6 +38,8 @@ public class NoticeController extends HttpServlet {
 			actionFoward = noticeService.selectList(request, response);
 		}else if(command.equals("/noticeWrite.do")) {
 			actionFoward = noticeService.insert(request, response);
+		}else if(command.equals("/noticeSelectOne.do")) {
+			actionFoward = noticeService.selectOne(request, response);
 		}else {
 			System.out.println("실패");
 		}

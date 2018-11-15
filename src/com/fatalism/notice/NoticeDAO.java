@@ -7,13 +7,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import com.fatalism.board.BoardDAO;
 import com.fatalism.board.BoardDTO;
 import com.fatalism.page.Search;
 import com.fatalism.page.RowNumber;
 import com.fatalism.util.DBConnector;
 
-public class NoticeDAO{
+public class NoticeDAO implements BoardDAO{
 
 //	public static void main(String[] args) {
 //		NoticeDAO noticeDAO = new NoticeDAO();
@@ -48,15 +48,27 @@ public class NoticeDAO{
 		
 //	}
 	
+	@Override
+	public int delete(int num) throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql = "delete board where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1,num);
+		int result = st.executeUpdate();
+		
+		DBConnector.disConnect(con, st);
+		return result;
+	}
 	
 	public int insert(BoardDTO boardDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'N',0,0,0,0)";
-		System.out.println(boardDTO.getWriter());
+		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'N',null,null,null,null,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1,boardDTO.getSubject());
 		st.setString(2,boardDTO.getWriter());
 		st.setString(3,boardDTO.getContents());
+		st.setString(4,boardDTO.getHide());
+		st.setString(5,boardDTO.getPw());
 		int result = st.executeUpdate();
 		
 		DBConnector.disConnect(con, st);
@@ -69,8 +81,8 @@ public class NoticeDAO{
 		String sql ="select * from ( "
 				+ "select rownum R, N.* from( "
 				+ "select * from board where kind='N' "
-				+ "and "+search.getKind()+" like ?) N "
-				+ "order by R desc) "
+				+ "and "+search.getKind()+" like ? "
+				+ "order by num desc) N )"
 				+ "where R between ? and ? ";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, "%"+search.getSearch()+"%");
@@ -104,11 +116,6 @@ public class NoticeDAO{
 		DBConnector.disConnect(con, st, rs);
 		return num;
 	}
-	
-	public int delete(int num) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	
 	public int update() throws Exception {
@@ -118,9 +125,26 @@ public class NoticeDAO{
 
 
 	
-	public BoardDTO selectOne() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public NoticeDTO selectOne(int num) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql="select * from board where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1,num);
+		ResultSet rs = st.executeQuery();
+		
+		NoticeDTO noticeDTO = null;
+		if(rs.next()) {
+			noticeDTO = new NoticeDTO();
+			noticeDTO.setNum(num);
+			noticeDTO.setSubject(rs.getString("subject"));
+			noticeDTO.setWriter(rs.getString("writer"));
+			noticeDTO.setReg_date(rs.getDate("reg_date"));
+			noticeDTO.setHit(rs.getInt("hit"));
+			noticeDTO.setContents(rs.getString("contents"));
+		}
+		
+		DBConnector.disConnect(con, st, rs);
+		return noticeDTO;
 	}
 
 

@@ -10,7 +10,23 @@ public class BoardDTO {
 	private int hit;
 	private String contents;
 	private String kind;
+	private String hide;
+	private String pw;
 	
+	
+	
+	public String getHide() {
+		return hide;
+	}
+	public void setHide(String hide) {
+		this.hide = hide;
+	}
+	public String getPw() {
+		return pw;
+	}
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
 	public int getNum() {
 		return num;
 	}

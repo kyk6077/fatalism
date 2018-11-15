@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fatalism.action.ActionFoward;
 import com.fatalism.board.BoardService;
+import com.fatalism.notice.NoticeDTO;
 import com.fatalism.page.MakePager;
 import com.fatalism.page.Pager;
 import com.fatalism.page.RowNumber;
@@ -26,7 +27,32 @@ public class ReviewService implements BoardService{
 		ActionFoward actionFoward = new ActionFoward();
 		String method = request.getMethod();
 		if(method.equals("POST")) {
-			
+			ReviewDTO reviewDTO = new ReviewDTO();
+			try {
+				reviewDTO.setSubject(request.getParameter("subject"));
+				reviewDTO.setWriter(request.getParameter("writer"));
+				reviewDTO.setContents(request.getParameter("contents"));
+				reviewDTO.setHide(request.getParameter("hide_radio"));
+				reviewDTO.setPw(request.getParameter("board_pw"));
+				int result = reviewDAO.insert(reviewDTO);
+				if(result>0) {
+					request.setAttribute("message", "Write Success");
+					request.setAttribute("path", "./reviewList.do");
+					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+					actionFoward.setCheck(true);
+				}else {
+					request.setAttribute("message","Write Fail");
+					request.setAttribute("path","./reviewWrite.do");
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+				}
+				
+			}catch (Exception e) {
+				request.setAttribute("message","Write Fail");
+				request.setAttribute("path","./reviewWrite.do");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+			}
 			
 		}else {
 			request.setAttribute("board","review");
@@ -86,8 +112,28 @@ public class ReviewService implements BoardService{
 
 	@Override
 	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+ActionFoward actionFoward = new ActionFoward();
+		
+		try {
+			ReviewDTO reviewDTO = reviewDAO.selectOne(Integer.parseInt(request.getParameter("num")));
+			if(reviewDTO!=null) {
+				request.setAttribute("boardDTO",reviewDTO);
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/boardSelectOne.jsp");
+			}else {
+				request.setAttribute("message", "Fail");
+				request.setAttribute("path", "./reviewList.do");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+			}
+		}catch (Exception e) {
+			request.setAttribute("message", "Fail");
+			request.setAttribute("path", "./reviewList.do");
+			actionFoward.setCheck(true);
+			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+		}
+		
+		return actionFoward;
 	}
 	
 }

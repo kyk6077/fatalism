@@ -49,16 +49,16 @@
 		<div class=row>
 		<h3 id="page_title">board</h3>
 			<div class="write">
-				<form action="./notice/noticeWrite.do" method="post">
+				<form action="./qna/qnaWrite.do" method="post">
 					<table class="write_table">
 						<tr>
 							<th>제목</th>
-							<td><input type="text" id="title" size=50></td>
+							<td><input type="text" id="title" name="title" size=50></td>
 						</tr>
 						
 						<tr>
 							<th>작성자</th>
-							<td><input type="text" id="writer" size=15></td>
+							<td><input type="text" id="writer" name="writer" size=15></td>
 						</tr>
 						<tr>
 							<td colspan="2" id="contents_ck"><textarea rows="50" cols="40" class="form-control" name="contents">
@@ -70,7 +70,7 @@
 						</tr>
 						<tr>
 							<th>비밀번호</th>
-							<td><input type="text" size=15></td>
+							<td><input type="text" id="board_pw" name="board_pw" size=15></td>
 						</tr>
 						<tr>
 							<th>비밀글설정</th>

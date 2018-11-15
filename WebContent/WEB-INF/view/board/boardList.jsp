@@ -63,9 +63,9 @@
 						<td>NO</td><td>SUBJECT</td><td>WRITER</td><td>DATE</td><td>HIT</td>
 					</tr>
 				</thead>
-					<c:forEach items="${list}" var="boardList">
+					<c:forEach items="${list}" var="boardDTO">
 					<tr>
-						<td>${boardList.num}</td><td class="table_subject">${boardList.subject}</td><td>${boardList.writer}</td><td>${boardList.reg_date}</td><td>${boardList.hit}</td>
+						<td>${boardDTO.num}</td><td class="table_subject"><a href="./${board}SelectOne.do?num=${boardDTO.num}">${boardDTO.subject}</a></td><td>${boardDTO.writer}</td><td>${boardDTO.reg_date}</td><td>${boardDTO.hit}</td>
 					</tr>
 					</c:forEach>
 				</table>
@@ -91,16 +91,6 @@
 			<div class="Row_search">
 				검색어 
 				<form class="form-inline" action="./${board}List.do">
-			    
-			    <div class="form-group">
-			    	<select class="form-control" id="menu1" name="bt">
-				        <option>일주일</option>
-				        <option>1달</option>
-				        <option>3달</option>
-				        <option>전체</option>
-			     	</select>	    
-			    </div>
-			    
 			    <div class="form-group">
 			    	<select class="form-control" id="menu2" name="kind">
 				        <option>subject</option>
