@@ -16,12 +16,12 @@ import com.fatalism.qna.QnaDTO;
 
 public class ReviewService implements BoardService{
 	private ReviewDAO reviewDAO;
-	
+
 	public ReviewService() {
 		reviewDAO = new ReviewDAO();
 	}
-	
-	
+
+
 	@Override
 	public ActionFoward insert(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
@@ -46,20 +46,20 @@ public class ReviewService implements BoardService{
 					actionFoward.setCheck(true);
 					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 				}
-				
+
 			}catch (Exception e) {
 				request.setAttribute("message","Write Fail");
 				request.setAttribute("path","./reviewWrite.do");
 				actionFoward.setCheck(true);
 				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 			}
-			
+
 		}else {
 			request.setAttribute("board","review");
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/board/boardWrite.jsp");
 		}
-		
+
 		return actionFoward;
 	}
 
@@ -106,14 +106,14 @@ public class ReviewService implements BoardService{
 			request.setAttribute("message", message);
 			e.printStackTrace();
 		}
-		
+
 		return actionFoward;
 	}
 
 	@Override
 	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response) {
-ActionFoward actionFoward = new ActionFoward();
-		
+		ActionFoward actionFoward = new ActionFoward();
+
 		try {
 			ReviewDTO reviewDTO = reviewDAO.selectOne(Integer.parseInt(request.getParameter("num")));
 			if(reviewDTO!=null) {
@@ -132,8 +132,52 @@ ActionFoward actionFoward = new ActionFoward();
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 		}
+
+		return actionFoward;
+	}
+
+
+	@Override
+	public ActionFoward pwCheck(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		actionFoward.setCheck(true);
+		actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+		
+		int num = -1;
+		if(method.equals("POST")) {
+			try {
+				num = Integer.parseInt(request.getParameter("num"));
+				String pw = request.getParameter("pw");
+				int result = reviewDAO.pwCheck(num, pw);
+				request.setAttribute("num", num);
+				if(result>0) {
+					actionFoward.setCheck(true);
+					actionFoward.setPath("./reviewSelectOne.do");
+				}else {
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+					request.setAttribute("board","review");
+					request.setAttribute("num",num);
+				}
+			}catch (Exception e) {
+				System.out.println("post Exception");
+			}
+		}else {
+			try {
+				num = Integer.parseInt(request.getParameter("num"));
+				request.setAttribute("board","review");
+				request.setAttribute("num",num);
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+			}catch (Exception e) {
+				System.out.println("get Exception");
+			}
+		}
 		
 		return actionFoward;
 	}
-	
+
+
+
 }

@@ -97,6 +97,7 @@ public class QnaDAO implements BoardDAO{
 			qDTO.setReg_date(rs.getDate("reg_date"));
 			qDTO.setHit(rs.getInt("hit"));
 			qDTO.setContents(rs.getString("contents"));
+			qDTO.setHide(rs.getString("hide"));
 			qDTO.setKind("Q");
 			ar.add(qDTO);
 		}
@@ -152,7 +153,20 @@ public class QnaDAO implements BoardDAO{
 	}
 
 	
-
-	
-	
+	@Override
+	public int pwCheck(int num, String pw) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql = "select num from board where num=? and pw=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, num);
+		st.setString(2, pw);
+		ResultSet rs = st.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);			
+		};
+		
+		DBConnector.disConnect(con, st, rs);
+		return result;
+	}
 }

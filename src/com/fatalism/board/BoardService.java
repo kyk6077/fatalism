@@ -17,4 +17,6 @@ public interface BoardService {
 	
 	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response);
 	
+	public ActionFoward pwCheck(HttpServletRequest request, HttpServletResponse response);
+	
 }

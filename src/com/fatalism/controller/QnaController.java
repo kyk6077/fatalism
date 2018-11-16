@@ -40,6 +40,8 @@ public class QnaController extends HttpServlet {
 			actionFoward = qnaService.insert(request, response);
 		}else if(command.equals("/qnaSelectOne.do")) {
 			actionFoward = qnaService.selectOne(request, response);
+		}else if(command.equals("/qnaPwCheck.do")) {
+			actionFoward = qnaService.pwCheck(request, response);
 		}else {
 			System.out.println("실패");
 		}

@@ -98,6 +98,7 @@ public class NoticeDAO implements BoardDAO{
 			nDTO.setReg_date(rs.getDate("reg_date"));
 			nDTO.setHit(rs.getInt("hit"));
 			nDTO.setContents(rs.getString("contents"));
+			nDTO.setHide(rs.getString("hide"));
 			nDTO.setKind("N");
 			ar.add(nDTO);
 		}
@@ -123,7 +124,7 @@ public class NoticeDAO implements BoardDAO{
 		return 0;
 	}
 
-
+	
 	
 	public NoticeDTO selectOne(int num) throws Exception {
 		Connection con = DBConnector.getConnect();
@@ -147,7 +148,20 @@ public class NoticeDAO implements BoardDAO{
 		return noticeDTO;
 	}
 
+	@Override
+	public int pwCheck(int num, String pw) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql = "select num from board where num=? and pw=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, num);
+		st.setString(2, pw);
+		ResultSet rs = st.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);			
+		};
+		DBConnector.disConnect(con, st, rs);
+		return result;
+	}
 
-	
-	
 }

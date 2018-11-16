@@ -68,8 +68,14 @@
 					<c:forEach items="${list}" var="boardDTO">
 						<tr>
 							<td>${boardDTO.num}</td>
-							<td class="table_subject"><a
-								href="./${board}SelectOne.do?num=${boardDTO.num}">${boardDTO.subject}</a></td>
+							<td class="table_subject">
+								<c:if test="${boardDTO.hide=='N'}">
+									<a href="./${board}SelectOne.do?num=${boardDTO.num}">${boardDTO.subject}</a>
+								</c:if>
+								<c:if test="${boardDTO.hide=='S'}">
+									<a href="./${board}PwCheck.do?num=${boardDTO.num}">${boardDTO.subject}<img alt="" src="../images/secret_icon.gif"></a>
+								</c:if>
+							</td>
 							<td>${boardDTO.writer}</td>
 							<td>${boardDTO.reg_date}</td>
 							<td>${boardDTO.hit}</td>

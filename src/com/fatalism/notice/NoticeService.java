@@ -14,12 +14,12 @@ import com.fatalism.qna.QnaDTO;
 
 public class NoticeService implements BoardService{
 	private NoticeDAO noticeDAO;
-	
+
 	public NoticeService() {
 		noticeDAO = new NoticeDAO();
 	}
-	
-	
+
+
 	@Override
 	public ActionFoward selectList(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
@@ -52,7 +52,7 @@ public class NoticeService implements BoardService{
 		}
 		return actionFoward;
 	}
-	
+
 	@Override
 	public ActionFoward insert(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
@@ -77,20 +77,20 @@ public class NoticeService implements BoardService{
 					actionFoward.setCheck(true);
 					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 				}
-				
+
 			}catch (Exception e) {
 				request.setAttribute("message","Write Fail");
 				request.setAttribute("path","./noticeWrite.do");
 				actionFoward.setCheck(true);
 				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 			}
-			
+
 		}else {
 			request.setAttribute("board","notice");
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/board/boardWrite.jsp");
 		}
-		
+
 		return actionFoward;
 	}
 	@Override
@@ -109,7 +109,7 @@ public class NoticeService implements BoardService{
 	@Override
 	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
-		
+
 		try {
 			NoticeDTO noticeDTO = noticeDAO.selectOne(Integer.parseInt(request.getParameter("num")));
 			if(noticeDTO!=null) {
@@ -128,11 +128,51 @@ public class NoticeService implements BoardService{
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 		}
+
+		return actionFoward;
+	}
+
+
+	@Override
+	public ActionFoward pwCheck(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		actionFoward.setCheck(true);
+		actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+		
+		int num = -1;
+		if(method.equals("POST")) {
+			try {
+				num = Integer.parseInt(request.getParameter("num"));
+				String pw = request.getParameter("pw");
+				int result = noticeDAO.pwCheck(num, pw);
+				request.setAttribute("num", num);
+				if(result>0) {
+					actionFoward.setCheck(true);
+					actionFoward.setPath("./noticeSelectOne.do");
+				}else {
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+					request.setAttribute("board","notice");
+					request.setAttribute("num",num);
+				}
+			}catch (Exception e) {
+				System.out.println("post Exception");
+			}
+		}else {
+			try {
+				num = Integer.parseInt(request.getParameter("num"));
+				request.setAttribute("board","notice");
+				request.setAttribute("num",num);
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+			}catch (Exception e) {
+				System.out.println("get Exception");
+			}
+		}
 		
 		return actionFoward;
 	}
-	
-	
-	
 
+	
 }

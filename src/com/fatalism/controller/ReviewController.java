@@ -40,6 +40,8 @@ public class ReviewController extends HttpServlet {
 			actionFoward = reviewService.insert(request, response);
 		}else if(command.equals("/reviewSelectOne.do")) {
 			actionFoward = reviewService.selectOne(request, response);
+		}else if(command.equals("/reviewPwCheck.do")) {
+			actionFoward = reviewService.pwCheck(request, response);
 		}else {
 			System.out.println("실패");
 		}

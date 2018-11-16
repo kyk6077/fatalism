@@ -116,6 +116,7 @@ public class QnaService implements BoardService{
 	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
 
+		
 		try {
 			QnaDTO qnaDTO = qnaDAO.selectOne(Integer.parseInt(request.getParameter("num")));
 			if(qnaDTO!=null) {
@@ -138,6 +139,51 @@ public class QnaService implements BoardService{
 		return actionFoward;
 	}
 
+
+
+
+	@Override
+	public ActionFoward pwCheck(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		actionFoward.setCheck(true);
+		actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+		
+		int num = -1;
+		if(method.equals("POST")) {
+			try {
+				num = Integer.parseInt(request.getParameter("num"));
+				String pw = request.getParameter("pw");
+				int result = qnaDAO.pwCheck(num, pw);
+				request.setAttribute("num", num);
+				if(result>0) {
+					actionFoward.setCheck(true);
+					actionFoward.setPath("./qnaSelectOne.do");
+				}else {
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+					request.setAttribute("board","qna");
+					request.setAttribute("num",num);
+				}
+			}catch (Exception e) {
+				System.out.println("post Exception");
+			}
+		}else {
+			try {
+				num = Integer.parseInt(request.getParameter("num"));
+				request.setAttribute("board","qna");
+				request.setAttribute("num",num);
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+			}catch (Exception e) {
+				System.out.println("get Exception");
+			}
+		}
+		
+		return actionFoward;
+	}
+
+	
 
 
 }
