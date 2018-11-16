@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+#sub_contents {
+    overflow: hidden;
+    padding: 30px 160px 80px 340px;
+    margin: 0 auto;
+}
+
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, img {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    display: block;
+}
+
+.titleArea {
+    min-height: 30px;
+    margin: 10px 0 20px;
+    border-bottom: 1px solid #fff;
+    text-align: center;
+}
+.titleArea h2 {
+    display: inline-block;
+    padding: 0 0 0 0px;
+    font-weight: 500;
+    font-size: 17px;
+    font-family: 'Roboto',nanum gothic,sans-serif,dotum,verdana,arial;
+    color: #252525;
+    *display: inline;
+    *zoom: 1;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.ec-base-tab {
+    position: relative;
+    font-family: 'Roboto',nanum gothic,sans-serif,dotum,verdana,arial;
+}
+
+
+.xans-mall-faq .cont {
+    padding: 17px 10px 46px 9px;
+    color: #353535;
+    line-height: 18px;
+}
+
+#sub_container:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.ec-base-box.typeThinBg {
+    border-width: 1px;
+    border-color: #e6e6e6;
+    background-color: #efeff0;
+}
+.ec-base-box {
+    padding: 20px;
+    border: 5px solid #e8e8e8;
+    color: #404040;
+}
+.ec-base-box.typeThinBg > .agree {
+    padding: 20px;
+    border: 1px solid #e6e6e6;
+    background: #fff;
+}
+
+.ec-base-box.typeThinBg > .agree p {
+    padding: 0 0 17px;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}

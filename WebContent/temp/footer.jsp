@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
+
+
+
 <footer>
 	<div class="f_top">
 		<strong>CUSTOMER SERVICE :</strong> 070-4146-6369 09:30 AM - 17:00 PM
@@ -10,9 +14,9 @@
 	
 	<br><br>
 	<a href="index.jsp" class="no-uline">HOME</a>&emsp;
-	<a href="guide.jsp" class="no-uline">GUIDE</a> &emsp;
-	<a href="agreement.jsp" class="no-uline">AGREEMENT</a> &emsp; 
-	<a href="privacypolicy.jsp" class="no-uline">PRIVACY POLICY</a><br><br><br>
+	<a href="./footer_nav/footer_guide.jsp" class="no-uline">GUIDE</a> &emsp;
+	<a href="./footer_nav/footer_agreement.jsp" class="no-uline">AGREEMENT</a> &emsp; 
+	<a href="./footer_nav/footer_privacyPolicy.jsp" class="no-uline">PRIVACY POLICY</a><br><br><br>
 
 
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 
 <div id="left">
 		<div id="logo">
@@ -67,7 +68,7 @@
 			</dl>
 			<dl class="abox_dl">
 				<dt style="font-variant: 600;" id="abox_dt">
-				<a>협 찬</a>
+				<a href ="./footer_nav/Hyupchan.jsp">협찬</a>
 				</dt>
 			</dl>
 			<dl class="abox_dl">
@@ -106,4 +107,8 @@
 			
 		
 	</div><!-- left의 끝 -->
+	
+	
+	<c:import url="./temp/footer.jsp"></c:import>
+	
 
