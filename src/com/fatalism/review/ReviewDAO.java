@@ -39,11 +39,12 @@ public class ReviewDAO implements BoardDAO{
 //		}
 	
 	@Override
-	public int delete(int num) throws Exception{
+	public int delete(int num,String pw) throws Exception{
 		Connection con = DBConnector.getConnect();
-		String sql = "delete board where num=?";
+		String sql = "delete board where num=? and pw=?";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1,num);
+		st.setString(2, pw);
 		int result = st.executeUpdate();
 		
 		DBConnector.disConnect(con, st);
@@ -100,15 +101,17 @@ public class ReviewDAO implements BoardDAO{
 	}
 
 
-	public int update() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-	public List<BoardDTO> selectList() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public int update(ReviewDTO reviewDTO) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql ="update board set subject=? , contents=? where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1,reviewDTO.getSubject());
+		st.setString(2, reviewDTO.getContents());
+		st.setInt(3, reviewDTO.getNum());
+		int result = st.executeUpdate();
+		
+		DBConnector.disConnect(con, st);
+		return result;
 	}
 
 	

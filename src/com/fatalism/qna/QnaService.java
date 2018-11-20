@@ -66,14 +66,73 @@ public class QnaService implements BoardService{
 
 	@Override
 	public ActionFoward delete(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionFoward actionFoward = new ActionFoward();
+		actionFoward.setCheck(true);
+		actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+		
+		try {
+			int num = Integer.parseInt(request.getParameter("num"));
+			String pw = request.getParameter("board_pw");
+			int result = qnaDAO.delete(num,pw);
+			if(result>0) {
+				request.setAttribute("message","Delete Success");
+				request.setAttribute("path","./qnaList.do");
+			}else {
+				request.setAttribute("message","Delete Fail");
+				request.setAttribute("path","./qnaSelectOne.do?num="+num);
+			}
+		} catch (Exception e) {
+			request.setAttribute("message","Delete Error");
+			request.setAttribute("path","./qnaList.do");
+		}
+		
+		return actionFoward;
 	}
 
 	@Override
 	public ActionFoward update(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		QnaDTO qnaDTO=null;
+		actionFoward.setCheck(true);
+		actionFoward.setPath("./qnaList.do");
+		if(method.equals("POST")) {
+			try {
+				qnaDTO = new QnaDTO();
+				qnaDTO.setNum(Integer.parseInt(request.getParameter("num")));
+				qnaDTO.setSubject(request.getParameter("subject"));
+				qnaDTO.setContents(request.getParameter("contents"));
+				int result = qnaDAO.update(qnaDTO);
+				request.setAttribute("message","Fail");
+				request.setAttribute("path","./qnaSelectOne.do?num="+qnaDTO.getNum());
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+				if(result>0) {
+					request.setAttribute("message","Update Success");
+				}
+				
+			} catch (Exception e) {
+				//null값 들어올떄 exception발생 처리해야함
+				System.out.println("exception 발생");
+				e.printStackTrace();
+			}
+			
+		}else {
+			try {
+				int num = Integer.parseInt(request.getParameter("num"));
+				qnaDTO = qnaDAO.selectOne(num);
+				request.setAttribute("boardDTO",qnaDTO);
+				request.setAttribute("board","qna");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/boardUpdate.jsp");
+				
+			} catch (Exception e) {
+				System.out.println("try 에러 10");
+				//에러시 list로 
+			}
+			
+		}
+		return actionFoward;
 	}
 
 	@Override
@@ -101,6 +160,7 @@ public class QnaService implements BoardService{
 			request.setAttribute("pager",pager);
 			request.setAttribute("board","qna");
 		} catch (Exception e) {
+			e.printStackTrace();
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/common/result.jsp");
 			message = "list Fali";
@@ -120,6 +180,7 @@ public class QnaService implements BoardService{
 		try {
 			QnaDTO qnaDTO = qnaDAO.selectOne(Integer.parseInt(request.getParameter("num")));
 			if(qnaDTO!=null) {
+				request.setAttribute("board","qna");
 				request.setAttribute("boardDTO",qnaDTO);
 				actionFoward.setCheck(true);
 				actionFoward.setPath("../WEB-INF/view/board/boardSelectOne.jsp");
@@ -130,6 +191,7 @@ public class QnaService implements BoardService{
 				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("message", "Fail");
 			request.setAttribute("path", "./qnaList.do");
 			actionFoward.setCheck(true);

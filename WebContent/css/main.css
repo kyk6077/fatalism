@@ -129,6 +129,7 @@
 		overflow :hidden;
 		padding : 30px 160px 80px 340px;
 		margin: 0 auto;
+		min-width: 700px;
 	}
 	
 	.titleArea{

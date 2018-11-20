@@ -13,6 +13,8 @@ import com.fatalism.page.Pager;
 import com.fatalism.page.RowNumber;
 import com.fatalism.page.Search;
 import com.fatalism.qna.QnaDTO;
+import com.fatalism.reply.ReplyDAO;
+import com.fatalism.reply.ReplyDTO;
 
 public class ReviewService implements BoardService{
 	private ReviewDAO reviewDAO;
@@ -48,6 +50,7 @@ public class ReviewService implements BoardService{
 				}
 
 			}catch (Exception e) {
+				e.printStackTrace();
 				request.setAttribute("message","Write Fail");
 				request.setAttribute("path","./reviewWrite.do");
 				actionFoward.setCheck(true);
@@ -65,14 +68,74 @@ public class ReviewService implements BoardService{
 
 	@Override
 	public ActionFoward delete(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionFoward actionFoward = new ActionFoward();
+		actionFoward.setCheck(true);
+		actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+		
+		try {
+			int num = Integer.parseInt(request.getParameter("num"));
+			String pw = request.getParameter("board_pw");
+			int result = reviewDAO.delete(num,pw);
+			if(result>0) {
+				request.setAttribute("message","Delete Success");
+				request.setAttribute("path","./reviewList.do");
+			}else {
+				request.setAttribute("message","Delete Fail");
+				request.setAttribute("path","./reviewSelectOne.do?num="+num);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("message","Delete Error");
+			request.setAttribute("path","./reviewList.do");
+		}
+		
+		return actionFoward;
 	}
 
 	@Override
 	public ActionFoward update(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		ReviewDTO reviewDTO=null;
+		actionFoward.setCheck(true);
+		actionFoward.setPath("./reviewList.do");
+		if(method.equals("POST")) {
+			try {
+				reviewDTO = new ReviewDTO();
+				reviewDTO.setNum(Integer.parseInt(request.getParameter("num")));
+				reviewDTO.setSubject(request.getParameter("subject"));
+				reviewDTO.setContents(request.getParameter("contents"));
+				int result = reviewDAO.update(reviewDTO);
+				request.setAttribute("message","Fail");
+				request.setAttribute("path","./reviewSelectOne.do?num="+reviewDTO.getNum());
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+				if(result>0) {
+					request.setAttribute("message","Update Success");
+				}
+				
+			} catch (Exception e) {
+				//null값 들어올떄 exception발생 처리해야함
+				System.out.println("exception 발생");
+				e.printStackTrace();
+			}
+			
+		}else {
+			try {
+				int num = Integer.parseInt(request.getParameter("num"));
+				reviewDTO = reviewDAO.selectOne(num);
+				request.setAttribute("boardDTO",reviewDTO);
+				request.setAttribute("board","review");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/boardUpdate.jsp");
+				
+			} catch (Exception e) {
+				System.out.println("try 에러 10");
+				//에러시 list로 
+			}
+			
+		}
+		return actionFoward;
 	}
 
 	@Override
@@ -114,12 +177,20 @@ public class ReviewService implements BoardService{
 	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
 
+		
 		try {
 			ReviewDTO reviewDTO = reviewDAO.selectOne(Integer.parseInt(request.getParameter("num")));
 			if(reviewDTO!=null) {
-				request.setAttribute("boardDTO",reviewDTO);
-				actionFoward.setCheck(true);
-				actionFoward.setPath("../WEB-INF/view/board/boardSelectOne.jsp");
+				ReplyDAO replyDAO = new ReplyDAO();
+				List<ReplyDTO> ar=null;
+					request.setAttribute("board","review");
+					request.setAttribute("boardDTO",reviewDTO);
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/board/boardSelectOne.jsp");
+					ar = replyDAO.selectList(reviewDTO.getNum());
+					if(!ar.isEmpty()) {
+						request.setAttribute("replyList", ar);
+					}
 			}else {
 				request.setAttribute("message", "Fail");
 				request.setAttribute("path", "./reviewList.do");
@@ -127,6 +198,7 @@ public class ReviewService implements BoardService{
 				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("message", "Fail");
 			request.setAttribute("path", "./reviewList.do");
 			actionFoward.setCheck(true);
@@ -178,6 +250,32 @@ public class ReviewService implements BoardService{
 		return actionFoward;
 	}
 
-
+	public ActionFoward commentInsert(HttpServletRequest request, HttpServletResponse response){
+		ActionFoward actionFoward = new ActionFoward();
+		ReplyDAO replyDAO = new ReplyDAO();
+		ReplyDTO replyDTO = new ReplyDTO();
+		try {
+			int num = Integer.parseInt(request.getParameter("num"));
+			replyDTO.setId(request.getParameter("id"));
+			replyDTO.setNum(num);
+			replyDTO.setContents(request.getParameter("contents"));
+			int result = replyDAO.insert(replyDTO);
+			
+			if(result>0) {
+				request.setAttribute("replyDTO", replyDTO);
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/replyView.jsp");
+			}else {
+				actionFoward.setCheck(true);
+				actionFoward.setPath("./reviewSelectOne.do?num="+num);				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			actionFoward.setCheck(true);
+			actionFoward.setPath("./reviewList.do");	
+		}
+		
+		return actionFoward;
+	}
 
 }
