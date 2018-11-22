@@ -9,7 +9,6 @@
 <script type="text/javascript">
 	$(function(){
 		$('#sc_submit').on('click',function(){
-			alert("submit");
 			$('#sc_form').submit();
 			
 		});

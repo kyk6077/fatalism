@@ -39,6 +39,8 @@
 	#contents_ck{
 		padding: 0px;
 	}
+	
+	
 /* body 끝 */
 	
 </style>

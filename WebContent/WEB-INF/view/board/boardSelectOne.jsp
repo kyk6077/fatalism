@@ -90,23 +90,13 @@
 
 .comment_contents {
 	border-top: 1px solid #EAEAEA;
-	padding: 20px;
+	padding: 20px; 
 }
-
 /* body 끝 */
 </style>
 
 <script type="text/javascript">
 	$(function() {
-
-		$('#comment_btn').on('click', function() {
-			$('#bottom_row').append("<p>추가</p>");
-			// 			$.ajax({
-			// 				url:"./comment.do",
-
-			// 			});
-
-		});
 
 		$('#delete_btn').on('click', function() {
 			var pw = $('#board_pw').val();
@@ -117,17 +107,19 @@
 			}
 
 		});
+
 		$('#comment').on('click', function() {
 			$.ajax({
 				type : "POST",
 				url : "./comment.do",
 				data : {
-					"num" : $('#comment_num').val(),
+					"bnum" : $('#comment_num').val(),
 					"id" : $('#comment_id').val(),
 					"contents" : $('#comment_contents').val()
 				},
 				success : function(data) {
-					$('#comment_view').append(data.trim());
+					$('#comment_view').html("");
+					$('#comment_view').html(data.trim());
 					$('#comment_contents').val("");
 				},
 				error : function() {
@@ -135,6 +127,66 @@
 				}
 			});
 		});
+
+		$('#comment_view').on('click', '.comment_delete', function() {
+			var index = $(this).attr('title');
+			$.ajax({
+				type : "POST",
+				url : "./commentDelete.do",
+				data : {
+					"num" : index
+				},
+				success : function(data) {
+					var c = 'comment' + index;
+					$('#' + c).remove();
+					alert("delete success");
+					location.href="#comment_view";
+				},
+				error : function() {
+					location.href="#comment_view";
+					alert("delete fail");
+				}
+
+			});
+
+		});
+
+		$('#comment_view').on('click', '.comment_modify', function() {
+			var index = $(this).attr('title');
+			$('#contents_p'+index).css("display","none");
+			$('#update_row'+index).css("display","block");
+
+		});
+		
+		
+		$('#comment_view').on('click', '.comment_btn', function() {
+			var index = $(this).attr('title');
+			var contents_val = $('#update_text'+index).val();
+			$.ajax({
+				type : "POST",
+				url : "./commentUpdate.do",
+				data : {
+					"num" : index,
+					"contents" : contents_val
+				},
+				success : function(data) {
+					alert(data);
+					$('#update_text'+index).val(data);
+					$('#contents_p'+index).html(data);
+					$('#update_row'+index).css("display","none");
+					$('#contents_p'+index).css("display","block");
+					alert("Update success");
+					location.href="#comment_view";
+				},
+				error : function() {
+					location.href="#comment_view";
+					alert("Update fail");
+				}
+
+			});
+
+		});
+
 	});
 </script>
 </head>
@@ -143,7 +195,7 @@
 	<div id="sub_container">
 		<div id="sub_contents">
 			<div class="write">
-				<h3 id="page_title">${board}</h3>
+				<h3 id="page_title">${board}z</h3>
 				<table class="write_table">
 					<tr>
 						<th>제목</th>
@@ -195,15 +247,29 @@
 								<button id="comment">등록</button>
 							</div>
 							<div id="comment_view">
-								<c:forEach items="${replyList}" var="replyDTO">
-									<div class="comment_header">
-										<strong>${replyDTO.id}</strong><span class="reply_date">${replyDTO.reg_date}</span>
-										<div class="comment_row">
-											<a><img alt="" src="../images/btn_comment_modify.png"></a>
-											<a><img alt="" src="../images/btn_comment_delete.png"></a>
+								<c:forEach items="${replyList}" var="replyDTO"
+									varStatus="status">
+									<div id="comment${replyDTO.num}">
+										<div class="comment_header">
+											<strong>${replyDTO.id}</strong><span class="reply_date">${replyDTO.reg_date}</span>
+											<%-- <c:if test="${member.id==replyDTO.id"> --%>
+											<div class="comment_row">
+												<a href="#" class="comment_modify" title="${replyDTO.num}"><img
+													alt="" src="../images/btn_comment_modify.png"></a> <a
+													href="#" class="comment_delete" title="${replyDTO.num}"><img
+													alt="" src="../images/btn_comment_delete.png"></a>
+											</div>
+											<%-- </c:if> --%>
+										</div>
+										<div class="comment_contents">
+											<p id="contents_p${replyDTO.num}">${replyDTO.contents}</p>
+											<div id="update_row${replyDTO.num}" style="display:none">
+												<input type="text" id="update_text${replyDTO.num}" size="50px" 
+													value="${replyDTO.contents}">
+												<button class="comment_btn" title="${replyDTO.num}">수정완료</button>
+											</div>
 										</div>
 									</div>
-									<div class="comment_contents">${replyDTO.contents}</div>
 								</c:forEach>
 							</div>
 						</div>

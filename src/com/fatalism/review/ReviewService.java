@@ -255,24 +255,74 @@ public class ReviewService implements BoardService{
 		ReplyDAO replyDAO = new ReplyDAO();
 		ReplyDTO replyDTO = new ReplyDTO();
 		try {
-			int num = Integer.parseInt(request.getParameter("num"));
+			int bnum = Integer.parseInt(request.getParameter("bnum"));
 			replyDTO.setId(request.getParameter("id"));
-			replyDTO.setNum(num);
+			replyDTO.setBnum(bnum);
 			replyDTO.setContents(request.getParameter("contents"));
 			int result = replyDAO.insert(replyDTO);
 			
 			if(result>0) {
-				request.setAttribute("replyDTO", replyDTO);
+				List<ReplyDTO> ar = replyDAO.selectList(bnum);
+				request.setAttribute("replyList", ar);
 				actionFoward.setCheck(true);
 				actionFoward.setPath("../WEB-INF/view/board/replyView.jsp");
 			}else {
+				request.setAttribute("message","fail");
 				actionFoward.setCheck(true);
-				actionFoward.setPath("./reviewSelectOne.do?num="+num);				
+				actionFoward.setPath("../WEB-INF/view/common/resultjax.jsp");			
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("message","fail");
 			actionFoward.setCheck(true);
-			actionFoward.setPath("./reviewList.do");	
+			actionFoward.setPath("../WEB-INF/view/common/resultjax.jsp");
+		}
+		
+		return actionFoward;
+	}
+	
+	public ActionFoward commentDelete(HttpServletRequest request, HttpServletResponse response){
+		ActionFoward actionFoward = new ActionFoward();
+		ReplyDAO replyDAO = new ReplyDAO();
+		try {
+			int result = replyDAO.delete(Integer.parseInt(request.getParameter("num")));
+			if(result>0) {
+				request.setAttribute("result", "success");
+			}else {
+				request.setAttribute("result", "fail");				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("result", "fail2");
+		}
+		actionFoward.setCheck(true);
+		actionFoward.setPath("../WEB-INF/view/common/replyDeleteAjax.jsp");
+		return actionFoward;
+	}
+	
+	public ActionFoward commentUpdate(HttpServletRequest request, HttpServletResponse response){
+		ActionFoward actionFoward = new ActionFoward();
+		ReplyDAO replyDAO = new ReplyDAO();
+		ReplyDTO replyDTO = new ReplyDTO();
+		try {
+			int num = Integer.parseInt(request.getParameter("num"));
+			replyDTO.setNum(num);
+			replyDTO.setContents(request.getParameter("contents"));
+			int result = replyDAO.update(replyDTO);
+			if(result>0) {
+				request.setAttribute("contents", replyDTO.getContents());
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/replyUpdate.jsp");
+			}else {
+				request.setAttribute("message", "Fail");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("message", "error");
+			actionFoward.setCheck(true);
+			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 		}
 		
 		return actionFoward;

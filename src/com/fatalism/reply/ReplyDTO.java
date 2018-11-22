@@ -7,6 +7,15 @@ public class ReplyDTO {
 	private String id;
 	private String contents;
 	private Date reg_date;
+	private int bnum;
+	
+	
+	public int getBnum() {
+		return bnum;
+	}
+	public void setBnum(int bnum) {
+		this.bnum = bnum;
+	}
 	public int getNum() {
 		return num;
 	}

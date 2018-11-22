@@ -10,11 +10,11 @@ import com.fatalism.util.DBConnector;
 
 public class ReplyDAO {
 	
-	public List<ReplyDTO> selectList(int num) throws Exception{
+	public List<ReplyDTO> selectList(int bnum) throws Exception{
 		Connection con = DBConnector.getConnect();
-		String sql="select * from Reply where num=?";
+		String sql="select * from Reply where bnum=?";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1, num);
+		st.setInt(1, bnum);
 		ResultSet rs = st.executeQuery();
 		List<ReplyDTO> ar = new ArrayList<>();
 		while(rs.next()) {
@@ -23,6 +23,7 @@ public class ReplyDAO {
 			replyDTO.setId(rs.getString("id"));
 			replyDTO.setContents(rs.getString("contents"));
 			replyDTO.setReg_date(rs.getDate("reg_date"));
+			replyDTO.setBnum(rs.getInt("bnum"));
 			ar.add(replyDTO);
 		}
 		DBConnector.disConnect(con, st, rs);
@@ -31,15 +32,38 @@ public class ReplyDAO {
 	
 	public int insert(ReplyDTO replyDTO) throws Exception{
 		Connection con = DBConnector.getConnect();
-		String sql = "insert into reply values(?,?,?,sysdate)";
+		String sql = "insert into reply values(REPLY_SEQ.NEXTVAL,?,?,sysdate,?)";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1,replyDTO.getNum());
-		st.setString(2,replyDTO.getId());
-		st.setString(3,replyDTO.getContents());
+		st.setString(1,replyDTO.getId());
+		st.setString(2,replyDTO.getContents());
+		st.setInt(3, replyDTO.getBnum());
 		int result = st.executeUpdate();
 		
 		DBConnector.disConnect(con, st);
 		return result;
 	}
+	
+	public int delete(int num) throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql="delete reply where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1,num);
+		int result = st.executeUpdate();
+		DBConnector.disConnect(con, st);
+		return result;
+	}
+	
+	public int update(ReplyDTO replyDTO) throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql="update reply set contents=? where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, replyDTO.getContents());
+		st.setInt(2, replyDTO.getNum());
+		int result = st.executeUpdate();
+		DBConnector.disConnect(con, st);
+		return result;
+	}
+	
+	
 	
 }

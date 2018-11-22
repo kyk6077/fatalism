@@ -48,10 +48,13 @@ public class ReviewController extends HttpServlet {
 			actionFoward = reviewService.update(request, response);
 		}else if(command.equals("/comment.do")) {
 			actionFoward = reviewService.commentInsert(request, response);
+		}else if(command.equals("/commentDelete.do")) {
+			actionFoward = reviewService.commentDelete(request, response);
+		}else if(command.equals("/commentUpdate.do")) {
+			actionFoward = reviewService.commentUpdate(request, response);
 		}else {
 			System.out.println("실패");
 		}
-		
 		
 		if(actionFoward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionFoward.getPath());
