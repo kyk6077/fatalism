@@ -195,7 +195,7 @@
 	<div id="sub_container">
 		<div id="sub_contents">
 			<div class="write">
-				<h3 id="page_title">${board}z</h3>
+				<h3 id="page_title">${board}</h3>
 				<table class="write_table">
 					<tr>
 						<th>제목</th>
@@ -235,9 +235,13 @@
 							href="./${board}Update.do?num=${boardDTO.num}"><img alt="1"
 							src="../images/write_img/btn_modify.png"></a>
 					</div>
+					
+					<c:if test="${board=='qna'}">
+						<a href="./reboardWrite.do?num=${boardDTO.num}&subject=${boardDTO.subject}" class="reboard_btn">답글</a>
+					</c:if>
+					
+					
 					<c:if test="${board=='review'}">
-						<button id="comment_btn">댓글</button>
-
 						<div id="bottom_row">
 							<div id="comment_write">
 								<input type="hidden" id="comment_num" value="${boardDTO.num}">

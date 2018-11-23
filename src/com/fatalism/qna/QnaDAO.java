@@ -13,6 +13,8 @@ import com.fatalism.page.RowNumber;
 import com.fatalism.page.Search;
 import com.fatalism.util.DBConnector;
 
+import oracle.jdbc.proxy.annotation.Pre;
+
 public class QnaDAO implements BoardDAO{
 
 //	public static void main(String[] args) {
@@ -58,21 +60,47 @@ public class QnaDAO implements BoardDAO{
 	
 	public int insert(QnaDTO qnaDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'Q',?,bt_seq.currval,1,1,'S',?)";
+		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'Q',null,bt_seq.currval,1,1,'S',?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1,qnaDTO.getSubject());
 		st.setString(2,qnaDTO.getWriter());
 		st.setString(3,qnaDTO.getContents());
-		st.setInt(4,qnaDTO.getPnum());
-		st.setString(5,qnaDTO.getHide());
-		st.setString(6,qnaDTO.getPw());
+		st.setString(4,qnaDTO.getPw());
 		int result = st.executeUpdate();
 		
 		DBConnector.disConnect(con, st);
 		return result;
 	}
 
-
+	public int replyInsert(QnaDTO qnaDTO) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'Q',null,?,?,?,'S',?)";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1,qnaDTO.getSubject());
+		st.setString(2,qnaDTO.getWriter());
+		st.setString(3,qnaDTO.getContents());
+		st.setInt(4,qnaDTO.getRef());
+		st.setInt(5,qnaDTO.getStep()+1);
+		st.setInt(6,qnaDTO.getDepth()+1);
+		st.setString(7,qnaDTO.getPw());
+		int result = st.executeUpdate();
+		
+		
+		DBConnector.disConnect(con, st);
+		return result;
+	}
+	
+	public int replyStep(int ref, int step) throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql ="update board set step=step+1 where ref = ? and step > ?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1,ref);
+		st.setInt(2,step);
+		int result = st.executeUpdate();
+		
+		DBConnector.disConnect(con, st);
+		return result;
+	}
 
 	public List<QnaDTO> selectList(RowNumber rowNumber, Search search) throws Exception {
 		Connection con = DBConnector.getConnect();
@@ -81,7 +109,7 @@ public class QnaDAO implements BoardDAO{
 				+ "select rownum R, Q.* from( "
 				+ "select * from board where kind='Q' "
 				+ "and "+search.getKind()+" like ? "
-				+ "order by num desc) Q )"
+				+ "order by ref desc, step asc) Q )"
 				+ "where R between ? and ? ";
 		
 		PreparedStatement st = con.prepareStatement(sql);
@@ -100,6 +128,7 @@ public class QnaDAO implements BoardDAO{
 			qDTO.setContents(rs.getString("contents"));
 			qDTO.setHide(rs.getString("hide"));
 			qDTO.setKind("Q");
+			qDTO.setDepth(rs.getInt("depth"));
 			ar.add(qDTO);
 		}
 		
@@ -138,6 +167,9 @@ public class QnaDAO implements BoardDAO{
 			qnaDTO.setReg_date(rs.getDate("reg_date"));
 			qnaDTO.setHit(rs.getInt("hit"));
 			qnaDTO.setContents(rs.getString("contents"));
+			qnaDTO.setRef(rs.getInt("ref"));
+			qnaDTO.setStep(rs.getInt("step"));
+			qnaDTO.setDepth(rs.getInt("depth"));
 		}
 		
 		DBConnector.disConnect(con, st, rs);

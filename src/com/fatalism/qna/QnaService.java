@@ -33,7 +33,6 @@ public class QnaService implements BoardService{
 				qnaDTO.setSubject(request.getParameter("subject"));
 				qnaDTO.setWriter(request.getParameter("writer"));
 				qnaDTO.setContents(request.getParameter("contents"));
-				qnaDTO.setPnum(1);
 				qnaDTO.setPw(request.getParameter("board_pw"));
 				int result = qnaDAO.insert(qnaDTO);
 				if(result>0) {
@@ -99,10 +98,12 @@ public class QnaService implements BoardService{
 		if(method.equals("POST")) {
 			try {
 				qnaDTO = new QnaDTO();
+				System.out.println("1");
 				qnaDTO.setNum(Integer.parseInt(request.getParameter("num")));
 				qnaDTO.setSubject(request.getParameter("subject"));
 				qnaDTO.setContents(request.getParameter("contents"));
 				int result = qnaDAO.update(qnaDTO);
+				System.out.println(result);
 				request.setAttribute("message","Fail");
 				request.setAttribute("path","./qnaSelectOne.do?num="+qnaDTO.getNum());
 				actionFoward.setCheck(true);
@@ -245,7 +246,56 @@ public class QnaService implements BoardService{
 		return actionFoward;
 	}
 
-	
+	public ActionFoward reboardInsert(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		if(method.equals("POST")) {
+			QnaDTO qnaDTO = null;
+			try {
+				int num = Integer.parseInt(request.getParameter("num"));
+				qnaDTO = qnaDAO.selectOne(num);
+				//session에서 id 넣어야됨
+				actionFoward.setCheck(true);
+				if(qnaDTO!=null) {
+					qnaDTO.setWriter(request.getParameter("writer"));
+					qnaDTO.setContents(request.getParameter("contents"));
+					qnaDTO.setPw(request.getParameter("board_pw"));
+					qnaDAO.replyStep(qnaDTO.getRef(), qnaDTO.getStep());
+					qnaDAO.replyInsert(qnaDTO);
+					actionFoward.setPath("./qnaSelectOne.do?num="+qnaDTO.getNum());
+				}else {
+					System.out.println("3");
+					actionFoward.setPath("./qnaList.do");
+				}
+				
+			} catch (Exception e) {
+				System.out.println("EXCEPTION");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("./qnaList.do");
+			}
+			
+			
+		}else {
+			try {
+				//session에서 작성자 넘겨줘야함
+				request.setAttribute("num",Integer.parseInt(request.getParameter("num")));
+				request.setAttribute("subject", request.getParameter("subject"));
+				request.setAttribute("writer","fatalism");
+				request.setAttribute("board","reboard");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/boardWrite.jsp");
+				
+			} catch (Exception e) {
+				System.out.println("get Error");
+			}
+		}
+		
+		
+		
+		
+		
+		return actionFoward;
+	}
 
 
 }

@@ -1,5 +1,7 @@
 package com.fatalism.review;
 
+import java.io.File;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,11 @@ import com.fatalism.page.Search;
 import com.fatalism.qna.QnaDTO;
 import com.fatalism.reply.ReplyDAO;
 import com.fatalism.reply.ReplyDTO;
+import com.fatalism.upload.UploadDAO;
+import com.fatalism.upload.UploadDTO;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 
 public class ReviewService implements BoardService{
 	private ReviewDAO reviewDAO;
@@ -30,14 +37,31 @@ public class ReviewService implements BoardService{
 		String method = request.getMethod();
 		if(method.equals("POST")) {
 			ReviewDTO reviewDTO = new ReviewDTO();
+			int maxSize = 1024*1024*10;
+			String path = request.getServletContext().getRealPath("upload");
+			File file = new File(path);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
 			try {
-				reviewDTO.setSubject(request.getParameter("subject"));
-				reviewDTO.setWriter(request.getParameter("writer"));
-				reviewDTO.setContents(request.getParameter("contents"));
-				reviewDTO.setHide(request.getParameter("hide_radio"));
-				reviewDTO.setPw(request.getParameter("board_pw"));
+				MultipartRequest multi = new MultipartRequest(request,path, maxSize,"utf-8",new DefaultFileRenamePolicy());
+				reviewDTO.setSubject(multi.getParameter("subject"));
+				reviewDTO.setWriter(multi.getParameter("writer"));
+				reviewDTO.setContents(multi.getParameter("contents"));
+				reviewDTO.setHide(multi.getParameter("hide_radio"));
+				reviewDTO.setPw(multi.getParameter("board_pw"));
 				int result = reviewDAO.insert(reviewDTO);
 				if(result>0) {
+					UploadDAO uploadDAO = new UploadDAO();
+					UploadDTO uploadDTO = new UploadDTO();
+					Enumeration<Object> e = multi.getFileNames();
+					while(e.hasMoreElements()) {
+						String s = (String)e.nextElement();
+						uploadDTO.setFname(multi.getFilesystemName(s));
+						uploadDTO.setOname(multi.getOriginalFileName(s));
+						uploadDTO.setStep(0);
+						uploadDAO.insert(uploadDTO);
+					}
 					request.setAttribute("message", "Write Success");
 					request.setAttribute("path", "./reviewList.do");
 					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
