@@ -5,13 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import com.fatalism.board.BoardDAO;
-import com.fatalism.board.BoardDTO;
 import com.fatalism.page.RowNumber;
 import com.fatalism.page.Search;
-import com.fatalism.qna.QnaDTO;
 import com.fatalism.util.DBConnector;
 
 public class ReviewDAO implements BoardDAO{
@@ -37,6 +34,10 @@ public class ReviewDAO implements BoardDAO{
 //			}
 //			
 //		}
+	
+	
+
+	
 	
 	@Override
 	public int delete(int num,String pw) throws Exception{
@@ -91,6 +92,7 @@ public class ReviewDAO implements BoardDAO{
 			rDTO.setReg_date(rs.getDate("reg_date"));
 			rDTO.setHit(rs.getInt("hit"));
 			rDTO.setContents(rs.getString("contents"));
+			rDTO.setPnum(rs.getInt("pnum"));
 			rDTO.setHide(rs.getString("hide"));
 			rDTO.setKind("R");
 			ar.add(rDTO);

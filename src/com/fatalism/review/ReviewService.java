@@ -1,7 +1,10 @@
 package com.fatalism.review;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,12 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fatalism.action.ActionFoward;
 import com.fatalism.board.BoardService;
-import com.fatalism.notice.NoticeDTO;
 import com.fatalism.page.MakePager;
 import com.fatalism.page.Pager;
 import com.fatalism.page.RowNumber;
 import com.fatalism.page.Search;
-import com.fatalism.qna.QnaDTO;
 import com.fatalism.reply.ReplyDAO;
 import com.fatalism.reply.ReplyDTO;
 import com.fatalism.upload.UploadDAO;
@@ -25,9 +26,11 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class ReviewService implements BoardService{
 	private ReviewDAO reviewDAO;
+	private UploadDAO uploadDAO;
 
 	public ReviewService() {
 		reviewDAO = new ReviewDAO();
+		uploadDAO = new UploadDAO();
 	}
 
 
@@ -52,16 +55,24 @@ public class ReviewService implements BoardService{
 				reviewDTO.setPw(multi.getParameter("board_pw"));
 				int result = reviewDAO.insert(reviewDTO);
 				if(result>0) {
-					UploadDAO uploadDAO = new UploadDAO();
+					uploadDAO = new UploadDAO();
 					UploadDTO uploadDTO = new UploadDTO();
 					Enumeration<Object> e = multi.getFileNames();
-					while(e.hasMoreElements()) {
-						String s = (String)e.nextElement();
+					String s = (String)e.nextElement();					
+					if(multi.getFilesystemName(s)!=null) {
 						uploadDTO.setFname(multi.getFilesystemName(s));
 						uploadDTO.setOname(multi.getOriginalFileName(s));
 						uploadDTO.setStep(0);
 						uploadDAO.insert(uploadDTO);
 					}
+					//파일이 여러개일때
+//					while(e.hasMoreElements()) {
+//						String s = (String)e.nextElement();
+//						uploadDTO.setFname(multi.getFilesystemName(s));
+//						uploadDTO.setOname(multi.getOriginalFileName(s));
+//						uploadDTO.setStep(0);
+//						uploadDAO.insert(uploadDTO);
+//					}
 					request.setAttribute("message", "Write Success");
 					request.setAttribute("path", "./reviewList.do");
 					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
@@ -180,14 +191,28 @@ public class ReviewService implements BoardService{
 			Pager pager = makePager.MakePage(totalCount);
 
 			ar = reviewDAO.selectList(rowNumber,pager.getSearch());
+			//list에 pnum 받아서 중복 제거후 pnum에 맞는 사진 가져오기
+			List<UploadDTO> ar2 = new ArrayList<>();
+			HashSet<Integer> h_pnum = new HashSet<>();
+			for (ReviewDTO reviewDTO : ar) {
+				h_pnum.add(reviewDTO.getPnum());
+			}
+			Iterator<Integer> iter = h_pnum.iterator();
+			UploadDTO uploadDTO = null;
+			while(iter.hasNext()) {
+				uploadDTO = new UploadDTO();
+				uploadDTO = uploadDAO.selectOne(iter.next());
+				ar2.add(uploadDTO);
+			}
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/board/boardList.jsp");
 			request.setAttribute("list", ar);
+			request.setAttribute("list2",ar2);
 			request.setAttribute("pager",pager);
 			request.setAttribute("board","review");
 		} catch (Exception e) {
 			actionFoward.setCheck(true);
-			actionFoward.setPath("../WEB-INF/common/result.jsp");
+			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 			message = "list Fali";
 			request.setAttribute("path", "../index.jsp");
 			request.setAttribute("message", message);

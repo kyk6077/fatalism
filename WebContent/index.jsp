@@ -7,20 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="./temp/b.jsp"/>
- 
- <script type="text/javascript">
-   	$(function() {
- 		$(".abox_dt").click(function() {
- 			 $("dd").toggle(350);
- 		});
- 	});
-</script>
 </head>
 <body>
-
-<a href="./notice/noticeList.do">boardList</a>
-<a href="./qna/qnaList.do">boardList</a>
-<a href="./review/reviewList.do">boardList</a>
 
 <c:import url="./temp/h.jsp"></c:import>
 

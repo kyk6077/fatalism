@@ -25,7 +25,6 @@
 		}else if('${board}'=='review'){
 			$('#boardWriteForm').prop("enctype","multipart/form-data");
 			$('.contents_row').after('<tr><th>이미지추가</th><td><input type="file" name="file" id="file"></td></tr>');
-			alert("clear");
 		}
 
 		$('#register_btn').on('click',function() {

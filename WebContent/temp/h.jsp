@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <div id="left">
 	<div id="logo">
 		<a href="${pageContext.request.contextPath }/index.jsp"> <img
@@ -88,13 +87,13 @@
 		<dl class="abox_dl">
 			<dt class="abox_dt">COMMUNITY</dt>
 			<dd>
-				<a>NOTICE</a>
+				<a href="${pageContext.request.contextPath }/notice/noticeList.do">NOTICE</a>
 			</dd>
 			<dd>
-				<a>Q&A</a>
+				<a href="${pageContext.request.contextPath }/qna/qnaList.do">Q&A</a>
 			</dd>
 			<dd>
-				<a>REVIEW</a>
+				<a href="${pageContext.request.contextPath }/review/reviewList.do">REVIEW</a>
 			</dd>
 		</dl>
 	</div>

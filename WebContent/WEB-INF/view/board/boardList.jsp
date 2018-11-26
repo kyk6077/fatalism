@@ -21,7 +21,8 @@
 #board_table {
 	border: 1px solid #EAEAEA;;
 	margin-top: 50px;
-	width: 100%;
+ 	width: 100%; 
+	min-width: 100px;
 }
 
 #board_table tr {
@@ -38,8 +39,7 @@
 }
 
 .table_subject {
-	
-	width: 600px;
+	width: 550px;
 	text-align: left !important;
 	padding-left: 15px;
 }
@@ -50,12 +50,21 @@
 }
 
 .row_pager {
-	border-radius: 0px;
+	
 }
 
 .write_btn {
 	margin-top: 20px;
 	text-align: right;
+}
+.item_td{
+	width:150px;
+	padding: 5px;
+}
+.write_day{
+	min-width: 100px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 /* body 끝 */
 </style>
@@ -70,6 +79,7 @@
 					<thead id="table_title">
 						<tr>
 							<td>NO</td>
+							<c:if test="${board=='review'}"><td>ITEM</td></c:if>
 							<td>SUBJECT</td>
 							<td>WRITER</td>
 							<td>DATE</td>
@@ -79,6 +89,20 @@
 					<c:forEach items="${list}" var="boardDTO">
 						<tr>
 							<td>${boardDTO.num}</td>
+							<c:if test="${board=='review'}">
+								<td class="item_td"><c:if test="${boardDTO.pnum!=null}">
+									<c:forEach items="${list2}" var="uploadDTO">
+										<c:if test="${uploadDTO.pnum==boardDTO.pnum}">
+											<img alt="" src="${pageContext.request.contextPath }/upload/${uploadDTO.fname}">
+										</c:if>
+									</c:forEach>
+								</c:if>
+								
+								<c:if test="${boardDTO.pnum==null}">
+									NoImage
+								</c:if>
+								</td>
+							</c:if>
 							<td class="table_subject">
 							<c:if test="${boardDTO.hide=='N'}">
 								<a href="./${board}SelectOne.do?num=${boardDTO.num}">${boardDTO.subject}</a>
@@ -96,7 +120,7 @@
 							</c:if>
 							</td>
 							<td>${boardDTO.writer}</td>
-							<td>${boardDTO.reg_date}</td>
+							<td class="write_day">${boardDTO.reg_date}</td>
 							<td>${boardDTO.hit}</td>
 						</tr>
 					</c:forEach>
