@@ -122,7 +122,7 @@
 	 $(function() {
 		$('.cartList').on('click','.test',function(){
 			alert($(this).attr("title"));
-			/* val sum = $('#price'+).val() * $('#product_count').val(); */
+			val sum = $('#price').val() * $('#product_count').val();
 			$('.sum').val(sum);
 		});
 	 }); 
