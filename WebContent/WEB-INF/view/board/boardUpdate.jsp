@@ -12,19 +12,24 @@
 <script type="text/javascript">
 	$(function(){
 		CKEDITOR.replace('contents');
+		
+		$('#register_btn').on('click',function(){
+				$('#boardUpdateForm').submit();
+		});
+		
+		
+		
 	});
 </script>
 <style type="text/css">
 /* body 시작 */
-	.container{
-		margin: 70px 0 0 300px;
-	}
 	#page_title{
 		text-align: center;
 	}
 	.write_table{
 		border: 1px solid #EAEAEA;
-		width:1200px;
+		width: 100%;
+		min-width: 800px;
 	}
 	.write_table td{
 		padding:10px;
@@ -39,11 +44,17 @@
 	#contents_ck{
 		padding: 0px;
 	}
-	
+	.row_btn{
+		margin-top: 20px;
+	}
+	.row_btn2{
+		float: right;
+	}
 	
 /* body 끝 */
 	
 </style>
+
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"/>
@@ -51,43 +62,35 @@
 		<div id="sub_contents">
 		<h3 id="page_title">board</h3>
 			<div class="write">
-				<form action="./qna/qnaWrite.do" method="post">
+				<form action="./${board}Update.do" method="post" id="boardUpdateForm">
+					<input type="hidden" name="num" value="${boardDTO.num}">
 					<table class="write_table">
 						<tr>
 							<th>제목</th>
-							<td><input type="text" id="title" name="title" size=50></td>
+							<td><input type="text" id="subject" name="subject" size=50 value="${boardDTO.subject}"></td>
 						</tr>
 						
 						<tr>
 							<th>작성자</th>
-							<td><input type="text" id="writer" name="writer" size=15></td>
+							<td><input type="text" id="writer" name="writer" size=15 disabled="disabled" value="${boardDTO.writer}"></td>
 						</tr>
 						<tr>
-							<td colspan="2" id="contents_ck"><textarea rows="50" cols="40" class="form-control" name="contents">
-							</textarea></td>
+							<td colspan="2" id="contents_ck"><textarea rows="50" cols="40" class="form-control" id="contents" name="contents">
+							${boardDTO.contents}</textarea></td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>
 							<td><button>파일선택</button>선택된 파일 없음</td>
 						</tr>
-						<tr>
-							<th>비밀번호</th>
-							<td><input type="text" id="board_pw" name="board_pw" size=15></td>
-						</tr>
-						<tr>
-							<th>비밀글설정</th>
-							<td></td>
-						</tr>
-						<tr>
-							<th>개인정보 수집 및 이용 동의</th>
-							<td><textarea cols="20" rows="9">개인정보의 수집..</textarea><br>
-							개인정보 수집 및 이용에 동의하십니까?</td>
-						</tr>
 					</table>
 					
-					<button>목록</button>
-					<input type="submit" value="등록">
-					<button>취소</button>
+					<div class="row_btn">
+						<a href="./${board}List.do"><img alt="1" src="../images/write_img/btn_list.png"></a>
+						<div class="row_btn2">
+							<a href="#" id="register_btn"><img alt="1" src="../images/write_img/btn_register.png"></a>
+<!-- 					<input type="submit" value="등록"> -->
+						</div>
+					</div>
 				</form>
 			</div>
 		</div>

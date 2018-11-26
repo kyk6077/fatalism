@@ -33,7 +33,6 @@ public class QnaService implements BoardService{
 				qnaDTO.setSubject(request.getParameter("subject"));
 				qnaDTO.setWriter(request.getParameter("writer"));
 				qnaDTO.setContents(request.getParameter("contents"));
-				qnaDTO.setPnum(1);
 				qnaDTO.setPw(request.getParameter("board_pw"));
 				int result = qnaDAO.insert(qnaDTO);
 				if(result>0) {
@@ -66,14 +65,75 @@ public class QnaService implements BoardService{
 
 	@Override
 	public ActionFoward delete(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionFoward actionFoward = new ActionFoward();
+		actionFoward.setCheck(true);
+		actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+		
+		try {
+			int num = Integer.parseInt(request.getParameter("num"));
+			String pw = request.getParameter("board_pw");
+			int result = qnaDAO.delete(num,pw);
+			if(result>0) {
+				request.setAttribute("message","Delete Success");
+				request.setAttribute("path","./qnaList.do");
+			}else {
+				request.setAttribute("message","Delete Fail");
+				request.setAttribute("path","./qnaSelectOne.do?num="+num);
+			}
+		} catch (Exception e) {
+			request.setAttribute("message","Delete Error");
+			request.setAttribute("path","./qnaList.do");
+		}
+		
+		return actionFoward;
 	}
 
 	@Override
 	public ActionFoward update(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		QnaDTO qnaDTO=null;
+		actionFoward.setCheck(true);
+		actionFoward.setPath("./qnaList.do");
+		if(method.equals("POST")) {
+			try {
+				qnaDTO = new QnaDTO();
+				System.out.println("1");
+				qnaDTO.setNum(Integer.parseInt(request.getParameter("num")));
+				qnaDTO.setSubject(request.getParameter("subject"));
+				qnaDTO.setContents(request.getParameter("contents"));
+				int result = qnaDAO.update(qnaDTO);
+				System.out.println(result);
+				request.setAttribute("message","Fail");
+				request.setAttribute("path","./qnaSelectOne.do?num="+qnaDTO.getNum());
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+				if(result>0) {
+					request.setAttribute("message","Update Success");
+				}
+				
+			} catch (Exception e) {
+				//null값 들어올떄 exception발생 처리해야함
+				System.out.println("exception 발생");
+				e.printStackTrace();
+			}
+			
+		}else {
+			try {
+				int num = Integer.parseInt(request.getParameter("num"));
+				qnaDTO = qnaDAO.selectOne(num);
+				request.setAttribute("boardDTO",qnaDTO);
+				request.setAttribute("board","qna");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/boardUpdate.jsp");
+				
+			} catch (Exception e) {
+				System.out.println("try 에러 10");
+				//에러시 list로 
+			}
+			
+		}
+		return actionFoward;
 	}
 
 	@Override
@@ -101,6 +161,7 @@ public class QnaService implements BoardService{
 			request.setAttribute("pager",pager);
 			request.setAttribute("board","qna");
 		} catch (Exception e) {
+			e.printStackTrace();
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/common/result.jsp");
 			message = "list Fali";
@@ -116,9 +177,11 @@ public class QnaService implements BoardService{
 	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
 
+		
 		try {
 			QnaDTO qnaDTO = qnaDAO.selectOne(Integer.parseInt(request.getParameter("num")));
 			if(qnaDTO!=null) {
+				request.setAttribute("board","qna");
 				request.setAttribute("boardDTO",qnaDTO);
 				actionFoward.setCheck(true);
 				actionFoward.setPath("../WEB-INF/view/board/boardSelectOne.jsp");
@@ -129,6 +192,7 @@ public class QnaService implements BoardService{
 				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("message", "Fail");
 			request.setAttribute("path", "./qnaList.do");
 			actionFoward.setCheck(true);
@@ -138,6 +202,100 @@ public class QnaService implements BoardService{
 		return actionFoward;
 	}
 
+
+
+
+	@Override
+	public ActionFoward pwCheck(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		actionFoward.setCheck(true);
+		actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+		
+		int num = -1;
+		if(method.equals("POST")) {
+			try {
+				num = Integer.parseInt(request.getParameter("num"));
+				String pw = request.getParameter("pw");
+				int result = qnaDAO.pwCheck(num, pw);
+				request.setAttribute("num", num);
+				if(result>0) {
+					actionFoward.setCheck(true);
+					actionFoward.setPath("./qnaSelectOne.do");
+				}else {
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+					request.setAttribute("board","qna");
+					request.setAttribute("num",num);
+				}
+			}catch (Exception e) {
+				System.out.println("post Exception");
+			}
+		}else {
+			try {
+				num = Integer.parseInt(request.getParameter("num"));
+				request.setAttribute("board","qna");
+				request.setAttribute("num",num);
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/secretBoard.jsp");
+			}catch (Exception e) {
+				System.out.println("get Exception");
+			}
+		}
+		
+		return actionFoward;
+	}
+
+	public ActionFoward reboardInsert(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		if(method.equals("POST")) {
+			QnaDTO qnaDTO = null;
+			try {
+				int num = Integer.parseInt(request.getParameter("num"));
+				qnaDTO = qnaDAO.selectOne(num);
+				//session에서 id 넣어야됨
+				actionFoward.setCheck(true);
+				if(qnaDTO!=null) {
+					qnaDTO.setWriter(request.getParameter("writer"));
+					qnaDTO.setContents(request.getParameter("contents"));
+					qnaDTO.setPw(request.getParameter("board_pw"));
+					qnaDAO.replyStep(qnaDTO.getRef(), qnaDTO.getStep());
+					qnaDAO.replyInsert(qnaDTO);
+					actionFoward.setPath("./qnaSelectOne.do?num="+qnaDTO.getNum());
+				}else {
+					System.out.println("3");
+					actionFoward.setPath("./qnaList.do");
+				}
+				
+			} catch (Exception e) {
+				System.out.println("EXCEPTION");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("./qnaList.do");
+			}
+			
+			
+		}else {
+			try {
+				//session에서 작성자 넘겨줘야함
+				request.setAttribute("num",Integer.parseInt(request.getParameter("num")));
+				request.setAttribute("subject", request.getParameter("subject"));
+				request.setAttribute("writer","fatalism");
+				request.setAttribute("board","reboard");
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/board/boardWrite.jsp");
+				
+			} catch (Exception e) {
+				System.out.println("get Error");
+			}
+		}
+		
+		
+		
+		
+		
+		return actionFoward;
+	}
 
 
 }

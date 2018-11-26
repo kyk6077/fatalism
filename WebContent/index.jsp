@@ -22,10 +22,6 @@
 </head>
 <body>
 
-<a href="./notice/noticeList.do">boardList</a>
-<a href="./qna/qnaList.do">boardList</a>
-<a href="./review/reviewList.do">boardList</a>
-
 <c:import url="./temp/h.jsp"></c:import>
 
 </body>

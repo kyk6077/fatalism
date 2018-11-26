@@ -5,13 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import com.fatalism.board.BoardDAO;
-import com.fatalism.board.BoardDTO;
 import com.fatalism.page.RowNumber;
 import com.fatalism.page.Search;
-import com.fatalism.qna.QnaDTO;
 import com.fatalism.util.DBConnector;
 
 public class ReviewDAO implements BoardDAO{
@@ -38,12 +35,17 @@ public class ReviewDAO implements BoardDAO{
 //			
 //		}
 	
+	
+
+	
+	
 	@Override
-	public int delete(int num) throws Exception{
+	public int delete(int num,String pw) throws Exception{
 		Connection con = DBConnector.getConnect();
-		String sql = "delete board where num=?";
+		String sql = "delete board where num=? and pw=?";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1,num);
+		st.setString(2, pw);
 		int result = st.executeUpdate();
 		
 		DBConnector.disConnect(con, st);
@@ -90,6 +92,8 @@ public class ReviewDAO implements BoardDAO{
 			rDTO.setReg_date(rs.getDate("reg_date"));
 			rDTO.setHit(rs.getInt("hit"));
 			rDTO.setContents(rs.getString("contents"));
+			rDTO.setPnum(rs.getInt("pnum"));
+			rDTO.setHide(rs.getString("hide"));
 			rDTO.setKind("R");
 			ar.add(rDTO);
 		}
@@ -99,15 +103,17 @@ public class ReviewDAO implements BoardDAO{
 	}
 
 
-	public int update() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-	public List<BoardDTO> selectList() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public int update(ReviewDTO reviewDTO) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql ="update board set subject=? , contents=? where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1,reviewDTO.getSubject());
+		st.setString(2, reviewDTO.getContents());
+		st.setInt(3, reviewDTO.getNum());
+		int result = st.executeUpdate();
+		
+		DBConnector.disConnect(con, st);
+		return result;
 	}
 
 	
@@ -144,5 +150,20 @@ public class ReviewDAO implements BoardDAO{
 		return num;
 	}
 	
+	@Override
+	public int pwCheck(int num, String pw) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql = "select num from board where num=? and pw=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, num);
+		st.setString(2, pw);
+		ResultSet rs = st.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);			
+		};
+		DBConnector.disConnect(con, st, rs);
+		return result;
+	}
 	
 }

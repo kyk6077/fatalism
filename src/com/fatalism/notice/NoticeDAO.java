@@ -49,11 +49,12 @@ public class NoticeDAO implements BoardDAO{
 //	}
 	
 	@Override
-	public int delete(int num) throws Exception{
+	public int delete(int num,String pw) throws Exception{
 		Connection con = DBConnector.getConnect();
-		String sql = "delete board where num=?";
+		String sql = "delete board where num=? and pw=?";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1,num);
+		st.setString(2, pw);
 		int result = st.executeUpdate();
 		
 		DBConnector.disConnect(con, st);
@@ -98,6 +99,7 @@ public class NoticeDAO implements BoardDAO{
 			nDTO.setReg_date(rs.getDate("reg_date"));
 			nDTO.setHit(rs.getInt("hit"));
 			nDTO.setContents(rs.getString("contents"));
+			nDTO.setHide(rs.getString("hide"));
 			nDTO.setKind("N");
 			ar.add(nDTO);
 		}
@@ -118,12 +120,20 @@ public class NoticeDAO implements BoardDAO{
 	}
 
 	
-	public int update() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int update(NoticeDTO noticeDTO) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql ="update board set subject=? , contents=? where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1,noticeDTO.getSubject());
+		st.setString(2, noticeDTO.getContents());
+		st.setInt(3, noticeDTO.getNum());
+		int result = st.executeUpdate();
+		
+		DBConnector.disConnect(con, st);
+		return result;
 	}
 
-
+	
 	
 	public NoticeDTO selectOne(int num) throws Exception {
 		Connection con = DBConnector.getConnect();
@@ -147,7 +157,20 @@ public class NoticeDAO implements BoardDAO{
 		return noticeDTO;
 	}
 
+	@Override
+	public int pwCheck(int num, String pw) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql = "select num from board where num=? and pw=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, num);
+		st.setString(2, pw);
+		ResultSet rs = st.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);			
+		};
+		DBConnector.disConnect(con, st, rs);
+		return result;
+	}
 
-	
-	
 }

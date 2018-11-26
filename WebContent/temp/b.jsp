@@ -8,3 +8,10 @@
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/foot.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/body.css">
+<script type="text/javascript">
+   	$(function() {
+ 		$("#abox").on("click",".abox_dl",function() {
+				$(this).find('dd').toggle(350);
+ 		});
+ 	});
+</script>
