@@ -7,6 +7,52 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../../../temp/b.jsp"></c:import>
+<style type="text/css">
+	#delete{
+		position: absolute;
+		right: 0;
+	}
+	#btn_delete{
+		width:140px;
+		height:51px;
+		background: url('../images/member/btn_delete.png');
+		background-repeat:no-repeat;
+		margin: auto;
+		display: inline-block;
+	}
+	#btn_update{
+		width:140px;
+		height:51px;
+		background: url('../images/member/btn_update.png');
+		background-repeat:no-repeat;
+		margin: auto;
+		display: inline-block;
+	}
+</style>
+<script type="text/javascript">
+	$(function() {
+		 $('#user_pass').blur(function() {
+			$('font[name=check]').text('');
+		});
+ 	
+		$('#pw2').blur(function() {
+			if ($('#pw').val() != $('#pw2').val()) {
+				$('font[name=check]').text('');
+				$('font[name=check]').html("비밀번호가 일치하지 않습니다.");
+			} else {
+				$('font[name=check]').text('');
+				$('font[name=check]').html("비밀번호가 일치합니다");
+			}
+		});
+		$("#btn_delete").click(function() {
+			var d = confirm("탈퇴하면 적립금이 삭제됩니다.\n정말로 탈퇴 하시겠습니까?");
+			if(d==true){
+				location.href="./memberDelete.do";
+			}
+		
+		});
+	});
+</script>
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"></c:import>
@@ -15,7 +61,7 @@
 		<div class="titleArea">
 		<h2>JOIN</h2>
 		</div>
-		<form name="frm" action="./memberUpdate.do" method="post">
+		<form name="frm" action="./memberUpdate.do" method="post" id="update_form">
 		<h3>기본정보</h3>
 		<input type="hidden" value="f" name="checkid" id="checkid">
 			<table class="table table-bordered">
@@ -29,13 +75,16 @@
 				</tr>
 				<tr>
 				<th >비밀번호</th>
-				<td><input type="password" id="pw" >
+				<td><input type="password" id="pw" name="pw_1">
 				(영문 대문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자)
 				</td>
 				</tr>
 				<tr>
 				<th>비밀번호 확인</th>
-				<td><input type="password" id="pw2" name="pw"></td>
+				<td>
+					<input type="password" id="pw2" name="pw">
+					<font name = "check" size="2" color="black"></font>
+				</td>
 				</tr>
 				<tr>
 				<th>이름</th>
@@ -60,15 +109,13 @@
 					<option>019</option>
 				</select>
 				-
-				<input type="text" maxlength="4" size="4" name="phone1">
-				-
-				<input type="text" maxlength="4" size="4" name="phone2">
+				<input type="text" maxlength="8" size="8" name="phone2" value="${member.phone2 }">
 				</td>
 				</tr>
 				<tr>
    				<th> 이메일 </th>
    				<td>
-    			<input type = "text" name="email"> @ <input type = "text" name="email1"> &nbsp;&nbsp; 
+    			<input type = "text" name="email" value="${member.email }"> @ <input type = "text" name="email2" value="${member.email2 }"> &nbsp;&nbsp; 
     			<select>
      				<option> 직접입력 </option>
      				<option> naver.com </option>
@@ -79,9 +126,12 @@
   				</tr>
 			</table>
 			<div class="join_button">
-				<button type="submit" id="btn"></button>
-				 <!-- <button id="btn2" ></button> -->
+				<button type="submit" id="btn_update"></button>
 				<a href="${pageContext.request.contextPath }/index.jsp" id="btn2"></a>
+				<span id="delete">
+				<a id="btn_delete" href="#"></a>
+				</span>
+				
 			</div>
 						
 			</form>

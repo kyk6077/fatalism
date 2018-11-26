@@ -11,19 +11,82 @@
 <script type="text/javascript">
 	$(function() {
 		
-		$("#id").blur(function() {
-			 $("#id_1").html("사용가능한 아이디입니다.");
-		});
 		 
-		
-		$("#btn").click(function() {
-			var isSeasonCHK = $("input:checkbox[name='SEASON[]']").is(":checked");
-				if (!isSeasonCHK) {
-						alert("약관에 동의하세요");
-						return false;
+	$("#id").blur(function() {
+			var id = $(this).val();
+			$.ajax({
+				url : "../member/memberCheckId.do",
+				type : "POST",
+				data : {
+					id : id
+				},
+				success : function(data) {
+					data=data.trim();
+					if (data=='2') {
+						$("#id_1").html( id+"는 사용가능한 아이디입니다");
+					} else {
+						$("#id_1").html( id+"는 사용불가능한 아이디입니다");
+						$("#id").val('');
+						document.frm.id.focus();
 					}
+				},
+				 error:function(){
+					$("#id").val('');
+					alert("아이디입력")
+				} 
+			});
 		});
 
+		$("#btn").click(function() {
+			var isSeasonCHK = $("input:checkbox[name='SEASON[]']").is(":checked");
+			if(document.frm.id.value==""){
+				alert("아이디를 입력하세요");
+				document.frm.id.focus();
+			}else if(document.frm.pw_1.value==""){
+				alert("비밀번호를 입력하세요");
+				document.frm.pw_1.focus();
+			}else if(document.frm.pw.value==""){
+				alert("비밀번호확인를 입력하세요");
+				document.frm.pw.focus();	
+			}else if(document.frm.name.value==""){
+				alert("이름를 입력하세요");
+				document.frm.name.focus();
+			}else if(document.frm.num_address.value==""){
+				alert("우편주소를 입력하세요");
+				document.frm.num_address.focus();
+			}else if(document.frm.phone2.value==""){
+				alert("핸드폰번호를 입력하세요");
+				document.frm.phone2.focus();
+			}else if(document.frm.email.value==""){
+				alert("이메일을 입력하세요");
+				document.frm.email.focus();
+			}if(document.frm.pw_1.value!=document.frm.pw.value){
+				alert("비밀번호가 일치하지않습니다");
+				document.frm.pw.focus();
+			}if (!isSeasonCHK) {
+					alert("[필수]약관에 동의하세요");
+					return false;
+					
+			}else{
+				$('#join_form').submit();
+			}
+			
+			
+			});
+		
+		  $('#user_pass').blur(function() {
+			$('font[name=check]').text('');
+		});
+
+		 $('#pw').blur(function() {
+			if ($('#pw1').val() != $('#pw').val()) {
+				$('font[name=check]').text('');
+				$('font[name=check]').html("비밀번호가 일치하지 않습니다.");
+			} else {
+				$('font[name=check]').text('');
+				$('font[name=check]').html("비밀번호가 일치합니다");
+			} 
+		}); 
 	});
 </script>
 </head>
@@ -34,27 +97,30 @@
 		<div class="titleArea">
 		<h2>JOIN</h2>
 		</div>
-		<form name="frm" action="./memberJoin.do" method="post">
-		<h3>기본정보</h3>
+		<form name="frm" action="./memberJoin.do" id="join_form" method="post">
+		<h3 class="h3">기본정보</h3>
 		<input type="hidden" value="f" name="checkid" id="checkid">
 			<table class="table table-bordered">
 				
 				<tr>
 				<th >아이디</th>
 				<td><input type="text" id="id" name="id">
-				<span id="id_1"></span>
+				<span id="id_1"> </span>
 				(영문소문자/숫자 4~16자)
 				</td>
 				</tr>
 				<tr>
 				<th >비밀번호</th>
-				<td><input type="password" id="pw" >
+				<td><input type="password" id="pw1" name="pw_1">
 				(영문 대문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자)
 				</td>
 				</tr>
 				<tr>
 				<th>비밀번호 확인</th>
-				<td><input type="password" id="pw2" name="pw"></td>
+				<td>
+					<input type="password" id="pw" name="pw">
+					<font name = "check" size="2" color="black"></font>
+				</td>
 				</tr>
 				<tr>
 				<th>이름</th>
@@ -62,7 +128,7 @@
 				</tr>
 				<tr>
 				<th>주소</th>
-				<td><input type="text" size="4" style="margin-bottom: 5px" name="num_address"> <button>우편번호</button> <input type="checkbox" name="c"> 해외 거주자인 경우, 체크해 주세요.<br>
+				<td><input type="text" size="4" style="margin-bottom: 5px" name="num_address"> <button>우편번호</button> <input type="checkbox"> 해외 거주자인 경우, 체크해 주세요.<br>
 					<input type="text" size="30" style="margin-bottom: 5px" name="main_address"> 기본주소<br>
 					<input type="text" size="30" name="sub_address"> 나머지주소
 				</td>
@@ -79,15 +145,14 @@
 					<option>019</option>
 				</select>
 				-
-				<input type="text" maxlength="4" size="4" name="phone1">
-				-
-				<input type="text" maxlength="4" size="4" name="phone2">
+				<input type="text" maxlength="8" size="12" name="phone2" placeholder=" - 는 생략해주세요">
+				
 				</td>
 				</tr>
 				<tr>
    				<th> 이메일 </th>
    				<td>
-    			<input type = "text" name="email"> @ <input type = "text" name="email1"> &nbsp;&nbsp; 
+    			<input type = "text" name="email"> @ <input type = "text" name="email2"> &nbsp;&nbsp; 
     			<select>
      				<option> 직접입력 </option>
      				<option> naver.com </option>
@@ -97,7 +162,7 @@
    				</td>
   				</tr>
 			</table>
-			<h3 class="h3">전체동의</h3>
+			<h3 class="h3">약관동의</h3>
 			
 			<div class="all_consent">
 				<p>
@@ -118,7 +183,7 @@
 						<p>③ ‘회원’이라 함은 “몰”에 개인정보를 제공하여 회원등록을 한 자로서, “몰”의 정보를 지속적으로 제공받으며, “몰”이 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.</p>
 						<p>④ ‘비회원’이라 함은 회원에 가입하지 않고 “몰”이 제공하는 서비스를 이용하는 자를 말합니다.</p>
 					</div>
-						이약관에 동의하십니까? <input type="checkbox" class="c"> 동의함
+						이약관에 동의하십니까? <input type="checkbox" id="c1" name="SEASON[]" value="1"> 동의함
 				</div>
 			</div>
 			<div class="consent">
@@ -134,7 +199,7 @@
 						<p>③ ‘회원’이라 함은 “몰”에 개인정보를 제공하여 회원등록을 한 자로서, “몰”의 정보를 지속적으로 제공받으며, “몰”이 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.</p>
 						<p>④ ‘비회원’이라 함은 회원에 가입하지 않고 “몰”이 제공하는 서비스를 이용하는 자를 말합니다.</p>
 					</div>
-						이약관에 동의하십니까? <input type="checkbox" id="c1" name="SEASON[]" value="1"> 동의함
+						이약관에 동의하십니까? <input type="checkbox" id="c2" name="SEASON[]" value="2"> 동의함
 				</div>
 			</div>
 			
@@ -151,12 +216,13 @@
 						<p>③ ‘회원’이라 함은 “몰”에 개인정보를 제공하여 회원등록을 한 자로서, “몰”의 정보를 지속적으로 제공받으며, “몰”이 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.</p>
 						<p>④ ‘비회원’이라 함은 회원에 가입하지 않고 “몰”이 제공하는 서비스를 이용하는 자를 말합니다.</p>
 					</div>
-						이약관에 동의하십니까? <input type="checkbox" id="c2" name="SEASON[]" value="2"> 동의함
+						이약관에 동의하십니까? <input type="checkbox"> 동의함
 				</div>
 			</div>
 			
 			<div class="join_button">
-				<button type="submit" id="btn"></button>
+				<button type="button" id="btn"></button>
+<!-- 				<button type="submit" id="btn"></button> -->
 				 <!-- <button id="btn2" ></button> -->
 				<a href="${pageContext.request.contextPath }/index.jsp" id="btn2"></a>
 			</div>

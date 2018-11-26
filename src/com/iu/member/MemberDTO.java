@@ -12,6 +12,29 @@ public class MemberDTO {
 	private String email;
 	private int money;
 	private String kind;
+	private String phone2;
+	private String email2;
+	private int point;
+	
+	
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	public String getPhone2() {
+		return phone2;
+	}
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
+	}
+	public String getEmail2() {
+		return email2;
+	}
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
 	public String getId() {
 		return id;
 	}

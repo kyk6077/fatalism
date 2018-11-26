@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../../../temp/b.jsp"></c:import>
+<script type="text/javascript">
+	
+
+</script>
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"></c:import>
@@ -27,21 +31,21 @@
 						</label>
 						<button type="submit" id="btn_login">LOGIN</button>
 						<p>
-							<input type="checkbox">
+							<input type="checkbox" id="idCheck">
 							<label>아이디저장</label>
-							<img alt="보안접속" src="../images/ico_access.gif">
+							<img alt="보안접속" src="../images/member/ico_access.gif">
 							보안 접속                    
 						</p>
 						<%-- <a href="${pageContext.request.contextPath }/index.jsp"id="login_btn"><img src="../images/btn_login.png"></a> 버튼--%>
 						<ul>
 							<li>
-								<a href="${pageContext.request.contextPath }/index.jsp">
-									<img alt="" src="../images/btn_findid.png">
+								<a href="./findId.do">
+									<img alt="" src="../images/member/btn_findid.png">
 								</a>
 							</li>
 							<li>
-								<a href="${pageContext.request.contextPath }/index.jsp">
-									<img alt="" src="../images/btn_findpw.png">
+								<a href="./findPw.do">
+									<img alt="" src="../images/member/btn_findpw.png">
 								</a>
 							</li>
 						</ul>
@@ -51,7 +55,7 @@
 							혜택이 준비되어 있습니다!!
 						</p>
 						<a href="./memberJoin.do">
-								<img alt="" src="../images/btn_join.png">
+								<img alt="" src="../images/member/btn_join.png">
 						</a>
 						
 						

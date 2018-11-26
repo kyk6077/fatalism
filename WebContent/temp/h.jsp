@@ -5,7 +5,7 @@
 <div id="left">
 	<div id="logo">
 		<a href="${pageContext.request.contextPath }/index.jsp"> <img
-			alt="" src="${pageContext.request.contextPath }/images/logo.png"
+			alt="" src="${pageContext.request.contextPath }/images/member/logo.png"
 			id="logo_images">
 		</a>
 	</div>
@@ -19,10 +19,9 @@
 						href="${pageContext.request.contextPath }/member/memberLogout.do">로그아웃</a>
 						<span>I</span> <a style="color: #000"
 						href="${pageContext.request.contextPath }/member/memberUpdate.do">회원정보수정</a>
-						<span>I</span> <a style="color: #000" href="">마이페이지</a></li>
-					<li id="login_menu_2"><a style="color: #000" href="">장바구니</a>
-						<span>I</span> <a style="color: #000" href="">주문내역</a> <span>I</span>
-						<a style="color: #000" href="">관심상품</a></li>
+						<span>I</span> <a style="color: #000" href="${pageContext.request.contextPath }/myPage.jsp">마이페이지</a></li>
+					<li id="login_menu_2"><a style="color: #000" href="${pageContext.request.contextPath }/cart/cartList.do">장바구니</a>
+						<span>I</span> <a style="color: #000" href="">주문내역</a>
 				</c:when>
 				<c:otherwise>
 					<li id="login_menu_2">
@@ -33,10 +32,9 @@
 						<span>I</span> <a style="color: #000"
 						href="${pageContext.request.contextPath }/member/memberLogin.do">마이페이지</a>
 					</li>
-					<li id="login_menu_2"><a style="color: #000" href="">장바구니</a>
+					<li id="login_menu_2"><a style="color: #000" href="${pageContext.request.contextPath }/cart.jsp">장바구니</a>
 						<span>I</span> <a style="color: #000"
-						href="${pageContext.request.contextPath }/member/memberOrder.do">주문내역</a>
-						<span>I</span> <a style="color: #000" href="">관심상품</a></li>
+						href="#">주문내역</a>
 				</c:otherwise>
 			</c:choose>
 		</ul>
@@ -106,12 +104,12 @@
 	<!-- 아이콘 -->
 	<div id="sns">
 		<a href="https://www.instagram.com/fatalism_official/" target="_blank">
-			<img src="${pageContext.request.contextPath }/images/instagram.png">
+			<img src="${pageContext.request.contextPath }/images/member/instagram.png">
 		</a> <span>I</span> <a href="https://www.facebook.com/fatalism23/"
 			target="_blank"> <img
-			src="${pageContext.request.contextPath }/images/facebook.png">
+			src="${pageContext.request.contextPath }/images/member/facebook.png">
 		</a> <span>I</span> <a href="https://pf.kakao.com/_jxhVRj" target="_blank">
-			<img src="${pageContext.request.contextPath }/images/kakaotalk.png">
+			<img src="${pageContext.request.contextPath }/images/member/kakaotalk.png">
 		</a>
 	</div>
 </div>

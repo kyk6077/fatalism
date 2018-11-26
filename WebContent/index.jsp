@@ -15,6 +15,10 @@
  		});
  	});
 </script>
+<style type="text/css">
+	
+	
+</style>
 </head>
 <body>
 
@@ -23,7 +27,6 @@
 <a href="./review/reviewList.do">boardList</a>
 
 <c:import url="./temp/h.jsp"></c:import>
-
 
 </body>
 </html>

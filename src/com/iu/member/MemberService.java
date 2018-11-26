@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.iu.action.ActionFoward;
+import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
 public class MemberService {
 	private MemberDAO memberDAO;
@@ -13,7 +14,183 @@ public class MemberService {
 		memberDAO = new MemberDAO();
 	}
 	
+	public ActionFoward findPw2(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+			String method = request.getMethod();
+			
+			if(method.equals("POST")) {
+				MemberDTO memberDTO = new MemberDTO();
+				memberDTO.setId(request.getParameter("id"));
+				memberDTO.setName(request.getParameter("name"));
+				memberDTO.setPhone(request.getParameter("phone"));
+				memberDTO.setPhone2(request.getParameter("phone2"));
+				try {
+					memberDTO= memberDAO.findPw2(memberDTO);
+					if(memberDTO.getPw()==null){
+						request.setAttribute("message", "정보를 잘못입력했습니다.");
+						request.setAttribute("path", "./findPw.do");
+						actionFoward.setCheck(true);
+						actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+					}
+				} catch (Exception e) {
+					memberDTO = null;
+					e.printStackTrace();
+				}
+				if(memberDTO.getPw()!=null) {
+					request.setAttribute("findPw2", memberDTO);
+					actionFoward.setPath("../WEB-INF/view/member/viewPw2.jsp");
+					actionFoward.setCheck(true);
+				}
+			}else {
+				actionFoward.setPath("../WEB-INF/view/member/findPw.jsp");
+				actionFoward.setCheck(true);
+				
+			}
+		return actionFoward;
+}
+	
+	//이메일로 비번 찾기
+	public ActionFoward findPw(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		
+		if(method.equals("POST")) {
+			MemberDTO memberDTO = new MemberDTO();
+			memberDTO.setId(request.getParameter("id"));
+			memberDTO.setName(request.getParameter("name"));
+			memberDTO.setEmail(request.getParameter("email"));
+			memberDTO.setEmail2(request.getParameter("email2"));
+			
+			try {
+				memberDTO = memberDAO.findPw(memberDTO);
+				if(memberDTO.getPw()==null){
+					request.setAttribute("message", "정보를 잘못입력했습니다.");
+					request.setAttribute("path", "./findPw.do");
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+				}
+			} catch (Exception e) {
+				memberDTO=null;
+				e.printStackTrace();
+			}
+			if(memberDTO.getPw()!=null) {
+				request.setAttribute("findPw", memberDTO);
+				actionFoward.setPath("../WEB-INF/view/member/viewPw.jsp");
+				actionFoward.setCheck(true);
+			}
+		}else {
+			actionFoward.setPath("../WEB-INF/view/member/findPw.jsp");
+			actionFoward.setCheck(true);
+		}
+		
+		return actionFoward;
+	}
+	
+	
+	//핸드폰으로 찾기
+	public ActionFoward findId2(HttpServletRequest request, HttpServletResponse response) {
+			ActionFoward actionFoward = new ActionFoward();
+				String method = request.getMethod();
+				
+				if(method.equals("POST")) {
+					MemberDTO memberDTO = new MemberDTO();
+					
+					memberDTO.setName(request.getParameter("name"));
+					memberDTO.setPhone(request.getParameter("phone"));
+					memberDTO.setPhone2(request.getParameter("phone2"));
+					try {
+						memberDTO= memberDAO.findId2(memberDTO);
+						if(memberDTO.getId()==null) {
+							request.setAttribute("message", "없는계정입니다.");
+							request.setAttribute("path", "./findId.do");
+							actionFoward.setCheck(true);
+							actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+						}
+					} catch (Exception e) {
+						memberDTO = null;
+						e.printStackTrace();
+					}
+					if(memberDTO.getId()!=null) {
+						request.setAttribute("findId2", memberDTO);
+						actionFoward.setPath("../WEB-INF/view/member/viewId2.jsp");
+						actionFoward.setCheck(true);
+					}
+				}else {
+					actionFoward.setPath("../WEB-INF/view/member/findId.jsp");
+					actionFoward.setCheck(true);
+					
+				}
+			return actionFoward;
+	}
+	
+	
+	//이메일로아이디 찾기
+	public ActionFoward findId(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		String method = request.getMethod();
+		
+		if(method.equals("POST")) {
+			MemberDTO memberDTO = new MemberDTO();
+			
+			memberDTO.setName(request.getParameter("name"));
+			memberDTO.setEmail(request.getParameter("email"));
+			memberDTO.setEmail2(request.getParameter("email2"));
+			try {
+				memberDTO = memberDAO.findId(memberDTO);
+				if(memberDTO.getId()==null) {
+					request.setAttribute("message", "없는계정입니다.");
+					request.setAttribute("path", "./findId.do");
+					actionFoward.setCheck(true);
+					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+					
+				}
+				
+			} catch (Exception e) {
+				memberDTO=null;
+				e.printStackTrace();
+			}
+			if(memberDTO.getId()!=null) {
+				request.setAttribute("findId", memberDTO);
+				actionFoward.setPath("../WEB-INF/view/member/viewId.jsp");
+				actionFoward.setCheck(true);
+			}
+		}else {
+			actionFoward.setPath("../WEB-INF/view/member/findId.jsp");
+			actionFoward.setCheck(true);
+		}
+		
+		return actionFoward;
+	}
+	
+	
 	//주문내역
+	
+	//회원탈퇴
+	public ActionFoward delete(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		MemberDTO memberDTO=null;
+		HttpSession session = request.getSession();
+		memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println(memberDTO.getId());
+		String message = "오류";
+		try {
+			
+			int result = memberDAO.delete(memberDTO);
+			if(result>0) {
+				message="탈퇴되었습니다.";
+				session.invalidate();
+			}
+		} catch (Exception e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("message", message);
+		request.setAttribute("path", "../index.jsp");
+		actionFoward.setCheck(true);
+		actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+		return actionFoward;
+	}
 	
 	
 	//회원 정보 수정
@@ -28,12 +205,10 @@ public class MemberService {
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 			try {
-				System.out.println("up");
-				String phone = request.getParameter("phone")+"-";
-				phone += request.getParameter("phone1")+"-";
+				/*String phone = request.getParameter("phone")+"-";
 				phone += request.getParameter("phone2");
 				String email = request.getParameter("email")+"@";
-				email += request.getParameter("email1");
+				email += request.getParameter("email2");*/
 				
 				MemberDTO memberDTO = new MemberDTO();
 				memberDTO.setId(request.getParameter("id"));
@@ -44,7 +219,9 @@ public class MemberService {
 				memberDTO.setSub_address(request.getParameter("sub_address"));
 				memberDTO.setCountry("I");
 				memberDTO.setPhone(request.getParameter("phone"));
+				memberDTO.setPhone2(request.getParameter("phone2"));
 				memberDTO.setEmail(request.getParameter("email"));
+				memberDTO.setEmail2(request.getParameter("email2"));
 				int result = memberDAO.update(memberDTO);
 				if(result>0) {
 					HttpSession session = request.getSession();
@@ -100,7 +277,6 @@ public class MemberService {
 			memberDTO.setPw(request.getParameter("pw"));
 			
 			try {
-				System.out.println("login");
 				memberDTO = memberDAO.login(memberDTO);
 
 			} catch (Exception e) {
@@ -127,23 +303,23 @@ public class MemberService {
 
 	//중복확인
 	public ActionFoward checkId(HttpServletRequest request, HttpServletResponse response) {
-		ActionFoward actionFoward = new ActionFoward();
-		String result = "1";//1이면 사용가능
-		boolean check =true;
-		String id = request.getParameter("id");
+		ActionFoward actionFoward = new ActionFoward(); 
+		String id=request.getParameter("id");
+		boolean result = true;
 		try {
-			check=memberDAO.checkId(id);
+			result=memberDAO.checkId(id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(check) {
-			result="2";//사용불가능
+		String message ="1";//불가능
+		if(!result) {
+			message="2";//가능한 아이디
 		}
 
-		request.setAttribute("result", result);
+		request.setAttribute("message", message);
 		actionFoward.setCheck(true);
-		actionFoward.setPath("../WEB-INF/view/member/memberCheckId.jsp");
+		actionFoward.setPath("../WEB-INF/view/common/resultjax.jsp");
 
 		return actionFoward;
 
@@ -158,11 +334,11 @@ public class MemberService {
 		//System.out.println(request.getParameter("name"));
 		if(method.equals("POST")) {
 			try {
-				String phone = request.getParameter("phone")+"-";
-				phone += request.getParameter("phone1")+"-";
+				/*String phone = request.getParameter("phone")+"-";
 				phone += request.getParameter("phone2");
+				
 				String email = request.getParameter("email")+"@";
-				email += request.getParameter("email1");
+				email += request.getParameter("email2");*/
 				MemberDTO memberDTO = new MemberDTO();
 				memberDTO.setId(request.getParameter("id"));
 				memberDTO.setPw(request.getParameter("pw"));
@@ -171,10 +347,13 @@ public class MemberService {
 				memberDTO.setMain_address(request.getParameter("main_address"));
 				memberDTO.setSub_address(request.getParameter("sub_address"));
 				memberDTO.setCountry("I");
-				memberDTO.setPhone(phone);
-				memberDTO.setEmail(email);
+				memberDTO.setPhone(request.getParameter("phone"));
+				memberDTO.setPhone2(request.getParameter("phone2"));
+				memberDTO.setEmail(request.getParameter("email"));
+				memberDTO.setEmail2(request.getParameter("email2"));
 				memberDTO.setMoney(1000);
 				memberDTO.setKind("U");
+				memberDTO.setPoint(1000);
 				int result = memberDAO.insert(memberDTO);
 				if(result>0) {
 					request.setAttribute("message", "Join Success");
