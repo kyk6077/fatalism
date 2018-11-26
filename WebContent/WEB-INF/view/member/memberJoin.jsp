@@ -97,7 +97,7 @@
    				</td>
   				</tr>
 			</table>
-			<h3>전체동의</h3>
+			<h3 class="h3">전체동의</h3>
 			
 			<div class="all_consent">
 				<p>
