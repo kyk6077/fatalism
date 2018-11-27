@@ -4,7 +4,8 @@
 <div id="left">
 	<div id="logo">
 		<a href="${pageContext.request.contextPath }/index.jsp"> <img
-			alt="" src="${pageContext.request.contextPath }/images/member/logo.png"
+			alt=""
+			src="${pageContext.request.contextPath }/images/member/logo.png"
 			id="logo_images">
 		</a>
 	</div>
@@ -18,8 +19,10 @@
 						href="${pageContext.request.contextPath }/member/memberLogout.do">로그아웃</a>
 						<span>I</span> <a style="color: #000"
 						href="${pageContext.request.contextPath }/member/memberUpdate.do">회원정보수정</a>
-						<span>I</span> <a style="color: #000" href="${pageContext.request.contextPath }/myPage.jsp">마이페이지</a></li>
-					<li id="login_menu_2"><a style="color: #000" href="${pageContext.request.contextPath }/cart/cartList.do">장바구니</a>
+						<span>I</span> <a style="color: #000"
+						href="${pageContext.request.contextPath }/myPage.jsp">마이페이지</a></li>
+					<li id="login_menu_2"><a style="color: #000"
+						href="${pageContext.request.contextPath }/cart/cartList.do">장바구니</a>
 						<span>I</span> <a style="color: #000" href="">주문내역</a>
 				</c:when>
 				<c:otherwise>
@@ -31,9 +34,9 @@
 						<span>I</span> <a style="color: #000"
 						href="${pageContext.request.contextPath }/member/memberLogin.do">마이페이지</a>
 					</li>
-					<li id="login_menu_2"><a style="color: #000" href="${pageContext.request.contextPath }/cart.jsp">장바구니</a>
-						<span>I</span> <a style="color: #000"
-						href="#">주문내역</a>
+					<li id="login_menu_2"><a style="color: #000"
+						href="${pageContext.request.contextPath }/cart.jsp">장바구니</a> <span>I</span>
+						<a style="color: #000" href="#">주문내역</a>
 				</c:otherwise>
 			</c:choose>
 		</ul>
@@ -79,7 +82,7 @@
 		</dl>
 		<dl class="abox_dl">
 			<dt style="font-variant: 600;" id="abox_dt">
-				<a>협 찬</a>
+				<a href="${pageContext.request.contextPath }/sub_menu/sponse.jsp">협 찬</a>
 			</dt>
 		</dl>
 		<dl class="abox_dl">
@@ -98,17 +101,24 @@
 
 	<div class="box1">
 		<span id="aa">COMPANY INFO</span>
-		<p id="aa2">daasdsad</p>
+		<p id="aa2">CUSTOMER SERVICE<br>070-4146-6369<br>09:30 AM - 17:00 PM
+			(점심시간 : 12:00 - 13:00)<br> WEEKEND/HOLIDAY OFF<br><br>BANK ACCOUNT<br>우리은행
+			1005-703-486615<br> 예금주 (주)퍼스트매니지먼트<br><br>COMPANY: (주)퍼스트매니지먼트 OWNER: 한창호<br> TEL:
+			070-4146-6369 E-MAIL: fatalismofficial@naver.com<br>ADDRESS: 경기도 의정부시
+			민락동 732-10번지 5층 페이탈리즘<br> BUSINESS LICENSE: 487-87-01003<br>MAIL-ORDER
+			LICENSE: 제 2018-의정부송산-0304호<br>COPYRIGHT © FATALISM ALL RIGHTS RESERVED.</p>
 	</div>
 	<!-- 아이콘 -->
 	<div id="sns">
 		<a href="https://www.instagram.com/fatalism_official/" target="_blank">
-			<img src="${pageContext.request.contextPath }/images/member/instagram.png">
+			<img
+			src="${pageContext.request.contextPath }/images/member/instagram.png">
 		</a> <span>I</span> <a href="https://www.facebook.com/fatalism23/"
 			target="_blank"> <img
 			src="${pageContext.request.contextPath }/images/member/facebook.png">
 		</a> <span>I</span> <a href="https://pf.kakao.com/_jxhVRj" target="_blank">
-			<img src="${pageContext.request.contextPath }/images/member/kakaotalk.png">
+			<img
+			src="${pageContext.request.contextPath }/images/member/kakaotalk.png">
 		</a>
 	</div>
 </div>

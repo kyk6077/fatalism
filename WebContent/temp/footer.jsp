@@ -9,10 +9,10 @@
 	</div>
 	
 	<br><br>
-	<a href="index.jsp" class="no-uline">HOME</a>&emsp;
-	<a href="guide.jsp" class="no-uline">GUIDE</a> &emsp;
-	<a href="agreement.jsp" class="no-uline">AGREEMENT</a> &emsp; 
-	<a href="privacypolicy.jsp" class="no-uline">PRIVACY POLICY</a><br><br><br>
+	<a href="${pageContext.request.contextPath }/index.jsp" class="no-uline">HOME</a>&emsp;
+	<a href="${pageContext.request.contextPath }/fmenu/footer_guide.jsp" class="no-uline">GUIDE</a> &emsp;
+	<a href="${pageContext.request.contextPath }/fmenu/footer_agreement.jsp" class="no-uline">AGREEMENT</a> &emsp; 
+	<a href="${pageContext.request.contextPath }/fmenu/footer_privacyPolicy.jsp" class="no-uline">PRIVACY POLICY</a><br><br><br>
 
 
 
