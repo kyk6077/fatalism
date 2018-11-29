@@ -8,124 +8,50 @@
 <title>Insert title here</title>
 <c:import url="../../../temp/b.jsp"></c:import>
 <style type="text/css">
-	
-	 .cart_menu{
-	 	padding:0 0;
-	 	height : 50px;
-		margin: 0 0 20px;
-		box-sizing: border-box;
-		background: #f2f2f2;
-		border: 1px solid #cbcdce;
-	}
-	.selected{
-		float:left;
-		border-right:1px solid #d6d4d4;
-		height: 100%;
-		width: 20%;
-		text-align: center;
-		background: white;
-	}
-	.sub_selected{
-		line-height: 45px;
-	}
-	.cart_sub{
-		width:100%;
-		height:50px;
-		margin :40px 0 0 ;
-	}
-	#ca{
-		margin: 50px 0;
-		text-align: center;
-		font-weight: bold;
-		color: #707070;
-	}
-	.btn_cart{
-		margin: 10px 0 40px;
-		padding: 10px 0;
-		text-align: center;
+	.patArea{
+		overflow: hidden;
 		position: relative;
+		/* padding: 0 241px 0 0; */
+		border: 1px solid #777;
+		color: black;
+		line-height: 1.5;
 	}
-	.order_ing{
-		position: absolute;
-		right: 0;
-	}
-	.sub_contents2{
-		margin: 20px 0;
-		border: 1px solid #d6d4d4;
-		line-height: 18px;
-		background: #fbfbfb;
-	}
-	.h6{
-		font-weight: bold;
-		padding: 0 0 0 10px;
-		
-	}
-	.inner{
-		padding: 0 9px 12px;
-	}
-	.ol{
-		color: #3c3c5d;
-		font-size: 11px;
-	}
-	.cartList_title{
-		height: 38px; 
-		margin: 20px 0 0;
-		padding: 0 0 0 9px;
-		border: 1px solid #d7d5d5;
-		border-bottom: 0;
-		line-height: 38px;
-		background: #f6f6f6;
-	}
-	.cartList{
-		border: 1px solid #d7d5d5;
+	.payment{
+		float: left;
 		width: 100%;
 	}
-	.cartList th{
-		height: 17px;
-		padding: 11px 0 10px;
-		border-left: 1px solid #dfdfdf;
-		border-bottom: 1px solid #dfdfdf;
-		vertical-align: middle;
-		background: #fbfafa;
-		text-align: center;
-	}
-	.cartList td{
-		text-align: center;
-		border-top: 1px solid #dfdfdf;
-	}
-	.cart_name{
-		padding-left: 10px;
-		text-align: left;
-	}
-	.cart_name a{
-		color: black;
-	}
-	.cart_img{
-		padding: 8px 0 7px;
-	}
-	.sum{
-		font-size: 14px;
+	.method{
+		padding: 17px 20px 15px;
 		font-weight: bold;
+		border-bottom: 3px double #dedede;
 	}
-	.sum2{
-		padding: 15px 10px 17px;
-		background: #fbfafa;
-		font-size: 15px;
-		font-weight: bold;
+	.method span{
+		margin: 0 15px 5px 0;
 	}
-	.cart_font{
-		color: #707070;
-		font-size: 11px;
+	.method label{
+		font-size: 12px;
 	}
-	.alldelete{
-		margin: 0 0 40px;
-		padding: 10px 0;
+	.total_h{
 		text-align: right;
 	}
-	
+	.btn_payment{
+		text-align: center;
+		margin: 16px 0 10px;
+	}
+	.ex{
+		padding: 10px 20px;
+	}
+	.ex_card{
+		margin: 0 0 0 130px;
+	}
 </style>
+<c:import url="../../payment/test.jsp"></c:import>
 <script type="text/javascript">
 	 $(function() {
+		 
+		/*  $('#test_btn').on('click',function(){
+			alert($('input:radio[name=paymethod]:checked').val()); 
+		 }) */
 		 
 		 var a = $('#allprice').val();
 		 var s = parseInt(0);
@@ -144,7 +70,6 @@
 		$(".allCheck").click(function() {
 			$('.ch').prop('checked', this.checked);
 		});
-		
 	 }); 
 </script>
 </head>
@@ -153,20 +78,13 @@
 	<div id="sub_container">
 		<div id="sub_contents">
 			<div class="titleArea">
-				<h2>CART</h2>
+				<h2>ORDER</h2>
+				<button id="test_btn">test</button>
 			</div>
 			<div>
-				<div class="cart_sub">
-					<ul class="cart_menu">
-						<li class="selected">
-							<a href="#" class="sub_selected">국내배송상품</a>
-						</li>
-					</ul>
-					
-				</div>
 				<div>
 					<div class="cartList_title">
-						<h6 class="h6">일반상품</h6>
+						<h6 class="h6">국내배송상품 주문내역</h6>
 					</div>
 					<table class="cartList">
 						<colgroup>
@@ -222,7 +140,7 @@
 									</a>
 								</td>
 								<td>
-									<span class="cart_font"> 
+									<span class="cart_font">
 										3000원
 									</span>
 								</td>
@@ -237,9 +155,6 @@
 									<p id="totalprice${c.count}" class="sum">${cDTO.price }</p>
 								</td>
 								<td>
-									<a>
-										<img alt="주문" src="../images/member/btn_order.png">
-									</a>
 									<a href="selectDelete.do?num=${cDTO.num }" class="delete_btn"<%--  title="${cDTO.num}" --%>>
 										<img alt="삭제" src="../images/member/btn_order_delete.png">
 									</a>
@@ -262,28 +177,85 @@
 							</tr>
 						</tfoot>
 					</table>
-				</div>
-				<div class="alldelete">
-					<strong>전체상품 : </strong>
-					<a href="allDelete.do">
-						<img alt="전체비우기" src="../images/member/btn_clear.png">
-					</a>
-				</div>
-				
-				<div class="btn_cart">
-					<a href="./order.do">
-						<img alt="전체상품결제" src="../images/member/btn_order_all.png">						
-					</a>
-					<a href="#">
-						<img alt="선택상품결제" src="../images/member/btn_order_select.png">
-					</a>
-					<span class="order_ing">
-						<a href="${pageContext.request.contextPath }/index.jsp">
-							<img alt="쇼핑하기" src="../images/member/btn_order_ing.png">
-						</a>
-					</span>
+					<hr>
+				<table class="table table-bordered">
+				<tr>	
+				<th>받으시는분</th>
+				<td><input type="text" name="name" value="${member.name }"></td>
+				</tr>
+				<c:import url="../../address/addressAPI.jsp"></c:import>
+				<tr>
+				<th>주소</th>
+				<td><input type="text" size="4" style="margin-bottom: 5px" name="num_address" value="${member.num_address }"id="num_address"> <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호"><br>
+					<input type="text" size="30" style="margin-bottom: 5px" name="main_address" value="${member.main_address }"id="main_address"> 기본주소<br>
+					<input type="text" size="30" name="sub_address" value="${member.sub_address }"id="sub_address"> 나머지주소
+				</td>
+				</tr>
+				<tr>
+				<th>휴대전화</th>
+				<td>
+				<select name="phone">
+					<option>010</option>
+					<option>011</option>
+					<option>016</option>
+					<option>017</option>
+					<option>018</option>
+					<option>019</option>
+				</select>
+				-
+				<input type="text" maxlength="8" size="8" name="phone2" value="${member.phone2 }">
+				</td>
+				</tr>
+			</table>
 				</div>
 			</div>
+			<hr>
+			<div class="patArea">
+				<div class="payment">
+					<div class="method">
+						<span>
+							<input type="radio" checked="checked" name="paymethod" class="pg_radio" value="card">
+							<label for="card">카드 결제</label>
+						</span>
+						<span>
+							<input type="radio" name="paymethod" class="pg_radio" value="bank">
+							<label for="bank">실시간계좌입금</label>
+						</span>
+						<span>
+							<input type="radio" name="paymethod" class="pg_radio" value="phone">
+							<label for="phone">휴대폰 결제</label>
+						</span>
+						<span>
+							<input type="radio" name="paymethod" class="pg_radio" value="vbank">
+							<label for="vbank">무통장 입금</label>
+						</span>
+					</div>
+						
+					<div class="ex">
+						<div class="ex_card">
+														
+						</div>
+					</div>
+					
+					<hr>
+					<div class="total_h">
+						<h5 style="margin: 17px 10px 0 0;">
+							<span>카드</span>
+							<span>최종결제 금액</span>
+						</h5>
+						<p style="text-align: right;clear: none;border: 0px;float: none; margin: 20px 10px 0 0;">최종금액넣는곳
+						<span>원</span>
+						</p>
+						<div class="btn_payment">
+						
+							<a href="#" id="btn12">
+								<img alt="결제하기" src="../images/member/btn_payment.png">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<div class="sub_contents2">
 				<h6 class="h6">이용안내</h6>
 				<hr style="margin: 0 0;">
@@ -309,13 +281,4 @@
 <c:import url="../../../temp/footer.jsp"></c:import>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 

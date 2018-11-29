@@ -45,9 +45,9 @@
 			}else if(document.frm.pw_1.value==""){
 				alert("비밀번호를 입력하세요");
 				document.frm.pw_1.focus();
-			}else if(document.frm.pw.value==""){
+			/* }else if(document.frm.pw.value==""){
 				alert("비밀번호확인를 입력하세요");
-				document.frm.pw.focus();	
+				document.frm.pw.focus();	 */
 			}else if(document.frm.name.value==""){
 				alert("이름를 입력하세요");
 				document.frm.name.focus();
@@ -60,13 +60,12 @@
 			}else if(document.frm.email.value==""){
 				alert("이메일을 입력하세요");
 				document.frm.email.focus();
-			}if(document.frm.pw_1.value!=document.frm.pw.value){
-				alert("비밀번호가 일치하지않습니다");
-				document.frm.pw.focus();
 			}if (!isSeasonCHK) {
 					alert("[필수]약관에 동의하세요");
 					return false;
-					
+			}if($("#pw").val() != $("#pw2").val()){		
+				alert("비밀번호가일치하지않습니다");
+				document.frm.pw.focus();
 			}else{
 				$('#join_form').submit();
 			}
@@ -78,15 +77,15 @@
 			$('font[name=check]').text('');
 		});
 
-		 $('#pw').blur(function() {
-			if ($('#pw1').val() != $('#pw').val()) {
+		$('#pw2').blur(function() {
+			if ($('#pw').val() != $('#pw2').val()) {
 				$('font[name=check]').text('');
 				$('font[name=check]').html("비밀번호가 일치하지 않습니다.");
 			} else {
 				$('font[name=check]').text('');
 				$('font[name=check]').html("비밀번호가 일치합니다");
 			} 
-		}); 
+		});  
 	});
 </script>
 </head>
@@ -99,42 +98,44 @@
 		</div>
 		<form name="frm" action="./memberJoin.do" id="join_form" method="post">
 		<h3 class="h3">기본정보</h3>
+		<p style="text-align: right;font-size: 11.4px;color: "><img src="../images/member/required.png"> 필수입력사항</p>
 		<input type="hidden" value="f" name="checkid" id="checkid">
 			<table class="table table-bordered">
 				
 				<tr>
-				<th >아이디</th>
+				<th>아이디 <img src="../images/member/required.png"></th>
 				<td><input type="text" id="id" name="id">
 				<span id="id_1"> </span>
 				(영문소문자/숫자 4~16자)
 				</td>
 				</tr>
 				<tr>
-				<th >비밀번호</th>
-				<td><input type="password" id="pw1" name="pw_1">
+				<th >비밀번호 <img src="../images/member/required.png"></th>
+				<td><input type="password" id="pw" name="pw_1">
 				(영문 대문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자)
 				</td>
 				</tr>
 				<tr>
-				<th>비밀번호 확인</th>
+				<th>비밀번호 확인 <img src="../images/member/required.png"></th>
 				<td>
-					<input type="password" id="pw" name="pw">
+					<input type="password" id="pw2" name="pw">
 					<font name = "check" size="2" color="black"></font>
 				</td>
 				</tr>
 				<tr>
-				<th>이름</th>
+				<th>이름 <img src="../images/member/required.png"></th>
 				<td><input type="text" name="name"></td>
 				</tr>
+				<c:import url="../../address/addressAPI.jsp"></c:import>
 				<tr>
-				<th>주소</th>
-				<td><input type="text" size="4" style="margin-bottom: 5px" name="num_address"> <button>우편번호</button> <input type="checkbox"> 해외 거주자인 경우, 체크해 주세요.<br>
-					<input type="text" size="30" style="margin-bottom: 5px" name="main_address"> 기본주소<br>
-					<input type="text" size="30" name="sub_address"> 나머지주소
+				<th>주소 <img src="../images/member/required.png"></th>
+				<td><input type="text" size="4" style="margin-bottom: 5px" name="num_address"id="num_address"> <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호"><br>
+					<input type="text" size="30" style="margin-bottom: 5px" name="main_address"id="main_address"> 기본주소<br>
+					<input type="text" size="30" name="sub_address"id="sub_address"> 나머지주소
 				</td>
 				</tr>
 				<tr>
-				<th>휴대전화</th>
+				<th>휴대전화 <img src="../images/member/required.png"></th>
 				<td>
 				<select name="phone">
 					<option>010</option>
@@ -150,7 +151,7 @@
 				</td>
 				</tr>
 				<tr>
-   				<th> 이메일 </th>
+   				<th> 이메일 <img src="../images/member/required.png"></th>
    				<td>
     			<input type = "text" name="email"> @ <input type = "text" name="email2"> &nbsp;&nbsp; 
     			<select>
@@ -165,9 +166,7 @@
 			<h3 class="h3">약관동의</h3>
 			
 			<div class="all_consent">
-				<p>
 				
-				</p>	
 			</div>
 			
 			<div class="consent">

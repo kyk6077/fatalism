@@ -35,12 +35,17 @@ public class CartController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ActionFoward actionFoward = null;
 		String command = request.getPathInfo();
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		if(command.equals("/cartList.do")) {
 			actionFoward = cartService.cartSelect(request, response);
 		}else if(command.equals("/selectDelete.do")) {
 			actionFoward = cartService.selectDelete(request, response);
 		}else if(command.equals("/allDelete.do")) {
 			actionFoward = cartService.allDelete(request, response);
+		}else if(command.equals("/order.do")) {
+			System.out.println("0");
+			actionFoward = cartService.order(request, response);
 		}
 		
 		

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/foot.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/body.css">
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/test.css">
 <script type="text/javascript">
    	$(function() {
  		$("#abox").on("click",".abox_dl",function() {

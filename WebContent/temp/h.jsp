@@ -31,9 +31,6 @@
 						<span>I</span> <a style="color: #000"
 						href="${pageContext.request.contextPath }/member/memberLogin.do">마이페이지</a>
 					</li>
-					<li id="login_menu_2"><a style="color: #000" href="${pageContext.request.contextPath }/cart.jsp">장바구니</a>
-						<span>I</span> <a style="color: #000"
-						href="#">주문내역</a>
 				</c:otherwise>
 			</c:choose>
 		</ul>

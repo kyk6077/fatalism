@@ -36,6 +36,9 @@ public class MemberController extends HttpServlet {
 		
 		String command = request.getPathInfo();
 		ActionFoward actionFoward=null;
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
 		if(command.equals("/memberJoin.do")) {
 			actionFoward = memberService.insert(request, response);
 		}else if(command.equals("/memberLogin.do")) {

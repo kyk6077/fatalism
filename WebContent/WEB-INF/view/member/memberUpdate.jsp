@@ -31,6 +31,37 @@
 </style>
 <script type="text/javascript">
 	$(function() {
+		
+		$("#btn_update").click(function() {
+			if(document.frm.id.value==""){
+				alert("아이디를 입력하세요");
+				document.frm.id.focus();	
+			}else if(document.frm.name.value==""){
+				alert("이름를 입력하세요");
+				document.frm.name.focus();
+			/* }else if(document.frm.pw_1.value==""){
+				alert("비밀번호를 입력하세요");
+				document.frm.pw_1.focus();
+			}else if(document.frm.pw.value==""){
+				alert("비밀번호확인를 입력하세요"); */
+				document.frm.pw.focus();
+			}else if(document.frm.num_address.value==""){
+				alert("우편주소를 입력하세요");
+				document.frm.num_address.focus();
+			}else if(document.frm.phone2.value==""){
+				alert("핸드폰번호를 입력하세요");
+				document.frm.phone2.focus();
+			}else if(document.frm.email2.value==""){
+				alert("이메일을 입력하세요");
+				document.frm.email2.focus();
+			}if($("#pw").val() != $("#pw2").val()){		
+				alert("비밀번호가일치하지않습니다");
+				document.frm.pw.focus();	
+			}else{
+				$('#update_form').submit();
+			}
+		});
+		
 		 $('#user_pass').blur(function() {
 			$('font[name=check]').text('');
 		});
@@ -90,11 +121,12 @@
 				<th>이름</th>
 				<td><input type="text" name="name" value="${member.name }"></td>
 				</tr>
+				<c:import url="../../address/addressAPI.jsp"></c:import>
 				<tr>
 				<th>주소</th>
-				<td><input type="text" size="4" style="margin-bottom: 5px" name="num_address" value="${member.num_address }"> <button>우편번호</button> <input type="checkbox" name="c"> 해외 거주자인 경우, 체크해 주세요.<br>
-					<input type="text" size="30" style="margin-bottom: 5px" name="main_address" value="${member.main_address }"> 기본주소<br>
-					<input type="text" size="30" name="sub_address" value="${member.sub_address }"> 나머지주소
+				<td><input type="text" size="4" style="margin-bottom: 5px" name="num_address" value="${member.num_address }"id="num_address"> <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호"><br>
+					<input type="text" size="30" style="margin-bottom: 5px" name="main_address" value="${member.main_address }"id="main_address"> 기본주소<br>
+					<input type="text" size="30" name="sub_address" value="${member.sub_address }"id="sub_address"> 나머지주소
 				</td>
 				</tr>
 				<tr>
@@ -126,7 +158,7 @@
   				</tr>
 			</table>
 			<div class="join_button">
-				<button type="submit" id="btn_update"></button>
+				<button id="btn_update" type="button"></button>
 				<a href="${pageContext.request.contextPath }/index.jsp" id="btn2"></a>
 				<span id="delete">
 				<a id="btn_delete" href="#"></a>

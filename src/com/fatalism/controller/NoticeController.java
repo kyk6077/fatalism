@@ -34,6 +34,7 @@ public class NoticeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ActionFoward actionFoward = null;
 		String command = request.getPathInfo();
+		
 		if(command.equals("/noticeList.do")) {
 			actionFoward = noticeService.selectList(request, response);
 		}else if(command.equals("/noticeWrite.do")) {

@@ -85,11 +85,37 @@ public class CartService {
 			id = "aaa";
 		}
 		try {
-			
 			ar = cartDAO.cartSelect(id);
 			request.setAttribute("cart", ar);
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/cart/cartList.jsp");
+			
+		} catch (Exception e) {
+			System.out.println("p");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return actionFoward;
+	}
+	
+	
+	public ActionFoward order(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		List<CartInfoDTO> ar = null;
+		String id =null;
+		try {
+		MemberDTO memberDTO = (MemberDTO)request.getSession().getAttribute("member");
+		id = memberDTO.getId();
+		}catch (Exception e) {
+			//비회원 처리
+			id = "aaa";
+		}
+		try {
+			System.out.println("1");
+			ar = cartDAO.cartSelect(id);
+			request.setAttribute("cart", ar);
+			actionFoward.setCheck(true);
+			actionFoward.setPath("../WEB-INF/view/cart/order.jsp");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
