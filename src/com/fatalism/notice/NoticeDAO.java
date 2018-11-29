@@ -63,7 +63,7 @@ public class NoticeDAO implements BoardDAO{
 	
 	public int insert(BoardDTO boardDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'N',null,null,null,null,?,?)";
+		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'N',null,null,null,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1,boardDTO.getSubject());
 		st.setString(2,boardDTO.getWriter());

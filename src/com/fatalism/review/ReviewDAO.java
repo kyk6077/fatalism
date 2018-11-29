@@ -54,19 +54,31 @@ public class ReviewDAO implements BoardDAO{
 	
 	public int insert(ReviewDTO reviewDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'R',null,null,null,null,?,?)";
+		String sql = "insert into board values(?,?,?,sysdate,0,?,'R',null,null,null,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1,reviewDTO.getSubject());
-		st.setString(2,reviewDTO.getWriter());
-		st.setString(3,reviewDTO.getContents());
-		st.setString(4,reviewDTO.getHide());
-		st.setString(5,reviewDTO.getPw());
+		st.setInt(1,reviewDTO.getNum());
+		st.setString(2,reviewDTO.getSubject());
+		st.setString(3,reviewDTO.getWriter());
+		st.setString(4,reviewDTO.getContents());
+		st.setString(5,reviewDTO.getHide());
+		st.setString(6,reviewDTO.getPw());
 		int result = st.executeUpdate();
 		
 		DBConnector.disConnect(con, st);
 		return result;
 	}
-
+	
+	public int getSeqNum() throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql="select bt_seq.NEXTVAL from dual";
+		PreparedStatement st = con.prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
+		rs.next();
+		int num = rs.getInt(1);
+		
+		DBConnector.disConnect(con, st, rs);
+		return num;
+	}
 
 	public List<ReviewDTO> selectList(RowNumber rowNumber, Search search) throws Exception {
 		Connection con = DBConnector.getConnect();
@@ -92,7 +104,6 @@ public class ReviewDAO implements BoardDAO{
 			rDTO.setReg_date(rs.getDate("reg_date"));
 			rDTO.setHit(rs.getInt("hit"));
 			rDTO.setContents(rs.getString("contents"));
-			rDTO.setPnum(rs.getInt("pnum"));
 			rDTO.setHide(rs.getString("hide"));
 			rDTO.setKind("R");
 			ar.add(rDTO);

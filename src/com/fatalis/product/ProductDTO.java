@@ -1,7 +1,5 @@
 package com.fatalis.product;
 
-
-
 public class ProductDTO {
 	
 	private int num;
@@ -11,6 +9,7 @@ public class ProductDTO {
 	private String bodysize;
 	private int count;
 	private String description;
+	private int pnum;
 	
 	
 	
@@ -55,6 +54,12 @@ public class ProductDTO {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public int getPnum() {
+		return pnum;
+	}
+	public void setPnum(int pnum) {
+		this.pnum = pnum;
 	}
 	
 	

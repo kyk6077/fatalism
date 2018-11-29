@@ -60,7 +60,7 @@ public class QnaDAO implements BoardDAO{
 	
 	public int insert(QnaDTO qnaDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'Q',null,bt_seq.currval,1,1,'S',?)";
+		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'Q',bt_seq.currval,1,1,'S',?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1,qnaDTO.getSubject());
 		st.setString(2,qnaDTO.getWriter());
@@ -74,7 +74,7 @@ public class QnaDAO implements BoardDAO{
 
 	public int replyInsert(QnaDTO qnaDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'Q',null,?,?,?,'S',?)";
+		String sql = "insert into board values(bt_seq.nextval,?,?,sysdate,0,?,'Q',?,?,?,'S',?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1,qnaDTO.getSubject());
 		st.setString(2,qnaDTO.getWriter());

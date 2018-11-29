@@ -139,12 +139,12 @@
 				success : function(data) {
 					var c = 'comment' + index;
 					$('#' + c).remove();
-					alert("delete success");
+					alert("삭제 완료");
 					location.href="#comment_view";
 				},
 				error : function() {
 					location.href="#comment_view";
-					alert("delete fail");
+					alert("비밀번호가 틀립니다.");
 				}
 
 			});

@@ -46,28 +46,28 @@
 		<dl class="abox_dl">
 			<dt class="abox_dt">스토어</dt>
 			<dd>
-				<a>신상품</a>
+				<a href="${pageContext.request.contextPath}/product/productList.do?type=NewProduct">신상품</a>
 			</dd>
 
 			<dd>
-				<a>FATALISM</a>
+				<a href="${pageContext.request.contextPath}/product/productList.do?type=FATALISM">FATALISM</a>
 			</dd>
 
 			<dd>
-				<a>GARMENTS LINE</a>
+				<a href="${pageContext.request.contextPath}/product/productList.do?type=GARMENTS LINE">GARMENTS LINE</a>
 			</dd>
 
 			<dd>
-				<a>27y</a>
+				<a href="${pageContext.request.contextPath}/product/productList.do?type=27y">27y</a>
 			</dd>
 
 			<dd>
-				<a>품절</a>
+				<a href="${pageContext.request.contextPath}/product/productList.do">품절</a>
 			</dd>
 		</dl>
 		<dl class="abox_dl">
 			<dt style="font-variant: 600;" id="abox_dt">
-				<a>ABOUT US</a>
+				<a href="${pageContext.request.contextPath }/sub_menu/about.jsp">ABOUT US</a>
 			</dt>
 		</dl>
 		<dl class="abox_dl">

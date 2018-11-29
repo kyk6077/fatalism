@@ -12,25 +12,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fatalism.action.ActionFoward;
 import com.fatalism.board.BoardService;
+import com.fatalism.boardimg.BoardimgDAO;
+import com.fatalism.boardimg.BoardimgDTO;
 import com.fatalism.page.MakePager;
 import com.fatalism.page.Pager;
 import com.fatalism.page.RowNumber;
 import com.fatalism.page.Search;
 import com.fatalism.reply.ReplyDAO;
 import com.fatalism.reply.ReplyDTO;
-import com.fatalism.upload.UploadDAO;
-import com.fatalism.upload.UploadDTO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 
 public class ReviewService implements BoardService{
 	private ReviewDAO reviewDAO;
-	private UploadDAO uploadDAO;
+	private BoardimgDAO boardimgDAO;
 
 	public ReviewService() {
 		reviewDAO = new ReviewDAO();
-		uploadDAO = new UploadDAO();
+		boardimgDAO = new BoardimgDAO();
 	}
 
 
@@ -41,7 +41,7 @@ public class ReviewService implements BoardService{
 		if(method.equals("POST")) {
 			ReviewDTO reviewDTO = new ReviewDTO();
 			int maxSize = 1024*1024*10;
-			String path = request.getServletContext().getRealPath("upload");
+			String path = request.getServletContext().getRealPath("boardupload");
 			File file = new File(path);
 			if(!file.exists()) {
 				file.mkdirs();
@@ -53,17 +53,17 @@ public class ReviewService implements BoardService{
 				reviewDTO.setContents(multi.getParameter("contents"));
 				reviewDTO.setHide(multi.getParameter("hide_radio"));
 				reviewDTO.setPw(multi.getParameter("board_pw"));
+				reviewDTO.setNum(reviewDAO.getSeqNum());
 				int result = reviewDAO.insert(reviewDTO);
 				if(result>0) {
-					uploadDAO = new UploadDAO();
-					UploadDTO uploadDTO = new UploadDTO();
+					BoardimgDTO boardimgDTO = new BoardimgDTO();
 					Enumeration<Object> e = multi.getFileNames();
-					String s = (String)e.nextElement();					
+					String s = (String)e.nextElement();
 					if(multi.getFilesystemName(s)!=null) {
-						uploadDTO.setFname(multi.getFilesystemName(s));
-						uploadDTO.setOname(multi.getOriginalFileName(s));
-						uploadDTO.setStep(0);
-						uploadDAO.insert(uploadDTO);
+						boardimgDTO.setBnum(reviewDTO.getNum());
+						boardimgDTO.setFname(multi.getFilesystemName(s));
+						boardimgDTO.setOname(multi.getOriginalFileName(s));
+						boardimgDAO.insert(boardimgDTO);
 					}
 					//파일이 여러개일때
 //					while(e.hasMoreElements()) {
@@ -191,19 +191,23 @@ public class ReviewService implements BoardService{
 			Pager pager = makePager.MakePage(totalCount);
 
 			ar = reviewDAO.selectList(rowNumber,pager.getSearch());
-			//list에 pnum 받아서 중복 제거후 pnum에 맞는 사진 가져오기
-			List<UploadDTO> ar2 = new ArrayList<>();
-			HashSet<Integer> h_pnum = new HashSet<>();
+			List<BoardimgDTO> ar2 = new ArrayList<>();
+			
 			for (ReviewDTO reviewDTO : ar) {
-				h_pnum.add(reviewDTO.getPnum());
+				ar2.add(boardimgDAO.selectOne(reviewDTO.getNum()));				
 			}
-			Iterator<Integer> iter = h_pnum.iterator();
-			UploadDTO uploadDTO = null;
-			while(iter.hasNext()) {
-				uploadDTO = new UploadDTO();
-				uploadDTO = uploadDAO.selectOne(iter.next());
-				ar2.add(uploadDTO);
-			}
+			
+//			HashSet<Integer> h_num = new HashSet<>();
+//			for (ReviewDTO reviewDTO : ar) {
+//				h_num.add(reviewDTO.getNum());
+//			}
+//			Iterator<Integer> iter = h_num.iterator();
+//			BoardimgDTO boardimgDTO = null;
+//			while(iter.hasNext()) {
+//				boardimgDTO = new BoardimgDTO();
+//				boardimgDTO = boardimgDAO.selectOne(iter.next());
+//				ar2.add(boardimgDTO);
+//			}
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/board/boardList.jsp");
 			request.setAttribute("list", ar);

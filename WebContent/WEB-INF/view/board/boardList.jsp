@@ -90,17 +90,12 @@
 						<tr>
 							<td>${boardDTO.num}</td>
 							<c:if test="${board=='review'}">
-								<td class="item_td"><c:if test="${boardDTO.pnum!=null}">
-									<c:forEach items="${list2}" var="uploadDTO">
-										<c:if test="${uploadDTO.pnum==boardDTO.pnum}">
-											<img alt="" src="${pageContext.request.contextPath }/upload/${uploadDTO.fname}">
+								<td class="item_td">
+									<c:forEach items="${list2}" var="boardimgDTO">
+										<c:if test="${boardimgDTO.bnum==boardDTO.num}">
+											<img alt="" src="${pageContext.request.contextPath }/upload/${boardimgDTO.fname}">
 										</c:if>
 									</c:forEach>
-								</c:if>
-								
-								<c:if test="${boardDTO.pnum==null}">
-									NoImage
-								</c:if>
 								</td>
 							</c:if>
 							<td class="table_subject">
@@ -127,7 +122,7 @@
 				</table>
 				<div class="write_btn">
 					<a href="./${board}Write.do"><img alt="???"
-						src="../images/btn_write.png"></a>
+						src="../images/write_img/btn_write.png"></a>
 				</div>
 				<div class="row_pager">
 					<ul class="pagination">

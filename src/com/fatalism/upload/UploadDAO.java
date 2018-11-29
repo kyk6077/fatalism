@@ -14,7 +14,7 @@ public class UploadDAO {
 	//pnum은 올릴때 product num 받아서 올림
 	public int insert(UploadDTO uploadDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql="insert into upload values(upload_seq.nextval,4,?,?,?)";
+		String sql="insert into upload values(upload_seq.nextval,1,?,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 //		st.setInt(1,uploadDTO.getPnum());
 		st.setInt(1, uploadDTO.getStep());
@@ -26,6 +26,19 @@ public class UploadDAO {
 		return result;
 	}
 	
+	public int productInsert(UploadDTO uploadDTO) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql="insert into upload values(upload_seq.nextval,?,?,?,?)";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, uploadDTO.getPnum());
+		st.setInt(2, uploadDTO.getStep());
+		st.setString(3, uploadDTO.getFname());
+		st.setString(4, uploadDTO.getOname());
+		int result = st.executeUpdate();
+		
+		DBConnector.disConnect(con, st);
+		return result;
+	}
 	
 	public UploadDTO selectOne(int pnum) throws Exception {
 		Connection con = DBConnector.getConnect();
