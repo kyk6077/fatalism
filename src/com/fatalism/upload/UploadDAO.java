@@ -60,6 +60,26 @@ public class UploadDAO {
 		return uploadDTO;
 	}
 	
+	public List<UploadDTO> selectInfo(int pnum) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql="select * from upload where pnum=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1,pnum);
+		ResultSet rs = st.executeQuery();
+		List<UploadDTO> ar = new ArrayList<>();
+		while(rs.next()) {
+			UploadDTO uploadDTO = new UploadDTO();
+			uploadDTO.setNum(rs.getInt("num"));
+			uploadDTO.setPnum(rs.getInt("pnum"));
+			uploadDTO.setStep(rs.getInt("step"));
+			uploadDTO.setFname(rs.getString("fname"));
+			uploadDTO.setOname(rs.getString("oname"));
+			ar.add(uploadDTO);
+		}
+		DBConnector.disConnect(con, st, rs);
+		return ar;
+	}
+	
 	public List<UploadDTO> selectList() throws Exception {
 		Connection con = DBConnector.getConnect();
 		String sql="select * from upload";

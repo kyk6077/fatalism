@@ -143,8 +143,8 @@
 					<c:forEach items="${product_list}" var="productDTO">
 						<li><c:forEach items="${upload_list}" var="uploadDTO">
 								<c:if test="${productDTO.pnum==uploadDTO.pnum}">
-									<img class="item" alt=""
-										src="${pageContext.request.contextPath }/upload/${uploadDTO.fname}">
+									<a href="./productSelect.do?pnum=${productDTO.pnum}"><img class="item" alt=""
+										src="${pageContext.request.contextPath }/upload/${uploadDTO.fname}"></a>
 								</c:if>
 							</c:forEach>
 							<div class="cartbtn_row">

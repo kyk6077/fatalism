@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<c:import url="./temp/b.jsp"></c:import>
+<c:import url="../../../temp/b.jsp"></c:import>
 <style type="text/css">
 	.titleArea2{
 		text-align: center;/* 가운데 정렬 */
@@ -163,7 +163,7 @@
 </style>
 </head>
 <body>
-<c:import url="./temp/h.jsp"></c:import>
+<c:import url="../../../temp/h.jsp"></c:import>
 	<div id="sub_container">
 		<div id="sub_contents">
 			<div class="titleArea2">
@@ -175,13 +175,13 @@
 					<div class="main_img">
 						<div class="keyImg">
 							<div class="thumbnail">
-								<img alt="Middle biue wide fit" src="./images/productImg/jin1.jpg">
+								<img alt="" src="${pageContext.request.contextPath}/upload/${mainUpload.fname}">
 							</div>
 						</div>
 						<div class="sub_img">
 							<ul style="padding: 0px;">
 								<li class="record">
-									<img class="ThumdImage" src="./images/productImg/sub_jin1.jpg">
+									<img class="ThumdImage" alt="" src="${pageContext.request.contextPath}/upload/${mainUpload.fname}">
 								</li>
 							</ul>				
 						</div>
@@ -218,10 +218,10 @@
 								<tr>
 									<td class="social">
 										<a href="https://www.facebook.com/fatalism23/">
-											<img src="./images/productImg/facebook.jpg">
+											<img src="../images/productImg/facebook.jpg">
 										</a>
 										<a href="https://twitter.com/intent/tweetstatu">
-											<img src="./images/productImg/twitter.jpg">
+											<img src="../images/productImg/twitter.jpg">
 										</a>
 									</td>
 								</tr>
@@ -258,7 +258,10 @@
 				</div>
 				<div>
 					<div class="cont">
-						<!-- 상품상세정보이미지넣는곳 -->
+						<c:forEach items="${uploadList}" var="uploadDTO">
+							<img alt="" src="${pageContext.request.contextPath }/upload/${uploadDTO.fname}">
+						</c:forEach>
+						
 					</div>
 					<div id="prdInfo">
 						<div class="contInfo1">
@@ -316,6 +319,6 @@
 				</div>
 			</div>
 		</div>
-<c:import url="./temp/footer.jsp"></c:import>
+<c:import url="../../../temp/footer.jsp"></c:import>
 </body>
 </html>

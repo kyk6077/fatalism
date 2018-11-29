@@ -30,6 +30,26 @@ public class ProductDAO {
 		return result;
 	}
 	
+	public ProductDTO selectOne(int pnum) throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql = "select * from product where pnum=? and bodysize='S'";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, pnum);
+		ResultSet rs = st.executeQuery();
+		ProductDTO productDTO = new ProductDTO();
+		if(rs.next()) {
+			productDTO.setNum(rs.getInt("num"));
+			productDTO.setName(rs.getString("name"));
+			productDTO.setPrice(rs.getInt("price"));
+			productDTO.setType(rs.getString("type"));
+			productDTO.setDescription(rs.getString("description"));
+			productDTO.setPnum(rs.getInt("pnum"));
+		}
+		
+		DBConnector.disConnect(rs, st, con);
+		return productDTO;
+	}
+	
 	public List<ProductDTO> selectList(RowNumber rowNumber) throws Exception{
 		Connection con = DBConnector.getConnect();
 		String sql = "SELECT * FROM ( "

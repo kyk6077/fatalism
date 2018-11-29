@@ -74,6 +74,34 @@ public class ProductService {
 
 		return actionFoward;
 	}
+	
+	public ActionFoward selectOne(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		actionFoward.setCheck(true);
+		try {
+			int pnum = Integer.parseInt(request.getParameter("pnum"));
+			ProductDTO productDTO = productDAO.selectOne(pnum);
+			UploadDAO uploadDAO = new UploadDAO();
+			List<UploadDTO> ar = uploadDAO.selectInfo(pnum);
+			UploadDTO mainUpload = new UploadDTO();
+			mainUpload.setNum(ar.get(0).getNum());
+			mainUpload.setPnum(ar.get(0).getPnum());
+			mainUpload.setStep(ar.get(0).getStep());
+			mainUpload.setFname(ar.get(0).getFname());
+			mainUpload.setOname(ar.get(0).getOname());
+			ar.remove(0);
+			request.setAttribute("mainUpload",mainUpload);
+			request.setAttribute("uploadList",ar);
+			request.setAttribute("productDTO",productDTO);
+			
+			actionFoward.setPath("../WEB-INF/view/product/productSelect.jsp");
+		} catch (Exception e) {
+			request.setAttribute("message","select fail");
+			request.setAttribute("path","./productList.do");
+			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+		}
+		return actionFoward;
+	}
 
 	public ActionFoward insert(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
