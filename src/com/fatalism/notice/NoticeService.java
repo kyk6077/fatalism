@@ -44,7 +44,7 @@ public class NoticeService implements BoardService{
 			request.setAttribute("board","notice");
 		} catch (Exception e) {
 			actionFoward.setCheck(true);
-			actionFoward.setPath("../WEB-INF/common/result.jsp");
+			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 			message = "list Fali";
 			request.setAttribute("path", "../index.jsp");
 			request.setAttribute("message", message);

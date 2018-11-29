@@ -6,7 +6,6 @@ public class QnaDTO extends BoardDTO{
 	private int ref;
 	private int step;
 	private int depth;
-	private int pnum;
 	
 	public int getRef() {
 		return ref;
@@ -26,12 +25,6 @@ public class QnaDTO extends BoardDTO{
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	public int getPnum() {
-		return pnum;
-	}
-	public void setPnum(int pnum) {
-		this.pnum = pnum;
-	}
-	
+
 	
 }

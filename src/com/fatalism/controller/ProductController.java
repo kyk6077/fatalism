@@ -9,22 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fatalism.action.ActionFoward;
-import com.fatalism.qna.QnaService;
+import com.fatalis.product.ProductService;
+import com.iu.action.ActionFoward;
 
 /**
- * Servlet implementation class QnaController
+ * Servlet implementation class ProductController
  */
-@WebServlet("/QnaController")
-public class QnaController extends HttpServlet {
+@WebServlet("/ProductController")
+public class ProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private QnaService qnaService;   
+    private ProductService productService;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaController() {
+    public ProductController() {
         super();
-        qnaService = new QnaService();
+        productService = new ProductService();
         // TODO Auto-generated constructor stub
     }
 
@@ -32,36 +33,27 @@ public class QnaController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String command = request.getPathInfo();
+		ActionFoward actionFoward = null;
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		ActionFoward actionFoward = null;
-		String command = request.getPathInfo();
 		
-		if(command.equals("/qnaList.do")) {
-			actionFoward = qnaService.selectList(request, response);
-		}else if(command.equals("/qnaWrite.do")) {
-			actionFoward = qnaService.insert(request, response);
-		}else if(command.equals("/qnaSelectOne.do")) {
-			actionFoward = qnaService.selectOne(request, response);
-		}else if(command.equals("/qnaPwCheck.do")) {
-			actionFoward = qnaService.pwCheck(request, response);
-		}else if(command.equals("/qnaDelete.do")) {
-			actionFoward = qnaService.delete(request, response);
-		}else if(command.equals("/qnaUpdate.do")) {
-			actionFoward = qnaService.update(request, response);
-		}else if(command.equals("/reboardWrite.do")) {
-			actionFoward = qnaService.reboardInsert(request, response);
-		}else {
-			System.out.println("실패");
+		if(command.equals("/productList.do")) {
+			actionFoward = productService.selectList(request, response);
+		}else if(command.equals("/productInsert.do")) {
+			actionFoward = productService.insert(request, response);
+		}else if(command.equals("/productDelete.do")) {
+			actionFoward = productService.delete(request, response);
 		}
 		
-		
+	
 		if(actionFoward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionFoward.getPath());
 			view.forward(request, response);
 		}else {
 			response.sendRedirect(actionFoward.getPath());
 		}
+		
 	}
 
 	/**

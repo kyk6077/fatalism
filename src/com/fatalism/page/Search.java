@@ -14,6 +14,7 @@ public class Search {
 			this.kind="subject";
 		}
 	}
+	
 	public String getSearch() {
 		return search;
 	}
