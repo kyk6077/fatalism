@@ -61,7 +61,6 @@ public class ProductService {
 		actionFoward.setCheck(true);
 		try {
 			Search search = new Search();
-			//		search.getKind();
 			int curPage = 1;
 			try {curPage = Integer.parseInt(request.getParameter("curPage"));
 			}catch (Exception e) {}
@@ -188,6 +187,9 @@ public class ProductService {
 
 			} catch (Exception e) {
 				e.printStackTrace();
+				
+				actionFoward.setCheck(true);
+				actionFoward.setPath("../WEB-INF/view/product/productWrite.jsp");
 			}
 
 		}else {
