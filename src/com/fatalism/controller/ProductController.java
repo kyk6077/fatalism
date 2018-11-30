@@ -52,7 +52,7 @@ public class ProductController extends HttpServlet {
 		
 	
 		if(actionFoward.isCheck()) {
-			RequestDispatcher view = request.getRequestDispatcher(actionFoward.getPath());
+			RequestDispatcher view = request.getRequestDispatcher(actionFoward.getPath());			
 			view.forward(request, response);
 		}else {
 			response.sendRedirect(actionFoward.getPath());

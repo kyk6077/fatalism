@@ -161,6 +161,19 @@
 		background: black;
 	}
 </style>
+<script type="text/javascript">
+	$(function(){
+		$('#buy_btn').on('click',function(){
+			
+			var size= $('#size_select').val();
+			alert(size);
+			location.href="./product_order.do?size="+size;
+			
+		});
+		
+	});
+</script>
+
 </head>
 <body>
 <c:import url="../../../temp/h.jsp"></c:import>
@@ -232,9 +245,7 @@
 								<tr>
 									<th class="product_size" scope="row">Size</th>
 									<td class="product_sizeSelect">
-										<select>
-											<option value="*">- [필수] 옵션을 선택해 주세여 -</option>
-											<option value="**">---------------------</option>
+										<select id="size_select">
 											<option value="S">S</option>
 											<option value="M">M</option>
 											<option value="L">L</option>
@@ -245,10 +256,11 @@
 						</table>
 						<div class="buttons">
 							<div>
-							<c:import url="./priduct_order.do"></c:import>
-								<a class="btn_cart" id="btn12">
+								<button id="buy_btn">							
+<!-- 								<a class="btn_cart" id="buy_btn"> -->
 									BUY IT NOW
-								</a>
+									</button >
+<!-- 								</a> -->
 								<a class="btn_cart">
 									ADD TO CART
 								</a>

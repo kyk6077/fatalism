@@ -32,7 +32,7 @@ public class ProductService {
 	public ActionFoward productOrder(HttpServletRequest request, HttpServletResponse response) {
 		ActionFoward actionFoward = new ActionFoward();
 		ProductDTO productDTO = null;
-		int pnum=0;
+		int pnum=2;
 		String id = null;
 		
 		try {
@@ -40,12 +40,14 @@ public class ProductService {
 		id=memberDTO.getId();
 		}catch (Exception e) {
 			//비회원처리
-			id="sadas";
+			id="qqq";
 			// TODO: handle exception
 		}
 		try {
 			productDTO=productDAO.selectOne(pnum);
+			productDTO.setBodysize(request.getParameter("size"));
 			request.setAttribute("productDTO", productDTO);
+			
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/product/product_order.jsp");
 		} catch (Exception e) {
