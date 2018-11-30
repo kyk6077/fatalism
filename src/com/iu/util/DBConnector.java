@@ -19,8 +19,6 @@ public class DBConnector {
 		
 		con = DriverManager.getConnection(url, user, password);
 		
-		
-		
 		return con;
 	}
 	public static void disConnect(ResultSet rs, PreparedStatement st, Connection con) {
