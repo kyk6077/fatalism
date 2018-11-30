@@ -245,7 +245,7 @@
 						</table>
 						<div class="buttons">
 							<div>
-							<c:import url="./"></c:import>
+							<c:import url="./priduct_order.do"></c:import>
 								<a class="btn_cart" id="btn12">
 									BUY IT NOW
 								</a>
