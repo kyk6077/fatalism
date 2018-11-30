@@ -262,12 +262,9 @@ public class QnaService implements BoardService{
 					qnaDTO.setPw(request.getParameter("board_pw"));
 					qnaDAO.replyStep(qnaDTO.getRef(), qnaDTO.getStep());
 					qnaDAO.replyInsert(qnaDTO);
-					actionFoward.setPath("./qnaSelectOne.do?num="+qnaDTO.getNum());
-				}else {
-					System.out.println("3");
-					actionFoward.setPath("./qnaList.do");
+	
 				}
-				
+				actionFoward.setPath("./qnaList.do");
 			} catch (Exception e) {
 				System.out.println("EXCEPTION");
 				actionFoward.setCheck(true);

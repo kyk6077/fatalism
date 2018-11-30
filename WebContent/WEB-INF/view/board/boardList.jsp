@@ -76,7 +76,7 @@
 	<c:import url="../../../temp/h.jsp" />
 	<div id="sub_container">
 		<div id="sub_contents">
-			<h1 id="page_title">${board}z</h1>
+			<h1 id="page_title">${board}</h1>
 			<div class="row_table">
 				<table id="board_table">
 					<thead id="table_title">

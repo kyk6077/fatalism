@@ -54,14 +54,13 @@ public class ReviewDAO implements BoardDAO{
 	
 	public int insert(ReviewDTO reviewDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql = "insert into board values(?,?,?,sysdate,0,?,'R',null,null,null,?,?)";
+		String sql = "insert into board values(?,?,?,sysdate,0,?,'R',null,null,null,'N',?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1,reviewDTO.getNum());
 		st.setString(2,reviewDTO.getSubject());
 		st.setString(3,reviewDTO.getWriter());
 		st.setString(4,reviewDTO.getContents());
-		st.setString(5,reviewDTO.getHide());
-		st.setString(6,reviewDTO.getPw());
+		st.setString(5,reviewDTO.getPw());
 		int result = st.executeUpdate();
 		
 		DBConnector.disConnect(con, st);

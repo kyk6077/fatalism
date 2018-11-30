@@ -102,7 +102,21 @@
 
 						<tr>
 							<th>작성자</th>
-							<td><input type="text" id="writer" name="writer" size=15></td>
+							<td>
+							<c:if test="${board=='notice'}">
+								<input type="text" readonly="readonly" id="writer" name="writer" value="fatalism" size=15>
+							</c:if>
+							<c:if test="${board!='notice'}">
+								<c:if test="${member!=null}">
+									<input type="text" readonly="readonly" id="writer" name="writer" value="${member.id}" size=15>
+								</c:if>
+								<c:if test="${member==null}">
+									<input type="text" id="writer" name="writer" size=15>
+								</c:if>
+								
+								
+							</c:if>
+							</td>
 						</tr>
 						<tr class="contents_row">
 							<td colspan="2" id="contents_ck"><textarea rows="50"
@@ -116,7 +130,7 @@
 							<td><input type="text" id="board_pw" name="board_pw" size=10></td>
 						</tr>
 
-						<c:if test="${board !='qna' and board !='reboard'}">
+						<c:if test="${board !='qna' and board !='reboard' and board!='review'}">
 							<tr>
 								<th>비밀글설정</th>
 								<td><input type="radio" checked="checked" name="hide_radio"

@@ -90,7 +90,7 @@
 
 .comment_contents {
 	border-top: 1px solid #EAEAEA;
-	padding: 20px; 
+	padding: 20px;
 }
 /* body 끝 */
 </style>
@@ -140,10 +140,10 @@
 					var c = 'comment' + index;
 					$('#' + c).remove();
 					alert("삭제 완료");
-					location.href="#comment_view";
+					location.href = "#comment_view";
 				},
 				error : function() {
-					location.href="#comment_view";
+					location.href = "#comment_view";
 					alert("비밀번호가 틀립니다.");
 				}
 
@@ -153,15 +153,14 @@
 
 		$('#comment_view').on('click', '.comment_modify', function() {
 			var index = $(this).attr('title');
-			$('#contents_p'+index).css("display","none");
-			$('#update_row'+index).css("display","block");
+			$('#contents_p' + index).css("display", "none");
+			$('#update_row' + index).css("display", "block");
 
 		});
-		
-		
+
 		$('#comment_view').on('click', '.comment_btn', function() {
 			var index = $(this).attr('title');
-			var contents_val = $('#update_text'+index).val();
+			var contents_val = $('#update_text' + index).val();
 			$.ajax({
 				type : "POST",
 				url : "./commentUpdate.do",
@@ -170,16 +169,14 @@
 					"contents" : contents_val
 				},
 				success : function(data) {
-					alert(data);
-					$('#update_text'+index).val(data);
-					$('#contents_p'+index).html(data);
-					$('#update_row'+index).css("display","none");
-					$('#contents_p'+index).css("display","block");
-					alert("Update success");
-					location.href="#comment_view";
+					$('#update_text' + index).val(data);
+					$('#contents_p' + index).html(data);
+					$('#update_row' + index).css("display", "none");
+					$('#contents_p' + index).css("display", "block");
+					location.href = "#comment_view";
 				},
 				error : function() {
-					location.href="#comment_view";
+					location.href = "#comment_view";
 					alert("Update fail");
 				}
 
@@ -235,41 +232,45 @@
 							href="./${board}Update.do?num=${boardDTO.num}"><img alt="1"
 							src="../images/write_img/btn_modify.png"></a>
 					</div>
-					
+
 					<c:if test="${board=='qna'}">
-						<a href="./reboardWrite.do?num=${boardDTO.num}&subject=${boardDTO.subject}" class="reboard_btn">답글</a>
+						<a
+							href="./reboardWrite.do?num=${boardDTO.num}&subject=${boardDTO.subject}"
+							class="reboard_btn">답글</a>
 					</c:if>
-					
-					
+
+
 					<c:if test="${board=='review'}">
 						<div id="bottom_row">
-							<div id="comment_write">
-								<input type="hidden" id="comment_num" value="${boardDTO.num}">
-								<input type="hidden" id="comment_id" value="tester"> <input
-									type="text" size="50px" placeholder="댓글을 달수있습니다."
-									id="comment_contents">
-								<button id="comment">등록</button>
-							</div>
+							<c:if test="${member.id!=null}">
+								<div id="comment_write">
+									<input type="hidden" id="comment_num" value="${boardDTO.num}">
+									<input type="hidden" id="comment_id" value="${member.id}">
+									<input type="text" size="50px" placeholder="댓글을 달수있습니다."
+										id="comment_contents">
+									<button id="comment">등록</button>
+								</div>
+							</c:if>
 							<div id="comment_view">
 								<c:forEach items="${replyList}" var="replyDTO"
 									varStatus="status">
 									<div id="comment${replyDTO.num}">
 										<div class="comment_header">
 											<strong>${replyDTO.id}</strong><span class="reply_date">${replyDTO.reg_date}</span>
-											<%-- <c:if test="${member.id==replyDTO.id"> --%>
-											<div class="comment_row">
-												<a href="#" class="comment_modify" title="${replyDTO.num}"><img
-													alt="" src="../images/btn_comment_modify.png"></a> <a
-													href="#" class="comment_delete" title="${replyDTO.num}"><img
-													alt="" src="../images/btn_comment_delete.png"></a>
-											</div>
-											<%-- </c:if> --%>
+											<c:if test="${member.id==replyDTO.id}">
+												<div class="comment_row">
+													<a href="#" class="comment_modify" title="${replyDTO.num}"><img
+														alt="" src="../images/btn_comment_modify.png"></a> <a
+														href="#" class="comment_delete" title="${replyDTO.num}"><img
+														alt="" src="../images/btn_comment_delete.png"></a>
+												</div>
+											</c:if>
 										</div>
 										<div class="comment_contents">
 											<p id="contents_p${replyDTO.num}">${replyDTO.contents}</p>
-											<div id="update_row${replyDTO.num}" style="display:none">
-												<input type="text" id="update_text${replyDTO.num}" size="50px" 
-													value="${replyDTO.contents}">
+											<div id="update_row${replyDTO.num}" style="display: none">
+												<input type="text" id="update_text${replyDTO.num}"
+													size="50px" value="${replyDTO.contents}">
 												<button class="comment_btn" title="${replyDTO.num}">수정완료</button>
 											</div>
 										</div>

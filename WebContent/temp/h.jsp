@@ -18,7 +18,7 @@
 					<li id="login_menu_2"><a style="color: #000"
 						href="${pageContext.request.contextPath }/member/memberLogout.do">로그아웃</a>
 						<span>I</span> <a style="color: #000"
-						href="${pageContext.request.contextPath }/member/memberUpdate.do">회원정보수정</a>
+						href="${pageContext.request.contextPath }/member/memberUpdate.do">회원정보</a>
 						<span>I</span> <a style="color: #000"
 						href="${pageContext.request.contextPath }/myPage.jsp">마이페이지</a></li>
 					<li id="login_menu_2"><a style="color: #000"

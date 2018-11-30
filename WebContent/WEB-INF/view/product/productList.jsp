@@ -168,7 +168,7 @@
 								href="./productList.do?curPage=${pager.startNum-1}&type=${pager.search.kind}"><span
 									class="glyphicon glyphicon-chevron-left"></span></a></li>
 						</c:if>
-						<c:forEach begin="${pager.startNum}" end="${pager.lastNum}"
+						<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" 
 							var="p">
 							<li><a
 								href="./productList.do?curPage=${p}&type=${pager.search.kind}">${p}</a></li>

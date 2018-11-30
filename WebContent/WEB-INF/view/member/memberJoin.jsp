@@ -21,7 +21,7 @@
 				},
 				success : function(data) {
 					data=data.trim();
-					if (data=='2' {
+					if (data=='2') {
 						$("#id_1").html( id+"는 사용가능한 아이디입니다");
 					} else {
 						$("#id_1").html( id+"는 사용불가능한 아이디입니다");
@@ -31,7 +31,7 @@
 				},
 				 error:function(){
 					$("#id").val('');
-					alert("아이디입력")
+					alert("아이디입력");
 				} 
 			});
 		});

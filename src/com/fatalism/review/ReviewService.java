@@ -51,7 +51,6 @@ public class ReviewService implements BoardService{
 				reviewDTO.setSubject(multi.getParameter("subject"));
 				reviewDTO.setWriter(multi.getParameter("writer"));
 				reviewDTO.setContents(multi.getParameter("contents"));
-				reviewDTO.setHide(multi.getParameter("hide_radio"));
 				reviewDTO.setPw(multi.getParameter("board_pw"));
 				reviewDTO.setNum(reviewDAO.getSeqNum());
 				int result = reviewDAO.insert(reviewDTO);
@@ -113,6 +112,7 @@ public class ReviewService implements BoardService{
 			ReplyDAO replyDAO = new ReplyDAO();
 			int result = reviewDAO.pwCheck(num, pw);
 			if(result>0) {
+				boardimgDAO.delete(num);
 				replyDAO.deleteList(num);
 				result = reviewDAO.delete(num,pw);
 			}
@@ -343,6 +343,7 @@ public class ReviewService implements BoardService{
 		ActionFoward actionFoward = new ActionFoward();
 		ReplyDAO replyDAO = new ReplyDAO();
 		try {
+			
 			int result = replyDAO.delete(Integer.parseInt(request.getParameter("num")));
 			if(result>0) {
 				request.setAttribute("result", "success");
