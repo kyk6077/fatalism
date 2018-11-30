@@ -169,7 +169,7 @@
 							<tr>
 								<td colspan="10" class="sum2">
 									총합계 : 
-									<span id="all_price">
+									<span class="all_price">
 										
 									</span>
 								</td>
