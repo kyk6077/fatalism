@@ -175,7 +175,6 @@
 		$('#buy_btn').on('click',function(){
 			
 			var size= $('#size_select').val();
-			alert(size);
 			location.href="./product_order.do?size="+size;
 			
 		});
