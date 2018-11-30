@@ -44,7 +44,6 @@ public class CartController extends HttpServlet {
 		}else if(command.equals("/allDelete.do")) {
 			actionFoward = cartService.allDelete(request, response);
 		}else if(command.equals("/order.do")) {
-			System.out.println("0");
 			actionFoward = cartService.order(request, response);
 		}
 		

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fatalis.cart.CartInfoDTO;
 import com.fatalism.page.MakePager;
 import com.fatalism.page.Pager;
 import com.fatalism.page.Search;
@@ -26,6 +27,32 @@ public class ProductService {
 	public ProductService() {
 		productDAO = new ProductDAO();
 		uploadDAO = new UploadDAO();
+	}
+	
+	public ActionFoward productOrder(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
+		ProductDTO productDTO = null;
+		int pnum=0;
+		String id = null;
+		
+		try {
+		MemberDTO memberDTO = (MemberDTO)request.getSession().getAttribute("member");
+		id=memberDTO.getId();
+		}catch (Exception e) {
+			//비회원처리
+			id="sadas";
+			// TODO: handle exception
+		}
+		try {
+			productDTO=productDAO.selectOne(pnum);
+			request.setAttribute("productDTO", productDTO);
+			actionFoward.setCheck(true);
+			actionFoward.setPath("../WEB-INF/view/product/product_order.jsp");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return actionFoward;
 	}
 
 

@@ -111,7 +111,6 @@ public class CartService {
 			id = "aaa";
 		}
 		try {
-			System.out.println("1");
 			ar = cartDAO.cartSelect(id);
 			request.setAttribute("cart", ar);
 			actionFoward.setCheck(true);

@@ -45,7 +45,7 @@
 		margin: 0 0 0 130px;
 	}
 </style>
-<c:import url="../../payment/test.jsp"></c:import> <!-- 결제 호출하는 역활  -->
+<c:import url="../../payment/test.jsp"></c:import>
 <script type="text/javascript">
 	 $(function() {
 		 
@@ -112,7 +112,7 @@
 								<th scope="col">선택</th>
 							</tr>
 						</thead>
-						<c:forEach	items="${cart}" var="cDTO" varStatus="c">
+						<c:forEach	items="${productDTO}" var="pDTO" varStatus="c">
 						<tbody>
 							<tr>
 								<td><input type="checkbox" class="ch"></td>
@@ -123,14 +123,14 @@
 								</td>
 								<td class="cart_name">
 									<a>
-										<strong>${cDTO.name}</strong>
+										<strong>${pDTO.name}</strong>
 									</a>
 									<ul>
-										<li>${cDTO.bodysize }</li>
+										<li>${pDTO.bodysize }</li>
 									</ul>
 								</td>
 								<td>
-									<p id="price${c.count}" title="${c.count}" >${cDTO.price }</p>
+									<p id="price${c.count}" title="${c.count}" >${pDTO.price }</p>
 								</td>
 								<td>
 									<input type="text" size="2" style="border-radius: 2px" value="1" id="product_count${c.count }"><br>
@@ -151,10 +151,10 @@
 								</td>
 								<td>
 								
-									<p id="totalprice${c.count}" class="sum">${cDTO.price }</p>
+									<p id="totalprice${c.count}" class="sum">${pDTO.price }</p>
 								</td>
 								<td>
-									<a href="selectDelete.do?num=${cDTO.num }" class="delete_btn"<%--  title="${cDTO.num}" --%>>
+									<a href="selectDelete.do?num=${pDTO.num }" class="delete_btn"<%--  title="${cDTO.num}" --%>>
 										<img alt="삭제" src="../images/member/btn_order_delete.png">
 									</a>
 															
