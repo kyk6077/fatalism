@@ -112,7 +112,6 @@
 								<th scope="col">선택</th>
 							</tr>
 						</thead>
-						<c:forEach	items="${productDTO}" var="pDTO" varStatus="c">
 						<tbody>
 							<tr>
 								<td><input type="checkbox" class="ch"></td>
@@ -123,14 +122,14 @@
 								</td>
 								<td class="cart_name">
 									<a>
-										<strong>${pDTO.name}</strong>
+										<strong>${productDTO.name}</strong>
 									</a>
 									<ul>
-										<li>${pDTO.bodysize }</li>
+										<li>${productDTO.bodysize }</li>
 									</ul>
 								</td>
 								<td>
-									<p id="price${c.count}" title="${c.count}" >${pDTO.price }</p>
+									<p id="price${c.count}" title="${c.count}" >${productDTO.price }</p>
 								</td>
 								<td>
 									<input type="text" size="2" style="border-radius: 2px" value="1" id="product_count${c.count }"><br>
@@ -151,10 +150,10 @@
 								</td>
 								<td>
 								
-									<p id="totalprice${c.count}" class="sum">${pDTO.price }</p>
+									<p id="totalprice${c.count}" class="sum">${productDTO.price }</p>
 								</td>
 								<td>
-									<a href="selectDelete.do?num=${pDTO.num }" class="delete_btn"<%--  title="${cDTO.num}" --%>>
+									<a href="selectDelete.do?num=${productDTO.num }" class="delete_btn" title="${productDTO.num}">
 										<img alt="삭제" src="../images/member/btn_order_delete.png">
 									</a>
 															
@@ -164,7 +163,6 @@
 						<c:if test="${c.last}">
 							<input type="hidden" value="${c.count}" id="allprice">
 						</c:if>
-						</c:forEach>
 						<tfoot>
 							<tr>
 								<td colspan="10" class="sum2">
