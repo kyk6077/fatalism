@@ -53,6 +53,16 @@ public class ReplyDAO {
 		return result;
 	}
 	
+	public int deleteList(int bnum) throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql="delete reply where bnum=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1,bnum);
+		int result = st.executeUpdate();
+		DBConnector.disConnect(con, st);
+		return result;
+	}
+	
 	public int update(ReplyDTO replyDTO) throws Exception{
 		Connection con = DBConnector.getConnect();
 		String sql="update reply set contents=? where num=?";

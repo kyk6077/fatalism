@@ -110,7 +110,12 @@ public class ReviewService implements BoardService{
 		try {
 			int num = Integer.parseInt(request.getParameter("num"));
 			String pw = request.getParameter("board_pw");
-			int result = reviewDAO.delete(num,pw);
+			ReplyDAO replyDAO = new ReplyDAO();
+			int result = reviewDAO.pwCheck(num, pw);
+			if(result>0) {
+				replyDAO.deleteList(num);
+				result = reviewDAO.delete(num,pw);
+			}
 			if(result>0) {
 				request.setAttribute("message","Delete Success");
 				request.setAttribute("path","./reviewList.do");

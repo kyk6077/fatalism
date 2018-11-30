@@ -57,8 +57,11 @@
 	margin-top: 20px;
 	text-align: right;
 }
-.item_td{
-	width:150px;
+.item_td>img{
+	width:100px;
+	height:150px;
+	max-width:150px;
+	max-height:180px;
 	padding: 5px;
 }
 .write_day{
@@ -73,7 +76,7 @@
 	<c:import url="../../../temp/h.jsp" />
 	<div id="sub_container">
 		<div id="sub_contents">
-			<h1 id="page_title">${board}</h1>
+			<h1 id="page_title">${board}z</h1>
 			<div class="row_table">
 				<table id="board_table">
 					<thead id="table_title">
@@ -93,7 +96,7 @@
 								<td class="item_td">
 									<c:forEach items="${list2}" var="boardimgDTO">
 										<c:if test="${boardimgDTO.bnum==boardDTO.num}">
-											<img alt="" src="${pageContext.request.contextPath }/upload/${boardimgDTO.fname}">
+											<img alt="" src="${pageContext.request.contextPath }/boardupload/${boardimgDTO.fname}">
 										</c:if>
 									</c:forEach>
 								</td>

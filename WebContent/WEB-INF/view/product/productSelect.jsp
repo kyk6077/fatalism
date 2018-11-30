@@ -160,6 +160,15 @@
 		text-align: center;
 		background: black;
 	}
+	#buy_btn{
+		width: 99.7%;
+		height: 50px;
+		border: 1px solid black;
+		margin-bottom: 3px;
+		display: block;
+		background-color: black;
+		color: white
+	}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -257,9 +266,8 @@
 						<div class="buttons">
 							<div>
 								<button id="buy_btn">							
-<!-- 								<a class="btn_cart" id="buy_btn"> -->
 									BUY IT NOW
-									</button >
+								</button >
 <!-- 								</a> -->
 								<a class="btn_cart">
 									ADD TO CART
